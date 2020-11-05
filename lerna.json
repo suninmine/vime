@@ -1,0 +1,14 @@
+{
+  "version": "4.3.1",
+  "npmClient": "yarn",
+  "command": {
+    "publish": {
+      "message": "chore(release): publish %s 🥳",
+      "conventionalCommits": true,
+      "createRelease": "github"
+    }
+  },
+  "packages": [
+    "packages/*"
+  ]
+}

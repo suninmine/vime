@@ -1,0 +1,72 @@
+{
+  "name": "@vime/core",
+  "version": "4.3.1",
+  "description": "Customizable, extensible, accessible and framework agnostic media player.",
+  "license": "MIT",
+  "sideEffects": false,
+  "main": "",
+  "module": "",
+  "types": "@types/",
+  "files": [
+    "dist/",
+    "icons/",
+    "themes/",
+    "@types/"
+  ],
+  "contributors": [
+    "Rahim Alwer <rahim_alwer@outlook.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vime-js/vime.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vime-js/vime/issues"
+  },
+  "scripts": {
+    "analyze": "wca analyze \"src/**/*!(test).ts\" --outFile custom-elements.json",
+    "build": "tsc",
+    "build:watch": "tsc -w",
+    "lint": "npm run lint:lit-analyzer && npm run lint:eslint",
+    "lint:eslint": "eslint 'src/**/*.ts'",
+    "lint:lit-analyzer": "lit-analyzer",
+    "serve": "es-dev-server --open playground --node-resolve --watch",
+    "test": "wtr \"src/**/*.test.ts\" --coverage --node-resolve",
+    "test:watch": "wtr \"src/**/*.test.ts\" --node-resolve --watch"
+  },
+  "dependencies": {
+    "lit-element": "^2.4.0"
+  },
+  "devDependencies": {
+    "@open-wc/testing": "^2.5.32",
+    "@types/mocha": "^8.0.3",
+    "@types/sinon": "^9.0.8",
+    "@web/dev-server": "^0.0.19",
+    "@web/dev-server-esbuild": "^0.2.6",
+    "@web/test-runner": "^0.9.7",
+    "lit-analyzer": "^1.2.1",
+    "rimraf": "^3.0.2",
+    "sinon": "^9.2.1",
+    "typescript": "^4.0.5",
+    "web-component-analyzer": "^1.1.6"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "vime",
+    "player",
+    "media",
+    "audio",
+    "video",
+    "html5",
+    "lit-element",
+    "youtube",
+    "dailymotion",
+    "vimeo",
+    "hls",
+    "dash",
+    "custom",
+    "web-components"
+  ]
+}
