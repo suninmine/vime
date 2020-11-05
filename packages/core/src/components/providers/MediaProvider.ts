@@ -1,4 +1,3 @@
-import { ComponentInterface, EventEmitter } from '@stencil/core';
 import { PlayerProps } from '../core/player/PlayerProps';
 import { withPlayerContext } from '../core/player/PlayerContext';
 
@@ -26,7 +25,7 @@ export type MockMediaProviderAdapter = {
   [P in keyof MediaProviderAdapter]: any
 };
 
-export interface MediaProvider<InternalPlayerType = any> extends ComponentInterface {
+export interface MediaProvider<InternalPlayerType = any> {
   logger?: PlayerProps['logger']
   controls: PlayerProps['controls']
   language: PlayerProps['language']

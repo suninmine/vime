@@ -21,7 +21,7 @@ export interface CancellablePromise<T> extends Promise<T> {
   cancel: () => void;
 }
 
-export const makeCancellablePromise = <T>(
+export const cancellablePromise = <T>(
   promise: Promise<T>,
 ): CancellablePromise<T> => {
   let rejectFn: (reason?: any) => void;

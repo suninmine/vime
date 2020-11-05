@@ -24,15 +24,15 @@
     "url": "https://github.com/vime-js/vime/issues"
   },
   "scripts": {
-    "analyze": "wca analyze \"src/**/*!(test).ts\" --outFile custom-elements.json",
+    "analyze": "wca analyze \"src/components/index.ts\" --outFile custom-elements.json",
     "build": "tsc",
     "build:watch": "tsc -w",
     "lint": "npm run lint:lit-analyzer && npm run lint:eslint",
     "lint:eslint": "eslint 'src/**/*.ts'",
     "lint:lit-analyzer": "lit-analyzer",
-    "serve": "es-dev-server --open playground --node-resolve --watch",
-    "test": "wtr \"src/**/*.test.ts\" --coverage --node-resolve",
-    "test:watch": "wtr \"src/**/*.test.ts\" --node-resolve --watch"
+    "serve": "wds",
+    "test": "wtr \"src/**/*.test.ts\" --coverage",
+    "test:watch": "wtr \"src/**/*.test.ts\" --watch"
   },
   "dependencies": {
     "lit-element": "^2.4.0"

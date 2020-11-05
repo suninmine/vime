@@ -16,6 +16,7 @@
     "vue": "yarn workspace @vime/vue",
     "vue:next": "yarn workspace @vime/vue-next",
     "svelte": "yarn workspace @vime/svelte",
+    "stencil": "yarn workspace @vime/stencil",
     "angular": "yarn workspace @vime/angular",
     "lint": "yarn workspaces run lint --parallel",
     "build": "yarn workspaces run build --parallel",

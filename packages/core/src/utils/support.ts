@@ -1,15 +1,15 @@
 import { isFunction } from './unit';
 import { listen } from './dom';
 
-export const IS_CLIENT = typeof window !== 'undefined';
-export const UA = (IS_CLIENT ? window.navigator?.userAgent.toLowerCase() : '');
-export const IS_IOS = /iphone|ipad|ipod|ios|CriOS|FxiOS/.test(UA);
-export const IS_ANDROID = /android/.test(UA);
-export const IS_MOBILE = (IS_IOS || IS_ANDROID);
-export const IS_IPHONE = (IS_CLIENT && /(iPhone|iPod)/gi.test(window.navigator?.platform));
-export const IS_FIREFOX = (/firefox/.test(UA));
-export const IS_CHROME = (IS_CLIENT && (window as any).chrome);
-export const IS_SAFARI = (IS_CLIENT && ((window as any).safari || IS_IOS || /Apple/.test(UA)));
+export const IS_CLIENT = /* #__PURE__ */typeof window !== 'undefined';
+export const UA = /* #__PURE__ */(IS_CLIENT ? window.navigator?.userAgent.toLowerCase() : '');
+export const IS_IOS = /* #__PURE__ *//iphone|ipad|ipod|ios|CriOS|FxiOS/.test(UA);
+export const IS_ANDROID = /* #__PURE__ *//android/.test(UA);
+export const IS_MOBILE = /* #__PURE__ */(IS_IOS || IS_ANDROID);
+export const IS_IPHONE = /* #__PURE__ */(IS_CLIENT && /(iPhone|iPod)/gi.test(window.navigator?.platform));
+export const IS_FIREFOX = /* #__PURE__ */(/firefox/.test(UA));
+export const IS_CHROME = /* #__PURE__ */(IS_CLIENT && (window as any).chrome);
+export const IS_SAFARI = /* #__PURE__ */(IS_CLIENT && ((window as any).safari || IS_IOS || /Apple/.test(UA)));
 
 export const ORIGIN = (window.location.protocol !== 'file:')
   ? `${window.location.protocol}//${window.location.hostname}`
