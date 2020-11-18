@@ -1,7 +1,8 @@
 import {
   h, Prop, Method, Component, Event, EventEmitter, State, Watch,
 } from '@stencil/core';
-import { MediaProvider, withProviderConnect, withProviderContext } from '../MediaProvider';
+import { MediaProvider } from '../MediaProvider';
+import { withProviderConnect } from '../ProviderConnect';
 import { decodeJSON } from '../../../utils/network';
 import { isString, isUndefined, isNumber } from '../../../utils/unit';
 import { ViewType } from '../../core/player/ViewType';
@@ -13,6 +14,8 @@ import { MediaType } from '../../core/player/MediaType';
 import { DeferredPromise, deferredPromise } from '../../../utils/promise';
 import { createProviderDispatcher, ProviderDispatcher } from '../ProviderDispatcher';
 import { Logger } from '../../core/player/PlayerLogger';
+import { withComponentRegistry } from '../../core/player/withComponentRegistry';
+import { withProviderContext } from '../withProviderContext';
 
 interface VideoInfo {
   width: number
@@ -23,11 +26,12 @@ interface VideoInfo {
 const videoInfoCache = new Map<string, VideoInfo>();
 
 @Component({
-  tag: 'vime-vimeo',
-  styleUrl: 'vimeo.scss',
+  tag: 'vm-vimeo',
+  styleUrl: 'vimeo.css',
+  shadow: true,
 })
-export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
-  private embed!: HTMLVimeEmbedElement;
+export class Vimeo implements MediaProvider<HTMLVmEmbedElement> {
+  private embed!: HTMLVmEmbedElement;
 
   private dispatch!: ProviderDispatcher;
 
@@ -149,9 +153,15 @@ export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
   /**
    * @internal
    */
-  @Event() vLoadStart!: EventEmitter<void>;
+  @Event() vmLoadStart!: EventEmitter<void>;
+
+  /**
+   * Emitted when an error has occurred.
+   */
+  @Event() vmError!: EventEmitter<any>;
 
   constructor() {
+    withComponentRegistry(this);
     withProviderConnect(this);
     withProviderContext(this);
   }
@@ -396,14 +406,14 @@ export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
         }
         break;
       case VimeoDataEvent.Error:
-        this.dispatch('errors', [new Error(payload)]);
+        this.vmError.emit(payload);
         break;
     }
   }
 
   private onEmbedSrcChange() {
     this.hasLoaded = false;
-    this.vLoadStart.emit();
+    this.vmLoadStart.emit();
   }
 
   private onEmbedMessage(event: CustomEvent<VimeoMessage>) {
@@ -463,7 +473,7 @@ export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
 
   render() {
     return (
-      <vime-embed
+      <vm-embed
         class={{ hideControls: !this.controls }}
         style={this.adjustPosition()}
         embedSrc={this.embedSrc}
@@ -472,8 +482,8 @@ export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
         params={this.buildParams()}
         decoder={decodeJSON}
         preconnections={this.getPreconnections()}
-        onVEmbedMessage={this.onEmbedMessage.bind(this)}
-        onVEmbedSrcChange={this.onEmbedSrcChange.bind(this)}
+        onVmEmbedMessage={this.onEmbedMessage.bind(this)}
+        onVmEmbedSrcChange={this.onEmbedSrcChange.bind(this)}
         ref={(el: any) => { this.embed = el; }}
       />
     );

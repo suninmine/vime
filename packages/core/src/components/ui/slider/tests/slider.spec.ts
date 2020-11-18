@@ -3,16 +3,16 @@ import { newUISpecPage } from '../../ui/tests';
 import { Slider } from '../slider';
 
 let page: SpecPage;
-let slider: HTMLVimeSliderElement;
+let slider: HTMLVmSliderElement;
 let input: HTMLInputElement;
 
 beforeEach(async () => {
   ({ page } = await newUISpecPage(
     [Slider],
-    '<vime-slider />',
+    '<vm-slider />',
   ));
 
-  slider = page.root!.querySelector('vime-slider')!;
+  slider = page.root!.querySelector('vm-slider')!;
   input = page.root!.querySelector('input')!;
 });
 
@@ -27,9 +27,9 @@ it('should set the value text', async () => {
   expect(input.getAttribute('aria-valuetext')).toEqual('70%');
 });
 
-it('should fire vValueChange event', async () => {
+it('should fire vmValueChange event', async () => {
   const callback = jest.fn();
-  slider.addEventListener('vValueChange', callback);
+  slider.addEventListener('vmValueChange', callback);
   input.value = '8';
   input.dispatchEvent(new Event('input'));
   await page.waitForChanges();

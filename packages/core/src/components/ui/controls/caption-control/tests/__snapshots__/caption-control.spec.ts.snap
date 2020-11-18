@@ -1,23 +1,23 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should be structurally sound when active 1`] = `
-<vime-caption-control class="hidden">
-  <vime-control hidden="" keys="c" label="Captions" pressed="">
-    <vime-icon href="#vime-captions-on"></vime-icon>
-    <vime-tooltip position="top">
+<vm-caption-control class="hidden">
+  <vm-control hidden="" keys="c" label="Captions" pressed="">
+    <vm-icon href="#vime-captions-on"></vm-icon>
+    <vm-tooltip position="top">
       Disable subtitles/captions (c)
-    </vime-tooltip>
-  </vime-control>
-</vime-caption-control>
+    </vm-tooltip>
+  </vm-control>
+</vm-caption-control>
 `;
 
 exports[`should be structurally sound when not active 1`] = `
-<vime-caption-control class="hidden">
-  <vime-control hidden="" keys="c" label="Captions">
-    <vime-icon href="#vime-captions-off"></vime-icon>
-    <vime-tooltip position="top">
+<vm-caption-control class="hidden">
+  <vm-control hidden="" keys="c" label="Captions">
+    <vm-icon href="#vime-captions-off"></vm-icon>
+    <vm-tooltip position="top">
       Enable subtitles/captions (c)
-    </vime-tooltip>
-  </vime-control>
-</vime-caption-control>
+    </vm-tooltip>
+  </vm-control>
+</vm-caption-control>
 `;

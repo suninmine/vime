@@ -1,15 +1,17 @@
 import {
   h, Component, Element, Prop, Watch, Event, EventEmitter, Listen,
 } from '@stencil/core';
+import { withComponentRegistry } from '../../../core/player/withComponentRegistry';
 
 /**
- * @slot - Used to pass in radio buttons (`vime-menu-radio`).
+ * @slot - Used to pass in radio buttons (`vm-menu-radio`).
  */
 @Component({
-  tag: 'vime-menu-radio-group',
+  tag: 'vm-menu-radio-group',
+  shadow: true,
 })
 export class MenuRadioGroup {
-  @Element() el!: HTMLVimeMenuRadioGroupElement;
+  @Element() el!: HTMLVmMenuRadioGroupElement;
 
   /**
    * The current value selected for this group.
@@ -19,7 +21,6 @@ export class MenuRadioGroup {
   @Watch('value')
   onValueChange() {
     this.findRadios().forEach((radio) => {
-      // eslint-disable-next-line no-param-reassign
       radio.checked = (radio.value === this.value);
     });
   }
@@ -27,20 +28,24 @@ export class MenuRadioGroup {
   /**
    * Emitted when a new radio button is selected for this group.
    */
-  @Event() vCheck!: EventEmitter<void>;
+  @Event() vmCheck!: EventEmitter<void>;
+
+  constructor() {
+    withComponentRegistry(this);
+  }
 
   connectedCallback() {
     this.onValueChange();
   }
 
-  @Listen('vCheck')
+  @Listen('vmCheck')
   onSelectionChange(event: Event) {
-    const radio = event.target as HTMLVimeMenuRadioElement;
+    const radio = event.target as HTMLVmMenuRadioElement;
     this.value = radio.value;
   }
 
   private findRadios() {
-    return this.el.querySelectorAll('vime-menu-radio');
+    return this.el.querySelectorAll('vm-menu-radio');
   }
 
   render() {

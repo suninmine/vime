@@ -1,5 +1,5 @@
 ---
-title: vime-settings
+title: vm-settings
 sidebar_label: Settings
 ---
 
@@ -37,15 +37,15 @@ values={[
 <TabItem value="html">
 
 ```html {5-7}
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-settings>
+    <vm-settings>
       <!-- ... -->
-    </vime-settings>
-  </vime-ui>
-</vime-player>
+    </vm-settings>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -55,17 +55,17 @@ values={[
 
 ```tsx {2,10}
 import React from 'react';
-import { VimePlayer, VimeUi, VimeSettings } from '@vime/react';
+import { Player, Ui, Settings } from '@vime/react';
 
 function Example() {
   return (
-    <VimePlayer>
+    <Player>
       {/* ... */}
-      <VimeUi>
+      <Ui>
         {/* ... */}
-        <VimeSettings>{/* ... */}</VimeSettings>
-      </VimeUi>
-    </VimePlayer>
+        <Settings>{/* ... */}</Settings>
+      </Ui>
+    </Player>
   );
 }
 ```
@@ -77,25 +77,25 @@ function Example() {
 
 ```html {6-8,14,20} title="example.vue"
 <template>
-  <VimePlayer>
+  <Player>
     <!-- ... -->
-    <VimeUi>
+    <Ui>
       <!-- ... -->
-      <VimeSettings>
+      <Settings>
         <!-- ... -->
-      </VimeSettings>
-    </VimeUi>
-  </VimePlayer>
+      </Settings>
+    </Ui>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeUi, VimeSettings } from '@vime/vue';
+  import { Player, Ui, Settings } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeUi,
-      VimeSettings,
+      Player,
+      Ui,
+      Settings,
     },
   };
 </script>
@@ -107,18 +107,18 @@ function Example() {
 <TabItem value="svelte">
 
 ```html {5-7,12} title="example.svelte"
-<VimePlayer>
+<Player>
   <!-- ... -->
-  <VimeUi>
+  <Ui>
     <!-- ... -->
-    <VimeSettings>
+    <Settings>
       <!-- ... -->
-    </VimeSettings>
-  </VimeUi>
-</VimePlayer>
+    </Settings>
+  </Ui>
+</Player>
 
 <script lang="ts">
-  import { VimePlayer, VimeUi, VimeSettings } from '@vime/svelte';
+  import { Player, Ui, Settings } from '@vime/svelte';
 </script>
 ```
 
@@ -131,13 +131,13 @@ function Example() {
 class Example {
   render() {
     return (
-      <vime-player>
+      <vm-player>
         {/* ... */}
-        <vime-ui>
+        <vm-ui>
           {/* ... */}
-          <vime-settings>{/* ... */}</vime-settings>
-        </vime-ui>
-      </vime-player>
+          <vm-settings>{/* ... */}</vm-settings>
+        </vm-ui>
+      </vm-player>
     );
   }
 }
@@ -149,15 +149,15 @@ class Example {
 <TabItem value="angular">
 
 ```html {5-7} title="example.html"
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-settings>
+    <vm-settings>
       <!-- ... -->
-    </vime-settings>
-  </vime-ui>
-</vime-player>
+    </vm-settings>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -207,19 +207,19 @@ Type: `Promise<void>`
 
 ### Used by
 
-- [vime-default-settings](default-settings.md)
+- [vm-default-settings](default-settings.md)
 
 ### Depends on
 
-- [vime-menu](menu.md)
+- [vm-menu](menu.md)
 
 ### Graph
 
 ```mermaid
 graph TD;
-  vime-settings --> vime-menu
-  vime-default-settings --> vime-settings
-  style vime-settings fill:#f9f,stroke:#333,stroke-width:4px
+  vm-settings --> vm-menu
+  vm-default-settings --> vm-settings
+  style vm-settings fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ---

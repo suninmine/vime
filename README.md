@@ -59,8 +59,8 @@ Vime is a customizable, extensible, accessible and framework agnostic media play
 and Angular. If you want to see how they look check out our [Demo](https://vimejs.com/demo).**
 
 ```html
-<vime-player autoplay muted>
-  <vime-video poster="/media/poster.png" cross-origin>
+<vm-player autoplay muted>
+  <vm-video poster="/media/poster.png" cross-origin>
     <!-- Why `data-src`? Lazy loading. You can always use `src` if you don't need it. -->
     <source data-src="/media/video.mp4" type="video/mp4" />
     <track
@@ -70,54 +70,54 @@ and Angular. If you want to see how they look check out our [Demo](https://vimej
       srclang="en"
       label="English"
     />
-  </vime-video>
+  </vm-video>
 
   <!-- Loads the default Vime UI. -->
-  <vime-default-ui />
-</vime-player>
+  <vm-default-ui />
+</vm-player>
 ```
 
 _Native UI?_
 
 ```html
 <!-- Here we are requesting to use the native controls. -->
-<vime-player autoplay muted controls>
-  <vime-audio cross-origin>
+<vm-player autoplay muted controls>
+  <vm-audio cross-origin>
     <source data-src="/media/audio.mp3" type="audio/mp3" />
-  </vime-audio>
-</vime-player>
+  </vm-audio>
+</vm-player>
 ```
 
 _Custom UI?_
 
 ```html
 <!-- Lets add a little splash of color throughout the player. -->
-<vime-player autoplay muted style="--vm-player-theme: #1873d3">
+<vm-player autoplay muted style="--vm-player-theme: #1873d3">
   <!-- Loading a YouTube video. -->
-  <vime-youtube video-id="DyTCOwB0DVw" />
+  <vm-youtube video-id="DyTCOwB0DVw" />
 
-  <vime-ui>
-    <vime-click-to-play />
-    <vime-captions />
-    <vime-poster />
-    <vime-spinner />
-    <vime-default-settings />
-    <vime-controls pin="bottomLeft" active-duration="2750" full-width>
+  <vm-ui>
+    <vm-click-to-play />
+    <vm-captions />
+    <vm-poster />
+    <vm-spinner />
+    <vm-default-settings />
+    <vm-controls pin="bottomLeft" active-duration="2750" full-width>
       <!-- 
         These are all predefined controls that you can easily customize. You could also build 
         your own controls completely from scratch.
       -->
-      <vime-playback-control tooltip-direction="right" />
-      <vime-volume-control />
-      <vime-time-progress />
-      <vime-control-spacer />
-      <vime-caption-control />
-      <vime-pip-control keys="p" />
-      <vime-settings-control />
-      <vime-fullscreen-control keys="f" tooltip-direction="left" />
-    </vime-controls>
-  </vime-ui>
-</vime-player>
+      <vm-playback-control tooltip-direction="right" />
+      <vm-volume-control />
+      <vm-time-progress />
+      <vm-control-spacer />
+      <vm-caption-control />
+      <vm-pip-control keys="p" />
+      <vm-settings-control />
+      <vm-fullscreen-control keys="f" tooltip-direction="left" />
+    </vm-controls>
+  </vm-ui>
+</vm-player>
 ```
 
 ## 🏗️ Frameworks

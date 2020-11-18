@@ -1,5 +1,5 @@
 ---
-title: vime-default-settings
+title: vm-default-settings
 sidebar_label: DefaultSettings
 ---
 
@@ -37,13 +37,13 @@ values={[
 <TabItem value="html">
 
 ```html {5}
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-default-settings></vime-default-settings>
-  </vime-ui>
-</vime-player>
+    <vm-default-settings></vm-default-settings>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -53,17 +53,17 @@ values={[
 
 ```tsx {2,10}
 import React from 'react';
-import { VimePlayer, VimeUi, VimeDefaultSettings } from '@vime/react';
+import { Player, Ui, DefaultSettings } from '@vime/react';
 
 function Example() {
   return (
-    <VimePlayer>
+    <Player>
       {/* ... */}
-      <VimeUi>
+      <Ui>
         {/* ... */}
-        <VimeDefaultSettings />
-      </VimeUi>
-    </VimePlayer>
+        <DefaultSettings />
+      </Ui>
+    </Player>
   );
 }
 ```
@@ -75,23 +75,23 @@ function Example() {
 
 ```html {6,12,18} title="example.vue"
 <template>
-  <VimePlayer>
+  <Player>
     <!-- ... -->
-    <VimeUi>
+    <Ui>
       <!-- ... -->
-      <VimeDefaultSettings />
-    </VimeUi>
-  </VimePlayer>
+      <DefaultSettings />
+    </Ui>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeUi, VimeDefaultSettings } from '@vime/vue';
+  import { Player, Ui, DefaultSettings } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeUi,
-      VimeDefaultSettings,
+      Player,
+      Ui,
+      DefaultSettings,
     },
   };
 </script>
@@ -103,16 +103,16 @@ function Example() {
 <TabItem value="svelte">
 
 ```html {5,10} title="example.svelte"
-<VimePlayer>
+<Player>
   <!-- ... -->
-  <VimeUi>
+  <Ui>
     <!-- ... -->
-    <VimeDefaultSettings />
-  </VimeUi>
-</VimePlayer>
+    <DefaultSettings />
+  </Ui>
+</Player>
 
 <script lang="ts">
-  import { VimePlayer, VimeUi, VimeDefaultSettings } from '@vime/svelte';
+  import { Player, Ui, DefaultSettings } from '@vime/svelte';
 </script>
 ```
 
@@ -125,13 +125,13 @@ function Example() {
 class Example {
   render() {
     return (
-      <vime-player>
+      <vm-player>
         {/* ... */}
-        <vime-ui>
+        <vm-ui>
           {/* ... */}
-          <vime-default-settings />
-        </vime-ui>
-      </vime-player>
+          <vm-default-settings />
+        </vm-ui>
+      </vm-player>
     );
   }
 }
@@ -143,13 +143,13 @@ class Example {
 <TabItem value="angular">
 
 ```html {5} title="example.html"
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-default-settings></vime-default-settings>
-  </vime-ui>
-</vime-player>
+    <vm-default-settings></vm-default-settings>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -173,32 +173,32 @@ class Example {
 
 ### Used by
 
-- [vime-default-ui](../default-ui.md)
+- [vm-default-ui](../default-ui.md)
 
 ### Depends on
 
-- [vime-menu-item](menu-item.md)
-- [vime-menu-radio](menu-radio.md)
-- [vime-submenu](submenu.md)
-- [vime-menu-radio-group](menu-radio-group.md)
-- [vime-settings](settings.md)
+- [vm-menu-item](menu-item.md)
+- [vm-menu-radio](menu-radio.md)
+- [vm-submenu](submenu.md)
+- [vm-menu-radio-group](menu-radio-group.md)
+- [vm-settings](settings.md)
 
 ### Graph
 
 ```mermaid
 graph TD;
-  vime-default-settings --> vime-menu-item
-  vime-default-settings --> vime-menu-radio
-  vime-default-settings --> vime-submenu
-  vime-default-settings --> vime-menu-radio-group
-  vime-default-settings --> vime-settings
-  vime-menu-item --> vime-icon
-  vime-menu-radio --> vime-menu-item
-  vime-submenu --> vime-menu-item
-  vime-submenu --> vime-menu
-  vime-settings --> vime-menu
-  vime-default-ui --> vime-default-settings
-  style vime-default-settings fill:#f9f,stroke:#333,stroke-width:4px
+  vm-default-settings --> vm-menu-item
+  vm-default-settings --> vm-menu-radio
+  vm-default-settings --> vm-submenu
+  vm-default-settings --> vm-menu-radio-group
+  vm-default-settings --> vm-settings
+  vm-menu-item --> vm-icon
+  vm-menu-radio --> vm-menu-item
+  vm-submenu --> vm-menu-item
+  vm-submenu --> vm-menu
+  vm-settings --> vm-menu
+  vm-default-ui --> vm-default-settings
+  style vm-default-settings fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ---

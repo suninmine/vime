@@ -1,5 +1,5 @@
 ---
-title: vime-poster
+title: vm-poster
 sidebar_label: Poster
 ---
 
@@ -35,13 +35,13 @@ values={[
 <TabItem value="html">
 
 ```html {5}
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-poster></vime-poster>
-  </vime-ui>
-</vime-player>
+    <vm-poster></vm-poster>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -51,17 +51,17 @@ values={[
 
 ```tsx {2,10}
 import React from 'react';
-import { VimePlayer, VimeUi, VimePoster } from '@vime/react';
+import { Player, Ui, Poster } from '@vime/react';
 
 function Example() {
   return (
-    <VimePlayer>
+    <Player>
       {/* ... */}
-      <VimeUi>
+      <Ui>
         {/* ... */}
-        <VimePoster />
-      </VimeUi>
-    </VimePlayer>
+        <Poster />
+      </Ui>
+    </Player>
   );
 }
 ```
@@ -73,23 +73,23 @@ function Example() {
 
 ```html {6,12,18} title="example.vue"
 <template>
-  <VimePlayer>
+  <Player>
     <!-- ... -->
-    <VimeUi>
+    <Ui>
       <!-- ... -->
-      <VimePoster />
-    </VimeUi>
-  </VimePlayer>
+      <Poster />
+    </Ui>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeUi, VimePoster } from '@vime/vue';
+  import { Player, Ui, Poster } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeUi,
-      VimePoster,
+      Player,
+      Ui,
+      Poster,
     },
   };
 </script>
@@ -101,16 +101,16 @@ function Example() {
 <TabItem value="svelte">
 
 ```html {5,10} title="example.svelte"
-<VimePlayer>
+<Player>
   <!-- ... -->
-  <VimeUi>
+  <Ui>
     <!-- ... -->
-    <VimePoster />
-  </VimeUi>
-</VimePlayer>
+    <Poster />
+  </Ui>
+</Player>
 
 <script lang="ts">
-  import { VimePlayer, VimeUi, VimePoster } from '@vime/svelte';
+  import { Player, Ui, Poster } from '@vime/svelte';
 </script>
 ```
 
@@ -123,13 +123,13 @@ function Example() {
 class Example {
   render() {
     return (
-      <vime-player>
+      <vm-player>
         {/* ... */}
-        <vime-ui>
+        <vm-ui>
           {/* ... */}
-          <vime-poster />
-        </vime-ui>
-      </vime-player>
+          <vm-poster />
+        </vm-ui>
+      </vm-player>
     );
   }
 }
@@ -141,13 +141,13 @@ class Example {
 <TabItem value="angular">
 
 ```html {5} title="example.html"
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-poster></vime-poster>
-  </vime-ui>
-</vime-player>
+    <vm-poster></vm-poster>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -163,11 +163,11 @@ class Example {
 
 ## Events
 
-| Event       | Description                             | Type                |
-| ----------- | --------------------------------------- | ------------------- |
-| `vLoaded`   | Emitted when the poster has loaded.     | `CustomEvent<void>` |
-| `vWillHide` | Emitted when the poster will be hidden. | `CustomEvent<void>` |
-| `vWillShow` | Emitted when the poster will be shown.  | `CustomEvent<void>` |
+| Event        | Description                             | Type                |
+| ------------ | --------------------------------------- | ------------------- |
+| `vmLoaded`   | Emitted when the poster has loaded.     | `CustomEvent<void>` |
+| `vmWillHide` | Emitted when the poster will be hidden. | `CustomEvent<void>` |
+| `vmWillShow` | Emitted when the poster will be shown.  | `CustomEvent<void>` |
 
 ## CSS Custom Properties
 
@@ -179,14 +179,14 @@ class Example {
 
 ### Used by
 
-- [vime-default-ui](default-ui.md)
+- [vm-default-ui](default-ui.md)
 
 ### Graph
 
 ```mermaid
 graph TD;
-  vime-default-ui --> vime-poster
-  style vime-poster fill:#f9f,stroke:#333,stroke-width:4px
+  vm-default-ui --> vm-poster
+  style vm-poster fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ---

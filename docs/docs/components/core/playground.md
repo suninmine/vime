@@ -1,5 +1,5 @@
 ---
-title: vime-playground
+title: vm-playground
 sidebar_label: Playground
 ---
 
@@ -13,6 +13,7 @@ A simple playground for testing and playing with Vime and its various providers.
 | -------------- | ----------------- | ------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ |
 | `poster`       | `poster`          | The current poster to load.                                         | `string`                                                                                                                                        | `${BASE_MEDIA_URL}/poster.png` |
 | `provider`     | `provider`        | The current media provider.                                         | `Provider.Audio ∣ Provider.Dailymotion ∣ Provider.Dash ∣ Provider.FakeTube ∣ Provider.HLS ∣ Provider.Video ∣ Provider.Vimeo ∣ Provider.YouTube` | `Provider.Audio`               |
+| `showControls` | `show-controls`   | Whether to show the native controls or not.                         | `boolean`                                                                                                                                       | `true`                         |
 | `showCustomUI` | `show-custom-u-i` | Whether to show the custom Vime UI or not.                          | `boolean`                                                                                                                                       | `false`                        |
 | `src`          | `src`             | The current `src` to load into the provider.                        | `string ∣ undefined`                                                                                                                            | `undefined`                    |
 | `theme`        | `theme`           | The current custom UI theme, won't work if custom UI is turned off. | `"dark" ∣ "light"`                                                                                                                              | `'dark'`                       |
@@ -21,98 +22,95 @@ A simple playground for testing and playing with Vime and its various providers.
 
 ### Depends on
 
-- [vime-audio](../providers/audio.md)
-- [vime-video](../providers/video.md)
-- [vime-hls](../providers/hls.md)
-- [vime-dash](../providers/dash.md)
-- [vime-youtube](../providers/youtube.md)
-- [vime-vimeo](../providers/vimeo.md)
-- [vime-dailymotion](../providers/dailymotion.md)
-- [vime-player](player.md)
-- [vime-default-ui](../ui/default-ui.md)
+- [vm-audio](../providers/audio.md)
+- [vm-video](../providers/video.md)
+- [vm-hls](../providers/hls.md)
+- [vm-dash](../providers/dash.md)
+- [vm-youtube](../providers/youtube.md)
+- [vm-vimeo](../providers/vimeo.md)
+- [vm-dailymotion](../providers/dailymotion.md)
+- [vm-player](player.md)
+- [vm-default-ui](../ui/default-ui.md)
 
 ### Graph
 
 ```mermaid
 graph TD;
-  vime-playground --> vime-audio
-  vime-playground --> vime-video
-  vime-playground --> vime-hls
-  vime-playground --> vime-dash
-  vime-playground --> vime-youtube
-  vime-playground --> vime-vimeo
-  vime-playground --> vime-dailymotion
-  vime-playground --> vime-player
-  vime-playground --> vime-default-ui
-  vime-audio --> vime-file
-  vime-video --> vime-file
-  vime-hls --> vime-video
-  vime-dash --> vime-video
-  vime-youtube --> vime-embed
-  vime-vimeo --> vime-embed
-  vime-dailymotion --> vime-embed
-  vime-default-ui --> vime-ui
-  vime-default-ui --> vime-icons
-  vime-default-ui --> vime-skeleton
-  vime-default-ui --> vime-click-to-play
-  vime-default-ui --> vime-dbl-click-fullscreen
-  vime-default-ui --> vime-captions
-  vime-default-ui --> vime-poster
-  vime-default-ui --> vime-spinner
-  vime-default-ui --> vime-default-controls
-  vime-default-ui --> vime-default-settings
-  vime-default-controls --> vime-controls
-  vime-default-controls --> vime-playback-control
-  vime-default-controls --> vime-volume-control
-  vime-default-controls --> vime-current-time
-  vime-default-controls --> vime-control-spacer
-  vime-default-controls --> vime-scrubber-control
-  vime-default-controls --> vime-live-indicator
-  vime-default-controls --> vime-end-time
-  vime-default-controls --> vime-settings-control
-  vime-default-controls --> vime-control-group
-  vime-default-controls --> vime-fullscreen-control
-  vime-default-controls --> vime-scrim
-  vime-default-controls --> vime-caption-control
-  vime-default-controls --> vime-time-progress
-  vime-default-controls --> vime-pip-control
-  vime-playback-control --> vime-control
-  vime-playback-control --> vime-icon
-  vime-playback-control --> vime-tooltip
-  vime-volume-control --> vime-mute-control
-  vime-volume-control --> vime-slider
-  vime-mute-control --> vime-control
-  vime-mute-control --> vime-icon
-  vime-mute-control --> vime-tooltip
-  vime-current-time --> vime-time
-  vime-scrubber-control --> vime-slider
-  vime-scrubber-control --> vime-tooltip
-  vime-end-time --> vime-time
-  vime-settings-control --> vime-control
-  vime-settings-control --> vime-icon
-  vime-settings-control --> vime-tooltip
-  vime-fullscreen-control --> vime-control
-  vime-fullscreen-control --> vime-icon
-  vime-fullscreen-control --> vime-tooltip
-  vime-caption-control --> vime-control
-  vime-caption-control --> vime-icon
-  vime-caption-control --> vime-tooltip
-  vime-time-progress --> vime-current-time
-  vime-time-progress --> vime-end-time
-  vime-pip-control --> vime-control
-  vime-pip-control --> vime-icon
-  vime-pip-control --> vime-tooltip
-  vime-default-settings --> vime-menu-item
-  vime-default-settings --> vime-menu-radio
-  vime-default-settings --> vime-submenu
-  vime-default-settings --> vime-menu-radio-group
-  vime-default-settings --> vime-settings
-  vime-menu-item --> vime-icon
-  vime-menu-radio --> vime-menu-item
-  vime-submenu --> vime-menu-item
-  vime-submenu --> vime-menu
-  vime-settings --> vime-menu
-  style vime-playground fill:#f9f,stroke:#333,stroke-width:4px
+  vm-playground --> vm-audio
+  vm-playground --> vm-video
+  vm-playground --> vm-hls
+  vm-playground --> vm-dash
+  vm-playground --> vm-youtube
+  vm-playground --> vm-vimeo
+  vm-playground --> vm-dailymotion
+  vm-playground --> vm-player
+  vm-playground --> vm-default-ui
+  vm-audio --> vm-file
+  vm-video --> vm-file
+  vm-hls --> vm-video
+  vm-dash --> vm-video
+  vm-youtube --> vm-embed
+  vm-vimeo --> vm-embed
+  vm-dailymotion --> vm-embed
+  vm-default-ui --> vm-ui
+  vm-default-ui --> vm-icon-library
+  vm-default-ui --> vm-skeleton
+  vm-default-ui --> vm-click-to-play
+  vm-default-ui --> vm-dbl-click-fullscreen
+  vm-default-ui --> vm-captions
+  vm-default-ui --> vm-poster
+  vm-default-ui --> vm-spinner
+  vm-default-ui --> vm-default-controls
+  vm-default-ui --> vm-default-settings
+  vm-default-controls --> vm-controls
+  vm-default-controls --> vm-playback-control
+  vm-default-controls --> vm-volume-control
+  vm-default-controls --> vm-current-time
+  vm-default-controls --> vm-control-spacer
+  vm-default-controls --> vm-scrubber-control
+  vm-default-controls --> vm-live-indicator
+  vm-default-controls --> vm-end-time
+  vm-default-controls --> vm-settings-control
+  vm-default-controls --> vm-control-group
+  vm-default-controls --> vm-fullscreen-control
+  vm-default-controls --> vm-scrim
+  vm-default-controls --> vm-caption-control
+  vm-default-controls --> vm-time-progress
+  vm-default-controls --> vm-pip-control
+  vm-playback-control --> vm-control
+  vm-playback-control --> vm-icon
+  vm-playback-control --> vm-tooltip
+  vm-volume-control --> vm-mute-control
+  vm-volume-control --> vm-slider
+  vm-mute-control --> vm-control
+  vm-mute-control --> vm-icon
+  vm-mute-control --> vm-tooltip
+  vm-current-time --> vm-time
+  vm-scrubber-control --> vm-slider
+  vm-scrubber-control --> vm-tooltip
+  vm-end-time --> vm-time
+  vm-settings-control --> vm-control
+  vm-settings-control --> vm-icon
+  vm-settings-control --> vm-tooltip
+  vm-fullscreen-control --> vm-control
+  vm-fullscreen-control --> vm-icon
+  vm-fullscreen-control --> vm-tooltip
+  vm-time-progress --> vm-current-time
+  vm-time-progress --> vm-end-time
+  vm-pip-control --> vm-control
+  vm-pip-control --> vm-icon
+  vm-pip-control --> vm-tooltip
+  vm-default-settings --> vm-menu-item
+  vm-default-settings --> vm-menu-radio
+  vm-default-settings --> vm-submenu
+  vm-default-settings --> vm-menu-radio-group
+  vm-default-settings --> vm-settings
+  vm-menu-item --> vm-icon
+  vm-menu-radio --> vm-menu-item
+  vm-submenu --> vm-menu-item
+  vm-submenu --> vm-menu
+  vm-settings --> vm-menu
+  style vm-playground fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ---

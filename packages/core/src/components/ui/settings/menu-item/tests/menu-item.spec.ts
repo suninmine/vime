@@ -3,15 +3,15 @@ import { MenuItem } from '../menu-item';
 import { newUISpecPage } from '../../../ui/tests';
 
 let page: SpecPage;
-let menuItem: HTMLVimeMenuItemElement;
+let menuItem: HTMLVmMenuItemElement;
 
 beforeEach(async () => {
   ({ page } = await newUISpecPage(
     [MenuItem],
-    '<vime-menu-item label="Label"></vime-menu-item>',
+    '<vm-menu-item label="Label"></vm-menu-item>',
   ));
 
-  menuItem = page.root!.querySelector('vime-menu-item')! as HTMLVimeMenuItemElement;
+  menuItem = page.root!.querySelector('vm-menu-item')! as HTMLVmMenuItemElement;
 });
 
 it('should be structurally sound if plain', () => {

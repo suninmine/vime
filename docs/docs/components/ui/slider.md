@@ -1,5 +1,5 @@
 ---
-title: vime-slider
+title: vm-slider
 sidebar_label: Slider
 ---
 
@@ -36,12 +36,12 @@ values={[
 <TabItem value="html">
 
 ```html
-<vime-slider step="5" max="100" value="50" label="Volume" />
+<vm-slider step="5" max="100" value="50" label="Volume" />
 
 <script>
-  const slider = document.querySelector('vime-slider');
+  const slider = document.querySelector('vm-slider');
 
-  slider.addEventListener('vValueChange', (event) => {
+  slider.addEventListener('vmValueChange', (event) => {
     const newValue = event.detail;
   });
 </script>
@@ -54,7 +54,7 @@ values={[
 
 ```tsx {2,12-18}
 import React, { useState } from 'react';
-import { VimeSlider } from '@vime/react';
+import { Slider } from '@vime/react';
 
 function Example() {
   const [value, setValue] = useState(50);
@@ -64,12 +64,12 @@ function Example() {
   };
 
   return (
-    <VimeSlider
+    <Slider
       label="Volume"
       step={5}
       max={100}
       value={value}
-      onVValueChange={onValueChange}
+      onVmValueChange={onValueChange}
     />
   );
 }
@@ -82,21 +82,21 @@ function Example() {
 
 ```html {2-8,12,16} title="example.vue"
 <template>
-  <VimeSlider
+  <Slider
     label="Volume"
     :step="5"
     :max="100"
     :value="value"
-    @vValueChange="onValueChange"
+    @vmValueChange="onValueChange"
   />
 </template>
 
 <script>
-  import { VimeSlider } from '@vime/vue';
+  import { Slider } from '@vime/vue';
 
   export default {
     components: {
-      VimeSlider,
+      Slider,
     },
     data: {
       value: 50,
@@ -116,18 +116,18 @@ function Example() {
 <TabItem value="svelte">
 
 ```tsx
-<VimeSlider
+<Slider
   label="Volume"
   step={5}
   max={100}
   value={value}
-  on:vValueChange={onValueChange}
+  on:vmValueChange={onValueChange}
 />
 ```
 
 ```html {2}
 <script lang="ts">
-  import { VimeSlider } from '@vime/svelte';
+  import { Slider } from '@vime/svelte';
 
   let value = 50;
 
@@ -152,12 +152,12 @@ class Example {
 
   render() {
     return (
-      <VimeSlider
+      <Slider
         label="Volume"
         step={5}
         max={100}
         value={this.value}
-        onVValueChange={this.onValueChange.bind(this)}
+        onVmValueChange={this.onValueChange.bind(this)}
       />
     );
   }
@@ -170,12 +170,12 @@ class Example {
 <TabItem value="angular">
 
 ```html title="example.html"
-<vime-slider
+<vm-slider
   label="Volume"
   [step]="5"
   [max]="100"
   [value]="value"
-  (vValueChange)="onValueChange($event)"
+  (vmValueChange)="onValueChange($event)"
 />
 ```
 
@@ -207,9 +207,9 @@ class Example {
 
 ## Events
 
-| Event          | Description                                                     | Type                  |
-| -------------- | --------------------------------------------------------------- | --------------------- |
-| `vValueChange` | Emitted when the value of the underlying `input` field changes. | `CustomEvent<number>` |
+| Event           | Description                                                     | Type                  |
+| --------------- | --------------------------------------------------------------- | --------------------- |
+| `vmValueChange` | Emitted when the value of the underlying `input` field changes. | `CustomEvent<number>` |
 
 ## CSS Custom Properties
 
@@ -228,16 +228,16 @@ class Example {
 
 ### Used by
 
-- [vime-scrubber-control](controls/scrubber-control.md)
-- [vime-volume-control](controls/volume-control.md)
+- [vm-scrubber-control](controls/scrubber-control.md)
+- [vm-volume-control](controls/volume-control.md)
 
 ### Graph
 
 ```mermaid
 graph TD;
-  vime-scrubber-control --> vime-slider
-  vime-volume-control --> vime-slider
-  style vime-slider fill:#f9f,stroke:#333,stroke-width:4px
+  vm-scrubber-control --> vm-slider
+  vm-volume-control --> vm-slider
+  style vm-slider fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ---

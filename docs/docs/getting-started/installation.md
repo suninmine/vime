@@ -74,11 +74,11 @@ section. See the [Video](../components/providers/video#dependencies) component a
 :::
 
 ```js
-import { VimePlayer, VimeVideo, VimeFile } from '@vime/core';
+import { Player, Video, File } from '@vime/core';
 
-customElements.define('vime-player', VimePlayer);
-customElements.define('vime-video', VimeVideo);
-customElements.define('vime-file', VimeFile);
+customElements.define('vm-player', Player);
+customElements.define('vm-video', Video);
+customElements.define('vm-file', File);
 ```
 
 And ... we're all done 🎉 &nbsp; Let's move onto [setting up our player](./player).
@@ -247,16 +247,16 @@ package by running the following in our terminal...
 npm i @vime/angular
 ```
 
-For the last step we simply need to import the `VimeModule` into our application, you can do this 
+For the last step we simply need to import the `Module` into our application, you can do this 
 at the root `AppModule` or wherever makes the most sense:
 
 ```ts title="app.module.ts"
 import { NgModule } from '@angular/core';
-import { VimeModule } from '@vime/angular';
+import { Module } from '@vime/angular';
 
 @NgModule({
   imports: [
-    VimeModule,
+    Module,
   ],
 })
 export class AppModule {

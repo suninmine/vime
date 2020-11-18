@@ -32,7 +32,7 @@ type Ref<T extends HTMLElement> = (() => T | SvelteWebComponent<T>);
  */
 export const usePlayer = <T extends HTMLElement>(
   ref: Ref<T>,
-  callback: (player: HTMLVimePlayerElement) => void,
+  callback: (player: HTMLVmPlayerElement) => void,
 ) => {
   onMount(() => {
     let el: any = ref();
@@ -49,11 +49,13 @@ export const usePlayer = <T extends HTMLElement>(
  * @param playerRef A function which returns the player to create the store for.
  *
  * @example
- * <vime-player bind:this={player}>
+ * <Player bind:this={player}>
  *  <!-- ... -->
- * </vime-player>
+ * <Player>
  *
  * <script lang="ts">
+ *  import { Player } from '@vime/svelte';
+ *
  *  let player;
  *
  *  const { currentTime } = usePlayerStore(() => player);

@@ -3,15 +3,15 @@ import { newUISpecPage } from '../../../ui/tests';
 import { DefaultControls } from '../default-controls';
 
 let page: SpecPage;
-let controls: HTMLVimeDefaultControlsElement;
+let controls: HTMLVmDefaultControlsElement;
 
 beforeEach(async () => {
   ({ page } = await newUISpecPage(
     [DefaultControls],
-    '<vime-default-controls />',
+    '<vm-default-controls />',
   ));
 
-  controls = page.root!.querySelector('vime-default-controls')!;
+  controls = page.root!.querySelector('vm-default-controls')!;
 });
 
 it('should be structurally sound when mobile video', async () => {

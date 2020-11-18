@@ -1,5 +1,5 @@
 ---
-title: vime-settings-control
+title: vm-settings-control
 sidebar_label: SettingsControl
 ---
 
@@ -35,16 +35,16 @@ values={[
 <TabItem value="html">
 
 ```html {7}
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-controls>
+    <vm-controls>
       <!-- ... -->
-      <vime-settings-control></vime-settings-control>
-    </vime-controls>
-  </vime-ui>
-</vime-player>
+      <vm-settings-control></vm-settings-control>
+    </vm-controls>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -54,24 +54,19 @@ values={[
 
 ```tsx {6,16}
 import React from 'react';
-import {
-  VimePlayer,
-  VimeUi,
-  VimeControls,
-  VimeSettingsControl,
-} from '@vime/react';
+import { Player, Ui, Controls, SettingsControl } from '@vime/react';
 
 function Example() {
   return (
-    <VimePlayer>
+    <Player>
       {/* ... */}
-      <VimeUi>
+      <Ui>
         {/* ... */}
-        <VimeControls>
-          <VimeSettingsControl />
-        </VimeControls>
-      </VimeUi>
-    </VimePlayer>
+        <Controls>
+          <SettingsControl />
+        </Controls>
+      </Ui>
+    </Player>
   );
 }
 ```
@@ -83,31 +78,26 @@ function Example() {
 
 ```html {7,18,26} title="example.vue"
 <template>
-  <VimePlayer>
+  <Player>
     <!-- ... -->
-    <VimeUi>
+    <Ui>
       <!-- ... -->
-      <VimeControls>
-        <VimeSettingsControl />
-      </VimeControls>
-    </VimeUi>
-  </VimePlayer>
+      <Controls>
+        <SettingsControl />
+      </Controls>
+    </Ui>
+  </Player>
 </template>
 
 <script>
-  import {
-    VimePlayer,
-    VimeUi,
-    VimeControls,
-    VimeSettingsControl,
-  } from '@vime/vue';
+  import { Player, Ui, Controls, SettingsControl } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeUi,
-      VimeControls,
-      VimeSettingsControl,
+      Player,
+      Ui,
+      Controls,
+      SettingsControl,
     },
   };
 </script>
@@ -119,23 +109,18 @@ function Example() {
 <TabItem value="svelte">
 
 ```html {6,16} title="example.svelte"
-<VimePlayer>
+<Player>
   <!-- ... -->
-  <VimeUi>
+  <Ui>
     <!-- ... -->
-    <VimeControls>
-      <VimeSettingsControl />
-    </VimeControls>
-  </VimeUi>
-</VimePlayer>
+    <Controls>
+      <SettingsControl />
+    </Controls>
+  </Ui>
+</Player>
 
 <script lang="ts">
-  import {
-    VimePlayer,
-    VimeUi,
-    VimeControls,
-    VimeSettingsControl,
-  } from '@vime/svelte';
+  import { Player, Ui, Controls, SettingsControl } from '@vime/svelte';
 </script>
 ```
 
@@ -148,15 +133,15 @@ function Example() {
 class Example {
   render() {
     return (
-      <vime-player>
+      <vm-player>
         {/* ... */}
-        <vime-ui>
+        <vm-ui>
           {/* ... */}
-          <vime-controls>
-            <vime-settings-control />
-          </vime-controls>
-        </vime-ui>
-      </vime-player>
+          <vm-controls>
+            <vm-settings-control />
+          </vm-controls>
+        </vm-ui>
+      </vm-player>
     );
   }
 }
@@ -168,16 +153,16 @@ class Example {
 <TabItem value="angular">
 
 ```html {7} title="example.html"
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-controls>
+    <vm-controls>
       <!-- ... -->
-      <vime-settings-control></vime-settings-control>
-    </vime-controls>
-  </vime-ui>
-</vime-player>
+      <vm-settings-control></vm-settings-control>
+    </vm-controls>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -187,35 +172,36 @@ class Example {
 
 ## Properties
 
-| Property           | Attribute           | Description                                                                        | Type                           | Default            |
-| ------------------ | ------------------- | ---------------------------------------------------------------------------------- | ------------------------------ | ------------------ |
-| `expanded`         | `expanded`          | Whether the settings menu this control manages is open.                            | `boolean`                      | `false`            |
-| `icon`             | `icon`              | The URL to an SVG element or fragment to load.                                     | `string`                       | `'#vime-settings'` |
-| `menu`             | `menu`              | The DOM `id` of the settings menu this control is responsible for opening/closing. | `string ∣ undefined`           | `undefined`        |
-| `tooltipDirection` | `tooltip-direction` | The direction in which the tooltip should grow.                                    | `"left" ∣ "right" ∣ undefined` | `undefined`        |
-| `tooltipPosition`  | `tooltip-position`  | Whether the tooltip is positioned above/below the control.                         | `"bottom" ∣ "top"`             | `'top'`            |
+| Property           | Attribute           | Description                                                                                         | Type                           | Default      |
+| ------------------ | ------------------- | --------------------------------------------------------------------------------------------------- | ------------------------------ | ------------ |
+| `expanded`         | `expanded`          | Whether the settings menu this control manages is open.                                             | `boolean`                      | `false`      |
+| `icon`             | `icon`              | The name of the settings icon to resolve from the icon library.                                     | `string`                       | `'settings'` |
+| `icons`            | `icons`             | The name of an icon library to use. Defaults to the library defined by the `icons` player property. | `string ∣ undefined`           | `undefined`  |
+| `menu`             | `menu`              | The DOM `id` of the settings menu this control is responsible for opening/closing.                  | `string ∣ undefined`           | `undefined`  |
+| `tooltipDirection` | `tooltip-direction` | The direction in which the tooltip should grow.                                                     | `"left" ∣ "right" ∣ undefined` | `undefined`  |
+| `tooltipPosition`  | `tooltip-position`  | Whether the tooltip is positioned above/below the control.                                          | `"bottom" ∣ "top"`             | `'top'`      |
 
 ## Dependencies
 
 ### Used by
 
-- [vime-default-controls](default-controls.md)
+- [vm-default-controls](default-controls.md)
 
 ### Depends on
 
-- [vime-control](control.md)
-- [vime-icon](../icon.md)
-- [vime-tooltip](../tooltip.md)
+- [vm-control](control.md)
+- [vm-icon](../icon.md)
+- [vm-tooltip](../tooltip.md)
 
 ### Graph
 
 ```mermaid
 graph TD;
-  vime-settings-control --> vime-control
-  vime-settings-control --> vime-icon
-  vime-settings-control --> vime-tooltip
-  vime-default-controls --> vime-settings-control
-  style vime-settings-control fill:#f9f,stroke:#333,stroke-width:4px
+  vm-settings-control --> vm-control
+  vm-settings-control --> vm-icon
+  vm-settings-control --> vm-tooltip
+  vm-default-controls --> vm-settings-control
+  style vm-settings-control fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ---

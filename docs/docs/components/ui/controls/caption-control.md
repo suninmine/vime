@@ -1,5 +1,5 @@
 ---
-title: vime-caption-control
+title: vm-caption-control
 sidebar_label: CaptionControl
 ---
 
@@ -35,16 +35,16 @@ values={[
 <TabItem value="html">
 
 ```html {7}
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-controls>
+    <vm-controls>
       <!-- ... -->
-      <vime-caption-control></vime-caption-control>
-    </vime-controls>
-  </vime-ui>
-</vime-player>
+      <vm-caption-control></vm-caption-control>
+    </vm-controls>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -54,24 +54,19 @@ values={[
 
 ```tsx {6,16}
 import React from 'react';
-import {
-  VimePlayer,
-  VimeUi,
-  VimeControls,
-  VimeCaptionControl,
-} from '@vime/react';
+import { Player, Ui, Controls, CaptionControl } from '@vime/react';
 
 function Example() {
   return (
-    <VimePlayer>
+    <Player>
       {/* ... */}
-      <VimeUi>
+      <Ui>
         {/* ... */}
-        <VimeControls>
-          <VimeCaptionControl />
-        </VimeControls>
-      </VimeUi>
-    </VimePlayer>
+        <Controls>
+          <CaptionControl />
+        </Controls>
+      </Ui>
+    </Player>
   );
 }
 ```
@@ -83,31 +78,26 @@ function Example() {
 
 ```html {7,18,26} title="example.vue"
 <template>
-  <VimePlayer>
+  <Player>
     <!-- ... -->
-    <VimeUi>
+    <Ui>
       <!-- ... -->
-      <VimeControls>
-        <VimeCaptionControl />
-      </VimeControls>
-    </VimeUi>
-  </VimePlayer>
+      <Controls>
+        <CaptionControl />
+      </Controls>
+    </Ui>
+  </Player>
 </template>
 
 <script>
-  import {
-    VimePlayer,
-    VimeUi,
-    VimeControls,
-    VimeCaptionControl,
-  } from '@vime/vue';
+  import { Player, Ui, Controls, CaptionControl } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeUi,
-      VimeControls,
-      VimeCaptionControl,
+      Player,
+      Ui,
+      Controls,
+      CaptionControl,
     },
   };
 </script>
@@ -119,23 +109,18 @@ function Example() {
 <TabItem value="svelte">
 
 ```html {6,16} title="example.svelte"
-<VimePlayer>
+<Player>
   <!-- ... -->
-  <VimeUi>
+  <Ui>
     <!-- ... -->
-    <VimeControls>
-      <VimeCaptionControl />
-    </VimeControls>
-  </VimeUi>
-</VimePlayer>
+    <Controls>
+      <CaptionControl />
+    </Controls>
+  </Ui>
+</Player>
 
 <script lang="ts">
-  import {
-    VimePlayer,
-    VimeUi,
-    VimeClickToPlay,
-    VimeCaptionControl,
-  } from '@vime/svelte';
+  import { Player, Ui, ClickToPlay, CaptionControl } from '@vime/svelte';
 </script>
 ```
 
@@ -148,15 +133,15 @@ function Example() {
 class Example {
   render() {
     return (
-      <vime-player>
+      <vm-player>
         {/* ... */}
-        <vime-ui>
+        <vm-ui>
           {/* ... */}
-          <vime-controls>
-            <vime-caption-control />
-          </vime-controls>
-        </vime-ui>
-      </vime-player>
+          <vm-controls>
+            <vm-caption-control />
+          </vm-controls>
+        </vm-ui>
+      </vm-player>
     );
   }
 }
@@ -168,16 +153,16 @@ class Example {
 <TabItem value="angular">
 
 ```html {7} title="example.html"
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-controls>
+    <vm-controls>
       <!-- ... -->
-      <vime-caption-control></vime-caption-control>
-    </vime-controls>
-  </vime-ui>
-</vime-player>
+      <vm-caption-control></vm-caption-control>
+    </vm-controls>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -200,23 +185,14 @@ class Example {
 
 ### Used by
 
-- [vime-default-controls](default-controls.md)
-
-### Depends on
-
-- [vime-control](control.md)
-- [vime-icon](../icon.md)
-- [vime-tooltip](../tooltip.md)
+- [vm-default-controls](default-controls.md)
 
 ### Graph
 
 ```mermaid
 graph TD;
-  vime-caption-control --> vime-control
-  vime-caption-control --> vime-icon
-  vime-caption-control --> vime-tooltip
-  vime-default-controls --> vime-caption-control
-  style vime-caption-control fill:#f9f,stroke:#333,stroke-width:4px
+  vm-default-controls --> vm-caption-control
+  style vm-caption-control fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ---

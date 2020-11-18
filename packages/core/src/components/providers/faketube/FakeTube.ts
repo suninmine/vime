@@ -1,17 +1,18 @@
 import {
-  Prop, Method, Component, Event, EventEmitter,
+  Prop, Method, Component, Event, EventEmitter, getElement,
 } from '@stencil/core';
-import {
-  MediaProvider, MockMediaProviderAdapter, withProviderContext,
-} from '../MediaProvider';
+import { AdapterHost, MediaProvider, MockMediaProviderAdapter } from '../MediaProvider';
 import { PlayerProp } from '../../core/player/PlayerProps';
 import { createProviderDispatcher, ProviderDispatcher } from '../ProviderDispatcher';
 import { Logger } from '../../core/player/PlayerLogger';
-import { findRootPlayer } from '../../core/player/utils';
+import { findPlayer } from '../../core/player/findPlayer';
+import { withComponentRegistry } from '../../core/player/withComponentRegistry';
+import { withProviderContext } from '../withProviderContext';
 
 @Component({
-  tag: 'vime-faketube',
+  tag: 'vm-faketube',
   styleUrl: 'faketube.css',
+  shadow: true,
 })
 export class FakeTube implements MediaProvider {
   private dispatch!: ProviderDispatcher;
@@ -54,9 +55,10 @@ export class FakeTube implements MediaProvider {
   /**
    * @internal
    */
-  @Event() vLoadStart!: EventEmitter<void>;
+  @Event() vmLoadStart!: EventEmitter<void>;
 
   constructor() {
+    withComponentRegistry(this);
     withProviderContext(this);
   }
 
@@ -64,9 +66,9 @@ export class FakeTube implements MediaProvider {
     this.dispatch = createProviderDispatcher(this);
   }
 
-  componentWillLoad() {
-    const player = findRootPlayer(this);
-    player.setProvider(this);
+  async componentWillLoad() {
+    const player = await findPlayer(this);
+    player.setProvider(getElement(this) as AdapterHost);
   }
 
   /**
@@ -96,11 +98,11 @@ export class FakeTube implements MediaProvider {
   }
 
   /**
-   * Dispatches the `vLoadStart` event.
+   * Dispatches the `vmLoadStart` event.
    */
   @Method()
   async dispatchLoadStart() {
-    this.vLoadStart.emit();
+    this.vmLoadStart.emit();
   }
 
   /**

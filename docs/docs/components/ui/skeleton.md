@@ -1,13 +1,11 @@
 ---
-title: vime-skeleton
+title: vm-skeleton
 sidebar_label: Skeleton
 ---
 
-import Tabs from '@theme/Tabs'
-import TabItem from '@theme/TabItem'
+> The implementation was inspired by [Shoelace](https://github.com/shoelace-style/shoelace), thanks Cory!
 
-A temporary placeholder that is used while content is loading. The implementation was inspired
-by [Shoelace](https://github.com/shoelace-style/shoelace), thanks Cory!
+A temporary placeholder that is used while content is loading.
 
 <!-- Auto Generated Below -->
 
@@ -28,13 +26,13 @@ values={[
 <TabItem value="html">
 
 ```html {5}
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-skeleton></vime-skeleton>
-  </vime-ui>
-</vime-player>
+    <vm-skeleton></vm-skeleton>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -44,17 +42,17 @@ values={[
 
 ```tsx {2,10}
 import React from 'react';
-import { VimePlayer, VimeUi, VimeSkeleton } from '@vime/react';
+import { Player, Ui, Skeleton } from '@vime/react';
 
 function Example() {
   return (
-    <VimePlayer>
+    <Player>
       {/* ... */}
-      <VimeUi>
+      <Ui>
         {/* ... */}
-        <VimeSkeleton />
-      </VimeUi>
-    </VimePlayer>
+        <Skeleton />
+      </Ui>
+    </Player>
   );
 }
 ```
@@ -66,23 +64,23 @@ function Example() {
 
 ```html {6,12,18} title="example.vue"
 <template>
-  <VimePlayer>
+  <Player>
     <!-- ... -->
-    <VimeUi>
+    <Ui>
       <!-- ... -->
-      <VimeSkeleton />
-    </VimeUi>
-  </VimePlayer>
+      <Skeleton />
+    </Ui>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeUi, VimeSkeleton } from '@vime/vue';
+  import { Player, Ui, Skeleton } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeUi,
-      VimeSkeleton,
+      Player,
+      Ui,
+      Skeleton,
     },
   };
 </script>
@@ -94,16 +92,16 @@ function Example() {
 <TabItem value="svelte">
 
 ```html {5,10} title="example.svelte"
-<VimePlayer>
+<Player>
   <!-- ... -->
-  <VimeUi>
+  <Ui>
     <!-- ... -->
-    <VimeSkeleton />
-  </VimeUi>
-</VimePlayer>
+    <Skeleton />
+  </Ui>
+</Player>
 
 <script lang="ts">
-  import { VimePlayer, VimeUi, VimeSkeleton } from '@vime/svelte';
+  import { Player, Ui, Skeleton } from '@vime/svelte';
 </script>
 ```
 
@@ -116,13 +114,13 @@ function Example() {
 class Example {
   render() {
     return (
-      <vime-player>
+      <vm-player>
         {/* ... */}
-        <vime-ui>
+        <vm-ui>
           {/* ... */}
-          <vime-skeleton />
-        </vime-ui>
-      </vime-player>
+          <vm-skeleton />
+        </vm-ui>
+      </vm-player>
     );
   }
 }
@@ -134,13 +132,13 @@ class Example {
 <TabItem value="angular">
 
 ```html {5} title="example.html"
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-skeleton></vime-skeleton>
-  </vime-ui>
-</vime-player>
+    <vm-skeleton></vm-skeleton>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -166,14 +164,14 @@ class Example {
 
 ### Used by
 
-- [vime-default-ui](default-ui.md)
+- [vm-default-ui](default-ui.md)
 
 ### Graph
 
 ```mermaid
 graph TD;
-  vime-default-ui --> vime-skeleton
-  style vime-skeleton fill:#f9f,stroke:#333,stroke-width:4px
+  vm-default-ui --> vm-skeleton
+  style vm-skeleton fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ---

@@ -1,5 +1,5 @@
 ---
-title: vime-audio
+title: vm-audio
 sidebar_label: Audio
 ---
 
@@ -29,13 +29,13 @@ values={[
 <TabItem value="html">
 
 ```html {2-5}
-<vime-player controls>
-  <vime-audio>
+<vm-player controls>
+  <vm-audio>
     <source data-src="/media/audio.mp3" type="audio/mp3" />
     <!-- <source> and <track> elements are placed here. -->
-  </vime-audio>
+  </vm-audio>
   <!-- ... -->
-</vime-player>
+</vm-player>
 ```
 
 </TabItem>
@@ -45,17 +45,17 @@ values={[
 
 ```tsx {2,7-10}
 import React from 'react';
-import { VimePlayer, VimeAudio } from '@vime/react';
+import { Player, Audio } from '@vime/react';
 
 function Example() {
   return (
-    <VimePlayer controls>
-      <VimeAudio>
+    <Player controls>
+      <Audio>
         <source data-src="/media/audio.mp3" type="audio/mp3" />
         {/* <source> and <track> elements are placed here. */}
-      </VimeAudio>
+      </Audio>
       {/* ... */}
-    </VimePlayer>
+    </Player>
   );
 }
 ```
@@ -67,22 +67,22 @@ function Example() {
 
 ```html {3-6,12,17} title="example.vue"
 <template>
-  <VimePlayer controls>
-    <VimeAudio>
+  <Player controls>
+    <audio>
       <source data-src="/media/audio.mp3" type="audio/mp3" />
       <!-- <source> and <track> elements are placed here. -->
-    </VimeAudio>
+    </audio>
     <!-- ... -->
-  </VimePlayer>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeAudio } from '@vime/vue';
+  import { Player, Audio } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeAudio,
+      Player,
+      Audio,
     },
   };
 </script>
@@ -94,16 +94,16 @@ function Example() {
 <TabItem value="svelte">
 
 ```html {2-5,10} title="example.svelte"
-<VimePlayer controls>
-  <VimeAudio>
+<Player controls>
+  <audio>
     <source data-src="/media/audio.mp3" type="audio/mp3" />
     <!-- <source> and <track> elements are placed here. -->
-  </VimeAudio>
+  </audio>
   <!-- ... -->
-</VimePlayer>
+</Player>
 
 <script lang="ts">
-  import { VimePlayer, VimeAudio } from '@vime/svelte';
+  import { Player, Audio } from '@vime/svelte';
 </script>
 ```
 
@@ -116,13 +116,13 @@ function Example() {
 class Example {
   render() {
     return (
-      <vime-player controls>
-        <vime-audio>
+      <vm-player controls>
+        <vm-audio>
           <source data-src="/media/audio.mp3" type="audio/mp3" />
           {/* <source> and <track> elements are placed here. */}
-        </vime-audio>
+        </vm-audio>
         {/* ... */}
-      </vime-player>
+      </vm-player>
     );
   }
 }
@@ -134,13 +134,13 @@ class Example {
 <TabItem value="angular">
 
 ```html {2-5} title="example.html"
-<vime-player controls>
-  <vime-audio>
+<vm-player controls>
+  <vm-audio>
     <source data-src="/media/audio.mp3" type="audio/mp3" />
     <!-- <source> and <track> elements are placed here. -->
-  </vime-audio>
+  </vm-audio>
   <!-- ... -->
-</vime-player>
+</vm-player>
 ```
 
 </TabItem>
@@ -167,19 +167,19 @@ class Example {
 
 ### Used by
 
-- [vime-playground](../core/playground.md)
+- [vm-playground](../core/playground.md)
 
 ### Depends on
 
-- [vime-file](file.md)
+- [vm-file](file.md)
 
 ### Graph
 
 ```mermaid
 graph TD;
-  vime-audio --> vime-file
-  vime-playground --> vime-audio
-  style vime-audio fill:#f9f,stroke:#333,stroke-width:4px
+  vm-audio --> vm-file
+  vm-playground --> vm-audio
+  style vm-audio fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ---

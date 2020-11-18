@@ -1,19 +1,21 @@
 import {
-  h, Component, Prop, State, Watch, Host, Event, EventEmitter, Element,
+  h, Component, Prop, State, Watch, Event, EventEmitter, Element,
 } from '@stencil/core';
-import { withPlayerContext } from '../../core/player/PlayerContext';
+import { withPlayerContext } from '../../core/player/withPlayerContext';
 import { PlayerProps } from '../../core/player/PlayerProps';
 import { isNull, isUndefined } from '../../../utils/unit';
 import { LazyLoader } from '../../core/player/LazyLoader';
+import { withComponentRegistry } from '../../core/player/withComponentRegistry';
 
 @Component({
-  tag: 'vime-poster',
-  styleUrl: 'poster.scss',
+  tag: 'vm-poster',
+  styleUrl: 'poster.css',
+  shadow: true,
 })
 export class Poster {
   private lazyLoader!: LazyLoader;
 
-  @Element() el!: HTMLVimePosterElement;
+  @Element() el!: HTMLVmPosterElement;
 
   @State() isHidden = true;
 
@@ -59,19 +61,20 @@ export class Poster {
   /**
    * Emitted when the poster has loaded.
    */
-  @Event({ bubbles: false }) vLoaded!: EventEmitter<void>;
+  @Event({ bubbles: false }) vmLoaded!: EventEmitter<void>;
 
   /**
    * Emitted when the poster will be shown.
    */
-  @Event({ bubbles: false }) vWillShow!: EventEmitter<void>;
+  @Event({ bubbles: false }) vmWillShow!: EventEmitter<void>;
 
   /**
    * Emitted when the poster will be hidden.
    */
-  @Event({ bubbles: false }) vWillHide!: EventEmitter<void>;
+  @Event({ bubbles: false }) vmWillHide!: EventEmitter<void>;
 
   constructor() {
+    withComponentRegistry(this);
     withPlayerContext(this, [
       'mediaTitle',
       'currentPoster',
@@ -97,7 +100,7 @@ export class Poster {
   }
 
   private onVisibilityChange() {
-    (!this.isHidden && this.isActive) ? this.vWillShow.emit() : this.vWillHide.emit();
+    (!this.isHidden && this.isActive) ? this.vmWillShow.emit() : this.vmWillHide.emit();
   }
 
   @Watch('isVideoView')
@@ -115,14 +118,15 @@ export class Poster {
   }
 
   private onPosterLoad() {
-    this.vLoaded.emit();
+    this.vmLoaded.emit();
     this.hasLoaded = true;
   }
 
   render() {
     return (
-      <Host
+      <div
         class={{
+          poster: true,
           hidden: this.isHidden,
           active: this.isActive && this.hasLoaded,
         }}
@@ -134,7 +138,7 @@ export class Poster {
           style={{ objectFit: this.fit }}
           onLoad={this.onPosterLoad.bind(this)}
         />
-      </Host>
+      </div>
     );
   }
 }

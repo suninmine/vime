@@ -1,5 +1,5 @@
 ---
-title: vime-end-time
+title: vm-end-time
 sidebar_label: EndTime
 ---
 
@@ -34,7 +34,7 @@ values={[
 <TabItem value="html">
 
 ```html
-<vime-end-time />
+<vm-end-time />
 ```
 
 </TabItem>
@@ -44,10 +44,10 @@ values={[
 
 ```tsx {2,5}
 import React from 'react';
-import { VimeEndTime } from '@vime/react';
+import { EndTime } from '@vime/react';
 
 function Example() {
-  return <VimeEndTime />;
+  return <EndTime />;
 }
 ```
 
@@ -58,15 +58,15 @@ function Example() {
 
 ```html {2,6,10} title="example.vue"
 <template>
-  <VimeEndTime />
+  <EndTime />
 </template>
 
 <script>
-  import { VimeEndTime } from '@vime/vue';
+  import { EndTime } from '@vime/vue';
 
   export default {
     components: {
-      VimeEndTime,
+      EndTime,
     },
   };
 </script>
@@ -78,10 +78,10 @@ function Example() {
 <TabItem value="svelte">
 
 ```html {1,4} title="example.svelte"
-<VimeEndTime />
+<EndTime />
 
 <script lang="ts">
-  import { VimeEndTime } from '@vime/svelte';
+  import { EndTime } from '@vime/svelte';
 </script>
 ```
 
@@ -93,7 +93,7 @@ function Example() {
 ```tsx {3}
 class Example {
   render() {
-    return <vime-end-time />;
+    return <vm-end-time />;
   }
 }
 ```
@@ -104,7 +104,7 @@ class Example {
 <TabItem value="angular">
 
 ```html title="example.html"
-<vime-end-time />
+<vm-end-time />
 ```
 
 </TabItem>
@@ -122,21 +122,21 @@ class Example {
 
 ### Used by
 
-- [vime-default-controls](../controls/default-controls.md)
-- [vime-time-progress](time-progress.md)
+- [vm-default-controls](../controls/default-controls.md)
+- [vm-time-progress](time-progress.md)
 
 ### Depends on
 
-- [vime-time](time.md)
+- [vm-time](time.md)
 
 ### Graph
 
 ```mermaid
 graph TD;
-  vime-end-time --> vime-time
-  vime-default-controls --> vime-end-time
-  vime-time-progress --> vime-end-time
-  style vime-end-time fill:#f9f,stroke:#333,stroke-width:4px
+  vm-end-time --> vm-time
+  vm-default-controls --> vm-end-time
+  vm-time-progress --> vm-end-time
+  style vm-end-time fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ---

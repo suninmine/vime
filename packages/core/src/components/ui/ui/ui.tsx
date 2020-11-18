@@ -1,16 +1,16 @@
-import {
-  h, Host, Component, Prop,
-} from '@stencil/core';
-import { withPlayerContext } from '../../core/player/PlayerContext';
+import { h, Component, Prop } from '@stencil/core';
+import { withPlayerContext } from '../../core/player/withPlayerContext';
 import { PlayerProps } from '../../core/player/PlayerProps';
 import { IS_IOS } from '../../../utils/support';
+import { withComponentRegistry } from '../../core/player/withComponentRegistry';
 
 /**
  * @slot - Used to pass in UI components for the player.
  */
 @Component({
-  tag: 'vime-ui',
-  styleUrl: 'ui.scss',
+  tag: 'vm-ui',
+  styleUrl: 'ui.css',
+  shadow: true,
 })
 export class UI {
   /**
@@ -29,6 +29,7 @@ export class UI {
   @Prop() isFullscreenActive: PlayerProps['isFullscreenActive'] = false;
 
   constructor() {
+    withComponentRegistry(this);
     withPlayerContext(this, [
       'isVideoView',
       'playsinline',
@@ -42,16 +43,15 @@ export class UI {
       || (this.playsinline && !this.isFullscreenActive);
 
     return (
-      <Host
+      <div
         class={{
+          ui: true,
           hidden: !canShowCustomUI,
           video: this.isVideoView,
         }}
       >
-        <div>
-          {canShowCustomUI && <slot />}
-        </div>
-      </Host>
+        {canShowCustomUI && <slot />}
+      </div>
     );
   }
 }

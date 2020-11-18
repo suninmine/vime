@@ -1,5 +1,5 @@
 ---
-title: vime-hls
+title: vm-hls
 sidebar_label: Hls
 ---
 
@@ -29,12 +29,12 @@ values={[
 <TabItem value="html">
 
 ```html {2-4}
-<vime-player controls>
-  <vime-hls version="latest" poster="/media/poster.png">
+<vm-player controls>
+  <vm-hls version="latest" poster="/media/poster.png">
     <source data-src="/media/index.m3u8" type="application/x-mpegURL" />
-  </vime-hls>
+  </vm-hls>
   <!-- ... -->
-</vime-player>
+</vm-player>
 ```
 
 </TabItem>
@@ -44,7 +44,7 @@ values={[
 
 ```tsx {2,14-16}
 import React from 'react';
-import { VimePlayer, VimeHls } from '@vime/react';
+import { Player, Hls } from '@vime/react';
 
 function Example() {
   /**
@@ -55,12 +55,12 @@ function Example() {
   };
 
   return (
-    <VimePlayer controls>
-      <VimeHls version="latest" config={hlsConfig} poster="/media/poster.png">
+    <Player controls>
+      <Hls version="latest" config={hlsConfig} poster="/media/poster.png">
         <source data-src="/media/index.m3u8" type="application/x-mpegURL" />
-      </VimeHls>
+      </Hls>
       {/* ... */}
-    </VimePlayer>
+    </Player>
   );
 }
 ```
@@ -72,21 +72,21 @@ function Example() {
 
 ```html {3-5,11,16} title="example.vue"
 <template>
-  <VimePlayer controls>
-    <VimeHls :config="hlsConfig" version="latest" poster="/media/poster.png">
+  <Player controls>
+    <Hls :config="hlsConfig" version="latest" poster="/media/poster.png">
       <source data-src="/media/index.m3u8" type="application/x-mpegURL" />
-    </VimeHls>
+    </Hls>
     <!-- ... -->
-  </VimePlayer>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeHls } from '@vime/vue';
+  import { Player, Hls } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeHls,
+      Player,
+      Hls,
     },
 
     data: {
@@ -107,15 +107,15 @@ function Example() {
 <TabItem value="svelte">
 
 ```html {2-4,9} title="example.svelte"
-<VimePlayer controls>
-  <VimeHls version="latest" config="{hlsConfig}" poster="/media/poster.png">
+<Player controls>
+  <Hls version="latest" config="{hlsConfig}" poster="/media/poster.png">
     <source data-src="/media/index.m3u8" type="application/x-mpegURL" />
-  </VimeHls>
+  </Hls>
   <!-- ... -->
-</VimePlayer>
+</Player>
 
 <script lang="ts">
-  import { VimePlayer, VimeHls } from '@vime/svelte';
+  import { Player, Hls } from '@vime/svelte';
 
   /**
    * @see https://hls-js.netlify.app/api-docs/file/src/config.ts.html.
@@ -135,12 +135,12 @@ function Example() {
 class Example {
   render() {
     return (
-      <vime-player controls>
-        <vime-hls version="latest" poster="/media/poster.png">
+      <vm-player controls>
+        <vm-hls version="latest" poster="/media/poster.png">
           <source data-src="/media/index.m3u8" type="application/x-mpegURL" />
-        </vime-hls>
+        </vm-hls>
         {/* ... */}
-      </vime-player>
+      </vm-player>
     );
   }
 }
@@ -152,12 +152,12 @@ class Example {
 <TabItem value="angular">
 
 ```html {2-4} title="example.html"
-<vime-player controls>
-  <vime-hls version="latest" [config]="hlsConfig" poster="/media/poster.png">
+<vm-player controls>
+  <vm-hls version="latest" [config]="hlsConfig" poster="/media/poster.png">
     <source data-src="/media/index.m3u8" type="application/x-mpegURL" />
-  </vime-hls>
+  </vm-hls>
   <!-- ... -->
-</vime-player>
+</vm-player>
 ```
 
 ```ts title="example.ts"
@@ -191,6 +191,12 @@ class Example {
 | `preload`               | `preload`                 | Provides a hint to the browser about what the author thinks will lead to the best user experience with regards to what content is loaded before the video is played. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video#attr-preload) for more information. | `"" ∣ "auto" ∣ "metadata" ∣ "none" ∣ undefined`    | `'metadata'` |
 | `version`               | `version`                 | The NPM package version of the `hls.js` library to download and use if HLS is not natively supported.                                                                                                                                                                              | `string`                                           | `'latest'`   |
 
+## Events
+
+| Event     | Description                         | Type               |
+| --------- | ----------------------------------- | ------------------ |
+| `vmError` | Emitted when an error has occurred. | `CustomEvent<any>` |
+
 ## Slots
 
 | Slot | Description                                                    |
@@ -201,20 +207,20 @@ class Example {
 
 ### Used by
 
-- [vime-playground](../core/playground.md)
+- [vm-playground](../core/playground.md)
 
 ### Depends on
 
-- [vime-video](video.md)
+- [vm-video](video.md)
 
 ### Graph
 
 ```mermaid
 graph TD;
-  vime-hls --> vime-video
-  vime-video --> vime-file
-  vime-playground --> vime-hls
-  style vime-hls fill:#f9f,stroke:#333,stroke-width:4px
+  vm-hls --> vm-video
+  vm-video --> vm-file
+  vm-playground --> vm-hls
+  style vm-hls fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ---

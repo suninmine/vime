@@ -10,13 +10,13 @@ import { Submenu } from '../../submenu/submenu';
 import { MockMediaProviderAdapter } from '../../../../providers/MediaProvider';
 
 let page: SpecPage;
-let player: HTMLVimePlayerElement;
-let provider: HTMLVimeFaketubeElement;
+let player: HTMLVmPlayerElement;
+let provider: HTMLVmFaketubeElement;
 
-const getSettingsMenu = () => page.root!.querySelector('vime-settings');
+const getSettingsMenu = () => page.root!.querySelector('vm-settings');
 
 const getController = (label: string) => page.root!
-  .querySelector(`vime-menu-item[aria-label="${label}"]`)! as HTMLVimeMenuItemElement;
+  .querySelector(`vm-menu-item[aria-label="${label}"]`)! as HTMLVmMenuItemElement;
 
 const getPlaybackRateSubmenuController = () => getController('Playback Rate');
 const getPlaybackQualitySubmenuController = () => getController('Playback Quality');
@@ -28,11 +28,11 @@ beforeEach(async () => {
       Submenu, MenuRadioGroup, MenuRadio,
       MenuItem,
     ],
-    '<vime-default-settings>DefaultSlot</vime-default-settings>',
+    '<vm-default-settings>DefaultSlot</vm-default-settings>',
   ));
 
-  player = page.root! as HTMLVimePlayerElement;
-  provider = page.root!.querySelector('vime-faketube')!;
+  player = page.root! as HTMLVmPlayerElement;
+  provider = page.root!.querySelector('vm-faketube')!;
 
   // Trigger another render cycle for the submenus to be built.
   provider.dispatchChange('playbackReady', true);
@@ -60,7 +60,7 @@ it('should change playback rate on radio selection', async () => {
   await page.waitForChanges();
   getPlaybackRateSubmenuController().click();
   await page.waitForChanges();
-  const radio = page.root!.querySelector('vime-menu-item[aria-label="2"]')! as HTMLVimeMenuItemElement;
+  const radio = page.root!.querySelector('vm-menu-item[aria-label="2"]')! as HTMLVmMenuItemElement;
   radio.click();
   await page.waitForChanges();
   expect(player.playbackRate).toEqual(2);
@@ -75,7 +75,7 @@ it('should update selected radio on playback rate change', async () => {
   await page.waitForChanges();
   player.playbackRate = 3;
   await page.waitForChanges();
-  const radio = page.root!.querySelector('vime-menu-item[aria-label="3"]')! as HTMLVimeMenuItemElement;
+  const radio = page.root!.querySelector('vm-menu-item[aria-label="3"]')! as HTMLVmMenuItemElement;
   expect(radio.checked).toBeTruthy();
 });
 
@@ -98,7 +98,7 @@ it('should change playback quality on radio selection', async () => {
   await page.waitForChanges();
   getPlaybackQualitySubmenuController().click();
   await page.waitForChanges();
-  const radio = page.root!.querySelector('vime-menu-item[aria-label="1080p"]')! as HTMLVimeMenuItemElement;
+  const radio = page.root!.querySelector('vm-menu-item[aria-label="1080p"]')! as HTMLVmMenuItemElement;
   radio.click();
   await page.waitForChanges();
   expect(player.playbackQuality).toEqual('1080p');
@@ -114,6 +114,6 @@ it('should update selected radio on playback quality change', async () => {
   await page.waitForChanges();
   player.playbackQuality = '480p';
   await page.waitForChanges();
-  const radio = page.root!.querySelector('vime-menu-item[aria-label="480p"]')! as HTMLVimeMenuItemElement;
+  const radio = page.root!.querySelector('vm-menu-item[aria-label="480p"]')! as HTMLVmMenuItemElement;
   expect(radio.checked).toBeTruthy();
 });

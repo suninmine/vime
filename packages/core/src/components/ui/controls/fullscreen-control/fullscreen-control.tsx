@@ -1,29 +1,36 @@
 import {
-  h, Host, Component, Prop, State, Watch,
+  h, Component, Prop, State, Watch,
 } from '@stencil/core';
 import { PlayerProps } from '../../../core/player/PlayerProps';
 import { TooltipDirection, TooltipPosition } from '../../tooltip/types';
 import { KeyboardControl } from '../control/KeyboardControl';
 import { isUndefined } from '../../../../utils/unit';
-import { findRootPlayer } from '../../../core/player/utils';
-import { withPlayerContext } from '../../../core/player/PlayerContext';
+import { findPlayer } from '../../../core/player/findPlayer';
+import { withPlayerContext } from '../../../core/player/withPlayerContext';
+import { withComponentRegistry } from '../../../core/player/withComponentRegistry';
 
 @Component({
-  tag: 'vime-fullscreen-control',
-  styleUrl: 'fullscreen-control.css',
+  tag: 'vm-fullscreen-control',
+  shadow: true,
 })
 export class FullscreenControl implements KeyboardControl {
   @State() canSetFullscreen = false;
 
   /**
-   * The URL to an SVG element or fragment to display for entering fullscreen.
+   * The name of the enter fullscreen icon to resolve from the icon library.
    */
-  @Prop() enterIcon = '#vime-enter-fullscreen';
+  @Prop() enterIcon = 'fullscreen-enter';
 
   /**
-   * The URL to an SVG element or fragment to display for exiting fullscreen.
+   * The name of the exit fullscreen icon to resolve from the icon library.
    */
-  @Prop() exitIcon = '#vime-exit-fullscreen';
+  @Prop() exitIcon = 'fullscreen–exit';
+
+  /**
+   * The name of an icon library to use. Defaults to the library defined by the `icons` player
+   * property.
+   */
+  @Prop() icons?: string;
 
   /**
    * Whether the tooltip is positioned above/below the control.
@@ -62,11 +69,12 @@ export class FullscreenControl implements KeyboardControl {
 
   @Watch('playbackReady')
   async onPlaybackReadyChange() {
-    const player = findRootPlayer(this);
+    const player = await findPlayer(this);
     this.canSetFullscreen = await player.canSetFullscreen();
   }
 
   constructor() {
+    withComponentRegistry(this);
     withPlayerContext(this, [
       'isFullscreenActive',
       'playbackReady',
@@ -74,8 +82,8 @@ export class FullscreenControl implements KeyboardControl {
     ]);
   }
 
-  private onClick() {
-    const player = findRootPlayer(this);
+  private async onClick() {
+    const player = await findPlayer(this);
     !this.isFullscreenActive ? player.enterFullscreen() : player.exitFullscreen();
   }
 
@@ -84,29 +92,26 @@ export class FullscreenControl implements KeyboardControl {
     const tooltipWithHint = !isUndefined(this.keys) ? `${tooltip} (${this.keys})` : tooltip;
 
     return (
-      <Host
-        class={{
-          hidden: !this.canSetFullscreen,
-        }}
+      <vm-control
+        label={this.i18n.fullscreen}
+        keys={this.keys}
+        pressed={this.isFullscreenActive}
+        hidden={!this.canSetFullscreen}
+        onClick={this.onClick.bind(this)}
       >
-        <vime-control
-          label={this.i18n.fullscreen}
-          keys={this.keys}
-          pressed={this.isFullscreenActive}
-          hidden={!this.canSetFullscreen}
-          onClick={this.onClick.bind(this)}
-        >
-          <vime-icon href={this.isFullscreenActive ? this.exitIcon : this.enterIcon} />
+        <vm-icon
+          name={this.isFullscreenActive ? this.exitIcon : this.enterIcon}
+          library={this.icons}
+        />
 
-          <vime-tooltip
-            hidden={this.hideTooltip}
-            position={this.tooltipPosition}
-            direction={this.tooltipDirection}
-          >
-            {tooltipWithHint}
-          </vime-tooltip>
-        </vime-control>
-      </Host>
+        <vm-tooltip
+          hidden={this.hideTooltip}
+          position={this.tooltipPosition}
+          direction={this.tooltipDirection}
+        >
+          {tooltipWithHint}
+        </vm-tooltip>
+      </vm-control>
     );
   }
 }

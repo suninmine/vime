@@ -4,19 +4,19 @@ import { newUISpecPage } from '../../ui/tests';
 import { ViewType } from '../../../core/player/ViewType';
 
 let page: SpecPage;
-let provider: HTMLVimeFaketubeElement;
-let poster: HTMLVimePosterElement;
+let provider: HTMLVmFaketubeElement;
+let poster: HTMLVmPosterElement;
 
 beforeEach(async () => {
   ({ page, provider } = await newUISpecPage(
     [Poster],
-    '<vime-poster />',
+    '<vm-poster />',
   ));
 
-  poster = page.root!.querySelector('vime-poster')!;
+  poster = page.root!.querySelector('vm-poster')!;
 });
 
-const findImage = () => page.root!.querySelector('vime-poster > img');
+const findImage = () => page.root!.querySelector('vm-poster > img');
 
 it('should be structurally sound', () => {
   expect(poster).toMatchSnapshot();
@@ -57,18 +57,18 @@ it('should set the alt text based on the media title', async () => {
   expect(findImage()).toEqualAttribute('alt', 'Apples Poster');
 });
 
-it('should emit vWillShow event when visible', async () => {
+it('should emit vmWillShow event when visible', async () => {
   const cb = jest.fn();
-  poster.addEventListener('vWillShow', cb);
+  poster.addEventListener('vmWillShow', cb);
   await provider.dispatchChange('viewType', ViewType.Video);
   await provider.dispatchChange('currentPoster', '');
   await page.waitForChanges();
   expect(cb).toHaveBeenCalled();
 });
 
-it('should emit vWillHide event when not visible', async () => {
+it('should emit vmWillHide event when not visible', async () => {
   const cb = jest.fn();
-  poster.addEventListener('vWillHide', cb);
+  poster.addEventListener('vmWillHide', cb);
   await provider.dispatchChange('viewType', ViewType.Video);
   await provider.dispatchChange('currentPoster', '');
   await page.waitForChanges();

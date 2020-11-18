@@ -6,7 +6,7 @@ import {
 import {
   PlayerProps,
   createDispatcher,
-  usePlayerContext as useVimeContext,
+  usePlayerContext as useContext,
   findRootPlayer,
   WritableProps,
 } from '@vime/core';
@@ -17,7 +17,7 @@ const noop = () => {};
  * Returns the closest ancestor player to the given `ref`.
  */
 export const usePlayer = (ref: React.RefObject<HTMLElement | null>) => {
-  const [player, setPlayer] = useState<HTMLVimePlayerElement | null>(null);
+  const [player, setPlayer] = useState<HTMLVmPlayerElement | null>(null);
 
   useLayoutEffect(() => {
     setPlayer((ref.current ? findRootPlayer(ref.current) : null));
@@ -59,7 +59,7 @@ export const usePlayerContext = <P extends keyof PlayerProps>(
 
   useLayoutEffect(() => {
     if (ref.current === null) return undefined;
-    return useVimeContext(
+    return useContext(
       ref.current!,
       [prop],
       (_, newValue) => { setValue(newValue as any); },

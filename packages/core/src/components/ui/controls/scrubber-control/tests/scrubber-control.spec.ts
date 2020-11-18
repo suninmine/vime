@@ -3,15 +3,15 @@ import { newUISpecPage } from '../../../ui/tests';
 import { ScrubberControl } from '../scrubber-control';
 
 let page: SpecPage;
-let control: HTMLVimeScrubberControlElement;
+let control: HTMLVmScrubberControlElement;
 
 beforeEach(async () => {
   ({ page } = await newUISpecPage(
     [ScrubberControl],
-    '<vime-scrubber-control />',
+    '<vm-scrubber-control />',
   ));
 
-  control = page.root!.querySelector('vime-scrubber-control')!;
+  control = page.root!.querySelector('vm-scrubber-control')!;
 });
 
 it('should be structurally sound', () => {

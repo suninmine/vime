@@ -3,15 +3,15 @@ import { newUISpecPage } from '../../ui/tests';
 import { Tooltip } from '../tooltip';
 
 let page: SpecPage;
-let tooltip: HTMLVimeTooltipElement;
+let tooltip: HTMLVmTooltipElement;
 
 beforeEach(async () => {
   ({ page } = await newUISpecPage(
     [Tooltip],
-    '<vime-tooltip>Play</vime-tooltip>',
+    '<vm-tooltip>Play</vm-tooltip>',
   ));
 
-  tooltip = page.root!.querySelector('vime-tooltip')!;
+  tooltip = page.root!.querySelector('vm-tooltip')!;
 });
 
 it('should be structurally sound', () => {

@@ -1,5 +1,5 @@
 ---
-title: vime-control
+title: vm-control
 sidebar_label: Control
 ---
 
@@ -36,18 +36,18 @@ values={[
 <TabItem value="html">
 
 ```html {6-9}
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-controls full-width>
-      <vime-control label="Playback" keys="k" pressed="false">
-        <vime-icon href="#vime-play"></vime-icon>
-        <vime-tooltip>Play (k)</vime-tooltip>
-      </vime-control>
-    </vime-controls>
-  </vime-ui>
-</vime-player>
+    <vm-controls full-width>
+      <vm-control label="Playback" keys="k" pressed="false">
+        <vm-icon name="play"></vm-icon>
+        <vm-tooltip>Play (k)</vm-tooltip>
+      </vm-control>
+    </vm-controls>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -57,12 +57,7 @@ values={[
 
 ```tsx {3,24-33}
 import React, { useMemo, useRef } from 'react';
-import {
-  VimeControl,
-  VimeIcon,
-  VimeTooltip,
-  usePlayerContext,
-} from '@vime/react';
+import { Control, Icon, Tooltip, usePlayerContext } from '@vime/react';
 
 function PlaybackControl() {
   const ref = useRef(null);
@@ -79,16 +74,16 @@ function PlaybackControl() {
   };
 
   return (
-    <VimeControl
+    <Control
       keys="k"
       ref={ref}
       label={i18n.playback}
       pressed={paused}
       onClick={onClick}
     >
-      <VimeIcon href={icon} />
-      <VimeTooltip>{tooltip} (k)</VimeTooltip>
-    </VimeControl>
+      <Icon href={icon} />
+      <Tooltip>{tooltip} (k)</Tooltip>
+    </Control>
   );
 }
 ```
@@ -100,31 +95,26 @@ function PlaybackControl() {
 
 ```html {2-10,16,24} title="playback-control.vue"
 <template>
-  <VimeControl
-    keys="k"
-    :label="i18n.playback"
-    :pressed="paused"
-    @click="onClick"
-  >
-    <VimeIcon :href="icon" />
-    <VimeTooltip>{{tooltip}} (k)</VimeTooltip>
-  </VimeControl>
+  <Control keys="k" :label="i18n.playback" :pressed="paused" @click="onClick">
+    <Icon :href="icon" />
+    <Tooltip>{{tooltip}} (k)</Tooltip>
+  </Control>
 </template>
 
 <script>
   import {
-    VimeMixin,
-    VimeControl,
-    VimeIcon,
-    VimeTooltip,
+    Mixin,
+    Control,
+    Icon,
+    Tooltip,
   } from '@vime/vue';
 
   export default {
-    mixins: [VimeMixin(['paused', 'i18n'])]
+    mixins: [Mixin(['paused', 'i18n'])]
     components: {
-      VimeControl,
-      VimeIcon,
-      VimeTooltip,
+      Control,
+      Icon,
+      Tooltip,
     },
     data: {
       paused: true,
@@ -155,33 +145,23 @@ function PlaybackControl() {
 ```html {2-10,19,27} title="playback-control.vue"
 <template>
   <div ref="domRef">
-    <VimeControl
-      keys="k"
-      :label="i18n.playback"
-      :pressed="paused"
-      @click="onClick"
-    >
-      <VimeIcon :href="icon" />
-      <VimeTooltip>{{tooltip}} (k)</VimeTooltip>
-    </VimeControl>
+    <Control keys="k" :label="i18n.playback" :pressed="paused" @click="onClick">
+      <Icon :href="icon" />
+      <Tooltip>{{tooltip}} (k)</Tooltip>
+    </Control>
   </div>
 </template>
 
 <script>
   import { defineComponent, ref, computed } from 'vue';
-  import {
-    usePlayerContext,
-    VimeControl,
-    VimeIcon,
-    VimeTooltip,
-  } from '@vime/vue-next';
+  import { usePlayerContext, Control, Icon, Tooltip } from '@vime/vue-next';
 
   export default defineComponent({
     name: 'PlaybackControl',
     components: {
-      VimeControl,
-      VimeIcon,
-      VimeTooltip,
+      Control,
+      Icon,
+      Tooltip,
     },
     setup() {
       const domRef = ref(null);
@@ -213,28 +193,23 @@ function PlaybackControl() {
 <TabItem value="svelte">
 
 ```tsx
-<VimeControl
+<Control
   keys="k"
   label={$i18n.playback}
   pressed={paused}
   on:click={onClick}
   bind:this={ref}
 >
-  <VimeIcon href={icon} />
-  <VimeTooltip>{tooltip} (k)</VimeTooltip>
-</VimeControl>
+  <Icon href={icon} />
+  <Tooltip>{tooltip} (k)</Tooltip>
+</Control>
 ```
 
 ```html {4}
 <script lang="ts">
-  import {
-    usePlayerStore,
-    VimeControl,
-    VimeIcon,
-    VimeTooltip,
-  } from '@vime/svelte';
+  import { usePlayerStore, Control, Icon, Tooltip } from '@vime/svelte';
 
-  let ref: VimeControl;
+  let ref: Control;
 
   const { paused, i18n } = usePlayerStore(() => ref);
 
@@ -287,17 +262,17 @@ export class PlaybackControl {
 
   render() {
     return (
-      <vime-control
+      <vm-control
         keys="k"
         label={this.i18n.playback}
         pressed={this.paused}
         onClick={this.onClick.bind(this)}
       >
-        <vime-icon href={this.paused ? '#vime-play' : '#vime-pause'} />
-        <vime-tooltip>
+        <vm-icon href={this.paused ? '#vime-play' : '#vime-pause'} />
+        <vm-tooltip>
           {this.paused ? this.i18n.play : this.i18n.pause} (k)
-        </vime-tooltip>
-      </vime-control>
+        </vm-tooltip>
+      </vm-control>
     );
   }
 }
@@ -311,26 +286,26 @@ withPlayerContext(PlaybackControl, ['paused', 'i18n']);
 <TabItem value="angular">
 
 ```html title="playback-control.html"
-<vime-control
+<vm-control
   keys="k"
   [label]="i18n.playback"
   [pressed]="paused"
   (click)="onClick()"
 >
-  <vime-icon [href]="icon"></vime-icon>
-  <vime-tooltip>{{tooltip}} (k)</vime-tooltip>
-</vime-control>
+  <vm-icon [href]="icon"></vm-icon>
+  <vm-tooltip>{{tooltip}} (k)</vm-tooltip>
+</vm-control>
 ```
 
 ```ts title="playback-control.ts"
 import { Component, ElementRef } from '@angular/core';
-import { VimeComponent } from '@vime/angular';
+import { Component } from '@vime/angular';
 
 @Component({
   selector: 'playback-control',
   templateUrl: './playback-control.html',
 })
-class PlaybackControl extends VimeComponent {
+class PlaybackControl extends Component {
   paused = true;
 
   i18n = {};
@@ -372,9 +347,9 @@ class PlaybackControl extends VimeComponent {
 
 ## Events
 
-| Event                | Description                                                                                    | Type                   |
-| -------------------- | ---------------------------------------------------------------------------------------------- | ---------------------- |
-| `vInteractionChange` | Emitted when the user is interacting with the control by focusing, touching or hovering on it. | `CustomEvent<boolean>` |
+| Event                 | Description                                                                                    | Type                   |
+| --------------------- | ---------------------------------------------------------------------------------------------- | ---------------------- |
+| `vmInteractionChange` | Emitted when the user is interacting with the control by focusing, touching or hovering on it. | `CustomEvent<boolean>` |
 
 ## Slots
 
@@ -400,24 +375,22 @@ class PlaybackControl extends VimeComponent {
 
 ### Used by
 
-- [vime-caption-control](caption-control.md)
-- [vime-fullscreen-control](fullscreen-control.md)
-- [vime-mute-control](mute-control.md)
-- [vime-pip-control](pip-control.md)
-- [vime-playback-control](playback-control.md)
-- [vime-settings-control](settings-control.md)
+- [vm-fullscreen-control](fullscreen-control.md)
+- [vm-mute-control](mute-control.md)
+- [vm-pip-control](pip-control.md)
+- [vm-playback-control](playback-control.md)
+- [vm-settings-control](settings-control.md)
 
 ### Graph
 
 ```mermaid
 graph TD;
-  vime-caption-control --> vime-control
-  vime-fullscreen-control --> vime-control
-  vime-mute-control --> vime-control
-  vime-pip-control --> vime-control
-  vime-playback-control --> vime-control
-  vime-settings-control --> vime-control
-  style vime-control fill:#f9f,stroke:#333,stroke-width:4px
+  vm-fullscreen-control --> vm-control
+  vm-mute-control --> vm-control
+  vm-pip-control --> vm-control
+  vm-playback-control --> vm-control
+  vm-settings-control --> vm-control
+  style vm-control fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ---

@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should be structurally sound 1`] = `
-<vime-time-progress>
-  <vime-current-time></vime-current-time>
+<vm-time-progress>
+  <vm-current-time></vm-current-time>
   <span>
     /
   </span>
-  <vime-end-time></vime-end-time>
-</vime-time-progress>
+  <vm-end-time></vm-end-time>
+</vm-time-progress>
 `;

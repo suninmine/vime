@@ -1,16 +1,16 @@
-import {
-  h, Host, Component, Prop,
-} from '@stencil/core';
+import { h, Component, Prop } from '@stencil/core';
 import { isNull } from '../../../../utils/unit';
+import { withComponentRegistry } from '../../../core/player/withComponentRegistry';
 
 let idCount = 0;
 
 /**
  * @slot - Used to pass in the body of the submenu which is usually a set of choices in the form
- * of a radio group (`vime-menu-radio-group`).
+ * of a radio group (`vm-menu-radio-group`).
  */
 @Component({
-  tag: 'vime-submenu',
+  tag: 'vm-submenu',
+  shadow: true,
 })
 export class Submenu {
   private id!: string;
@@ -36,6 +36,10 @@ export class Submenu {
    */
   @Prop({ mutable: true, reflect: true }) active = false;
 
+  constructor() {
+    withComponentRegistry(this);
+  }
+
   connectedCallback() {
     this.genId();
   }
@@ -56,7 +60,7 @@ export class Submenu {
 
   private genId() {
     idCount += 1;
-    this.id = `vime-submenu-${idCount}`;
+    this.id = `vm-submenu-${idCount}`;
   }
 
   private getControllerId() {
@@ -65,8 +69,8 @@ export class Submenu {
 
   render() {
     return (
-      <Host>
-        <vime-menu-item
+      <div>
+        <vm-menu-item
           identifier={this.getControllerId()}
           hidden={this.hidden}
           menu={this.id}
@@ -74,16 +78,16 @@ export class Submenu {
           hint={this.hint}
           expanded={this.active}
         />
-        <vime-menu
+        <vm-menu
           identifier={this.id}
           controller={this.getControllerId()}
           active={this.active}
-          onVOpen={this.onOpen.bind(this)}
-          onVClose={this.onClose.bind(this)}
+          onVmOpen={this.onOpen.bind(this)}
+          onVmClose={this.onClose.bind(this)}
         >
           <slot />
-        </vime-menu>
-      </Host>
+        </vm-menu>
+      </div>
     );
   }
 }

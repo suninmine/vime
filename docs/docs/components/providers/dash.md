@@ -1,5 +1,5 @@
 ---
-title: vime-dash
+title: vm-dash
 sidebar_label: Dash
 ---
 
@@ -30,14 +30,14 @@ values={[
 <TabItem value="html">
 
 ```html {2-6}
-<vime-player controls>
-  <vime-dash
+<vm-player controls>
+  <vm-dash
     src="/media/manifest.mpd"
     version="latest"
     poster="/media/poster.png"
-  ></vime-dash>
+  ></vm-dash>
   <!-- ... -->
-</vime-player>
+</vm-player>
 ```
 
 </TabItem>
@@ -47,7 +47,7 @@ values={[
 
 ```tsx {2,14-19}
 import React from 'react';
-import { VimePlayer, VimeDash } from '@vime/react';
+import { Player, Dash } from '@vime/react';
 
 function Example() {
   /**
@@ -58,15 +58,15 @@ function Example() {
   };
 
   return (
-    <VimePlayer controls>
-      <VimeDash
+    <Player controls>
+      <Dash
         src="/media/manifest.mpd"
         version="latest"
         config={dashConfig}
         poster="/media/poster.png"
       />
       {/* ... */}
-    </VimePlayer>
+    </Player>
   );
 }
 ```
@@ -78,24 +78,24 @@ function Example() {
 
 ```html {3-8,14,19} title="example.vue"
 <template>
-  <VimePlayer controls>
-    <VimeDash
+  <Player controls>
+    <Dash
       src="/media/manifest.mpd"
       :config="dashConfig"
       version="latest"
       poster="/media/poster.png"
     />
     <!-- ... -->
-  </VimePlayer>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeDash } from '@vime/vue';
+  import { Player, Dash } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeDash,
+      Player,
+      Dash,
     },
 
     data: {
@@ -116,18 +116,18 @@ function Example() {
 <TabItem value="svelte">
 
 ```html {2-7,12} title="example.svelte"
-<VimePlayer controls>
-  <VimeDash
+<Player controls>
+  <Dash
     src="/media/manifest.mpd"
     version="latest"
     config="{dashConfig}"
     poster="/media/poster.png"
   />
   <!-- ... -->
-</VimePlayer>
+</Player>
 
 <script lang="ts">
-  import { VimePlayer, VimeDash } from '@vime/svelte';
+  import { Player, Dash } from '@vime/svelte';
 
   /**
    * @see https://github.com/Dash-Industry-Forum/dash.js.
@@ -147,14 +147,14 @@ function Example() {
 class Example {
   render() {
     return (
-      <vime-player controls>
-        <vime-dash
+      <vm-player controls>
+        <vm-dash
           src="/media/manifest.mpd"
           version="latest"
           poster="/media/poster.png"
         />
         {/* ... */}
-      </vime-player>
+      </vm-player>
     );
   }
 }
@@ -166,15 +166,15 @@ class Example {
 <TabItem value="angular">
 
 ```html {2-7} title="example.html"
-<vime-player controls>
-  <vime-dash
+<vm-player controls>
+  <vm-dash
     [config]="dashConfig"
     src="/media/manifest.mpd"
     version="latest"
     poster="/media/poster.png"
-  ></vime-dash>
+  ></vm-dash>
   <!-- ... -->
-</vime-player>
+</vm-player>
 ```
 
 ```ts title="example.ts"
@@ -209,24 +209,30 @@ class Example {
 | `src` _(required)_      | `src`                     | The URL of the `manifest.mpd` file to use.                                                                                                                                                                                                                                         | `string`                                           | `undefined`  |
 | `version`               | `version`                 | The NPM package version of the `dashjs` library to download and use.                                                                                                                                                                                                               | `string`                                           | `'latest'`   |
 
+## Events
+
+| Event     | Description                         | Type               |
+| --------- | ----------------------------------- | ------------------ |
+| `vmError` | Emitted when an error has occurred. | `CustomEvent<any>` |
+
 ## Dependencies
 
 ### Used by
 
-- [vime-playground](../core/playground.md)
+- [vm-playground](../core/playground.md)
 
 ### Depends on
 
-- [vime-video](video.md)
+- [vm-video](video.md)
 
 ### Graph
 
 ```mermaid
 graph TD;
-  vime-dash --> vime-video
-  vime-video --> vime-file
-  vime-playground --> vime-dash
-  style vime-dash fill:#f9f,stroke:#333,stroke-width:4px
+  vm-dash --> vm-video
+  vm-video --> vm-file
+  vm-playground --> vm-dash
+  style vm-dash fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ---

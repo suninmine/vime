@@ -3,15 +3,15 @@ import { newUISpecPage } from '../../../ui/tests';
 import { SettingsControl } from '../settings-control';
 
 let page: SpecPage;
-let control: HTMLVimeSettingsControlElement;
+let control: HTMLVmSettingsControlElement;
 
 beforeEach(async () => {
   ({ page } = await newUISpecPage(
     [SettingsControl],
-    '<vime-settings-control />',
+    '<vm-settings-control />',
   ));
 
-  control = page.root!.querySelector('vime-settings-control')!;
+  control = page.root!.querySelector('vm-settings-control')!;
 });
 
 it('should be structurally sound', () => {

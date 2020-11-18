@@ -1,9 +1,10 @@
 /* eslint-disable no-continue, jsx-a11y/media-has-caption */
 
 import {
-  h, Prop, Method, Component, Event, EventEmitter, Watch, Element,
+  h, Prop, Method, Component, Event, EventEmitter, Watch, Element, State,
 } from '@stencil/core';
-import { withProviderContext, MediaProvider, withProviderConnect } from '../MediaProvider';
+import { MediaProvider } from '../MediaProvider';
+import { withProviderConnect } from '../ProviderConnect';
 import { ViewType } from '../../core/player/ViewType';
 import { MediaFileProvider, MediaPreloadOption, MediaCrossOriginOption } from './MediaFileProvider';
 import {
@@ -16,20 +17,22 @@ import {
 } from '../../../utils/support';
 import { MediaType } from '../../core/player/MediaType';
 import { listen } from '../../../utils/dom';
-import { Disposal } from '../../core/player/Disposal';
-import { findRootPlayer } from '../../core/player/utils';
+import { Disposal } from '../../../utils/Disposal';
 import { createProviderDispatcher, ProviderDispatcher } from '../ProviderDispatcher';
 import { Logger } from '../../core/player/PlayerLogger';
 import { LazyLoader } from '../../core/player/LazyLoader';
 import { MediaResource } from './MediaResource';
 import { createDispatcher } from '../../core/player/PlayerDispatcher';
+import { watchComponentRegistry, withComponentRegistry } from '../../core/player/withComponentRegistry';
+import { withProviderContext } from '../withProviderContext';
 
 /**
  * @slot - Pass `<source>` and `<track>` elements to the underlying HTML5 media player.
  */
 @Component({
-  tag: 'vime-file',
-  styleUrl: 'file.scss',
+  tag: 'vm-file',
+  styleUrl: 'file.css',
+  scoped: true,
 })
 export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<HTMLMediaElement> {
   private dispatch!: ProviderDispatcher;
@@ -52,7 +55,9 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
 
   private mediaQueryDisposal = new Disposal();
 
-  @Element() el!: HTMLVimeFileElement;
+  @Element() el!: HTMLVmFileElement;
+
+  @State() vmPoster?: HTMLVmPosterElement;
 
   /**
    * @internal Whether an external SDK will attach itself to the media player and control it.
@@ -182,21 +187,28 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   /**
    * @internal
    */
-  @Event() vLoadStart!: EventEmitter<void>;
+  @Event() vmLoadStart!: EventEmitter<void>;
+
+  /**
+   * Emitted when an error has occurred.
+   */
+  @Event() vmError!: EventEmitter<any>;
 
   /**
    * Emitted when the underlying media element changes.
    */
-  @Event() vMediaElChange!: EventEmitter<HTMLAudioElement | HTMLVideoElement | undefined>;
+  @Event() vmMediaElChange!: EventEmitter<HTMLAudioElement | HTMLVideoElement | undefined>;
 
   /**
    * Emitted when the child `<source />` elements are modified.
    */
-  @Event() vSrcSetChange!: EventEmitter<MediaResource[]>;
+  @Event() vmSrcSetChange!: EventEmitter<MediaResource[]>;
 
   constructor() {
+    withComponentRegistry(this);
     if (!this.noConnect) withProviderConnect(this);
     withProviderContext(this, ['playbackStarted', 'currentTime', 'paused']);
+    watchComponentRegistry(this, 'vm-poster', ((regs) => { [this.vmPoster] = regs; }));
   }
 
   connectedCallback() {
@@ -211,7 +223,7 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   componentDidRender() {
     if (this.prevMediaEl !== this.mediaEl) {
       this.prevMediaEl = this.mediaEl;
-      this.vMediaElChange.emit(this.mediaEl);
+      this.vmMediaElChange.emit(this.mediaEl);
     }
   }
 
@@ -288,8 +300,8 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
 
   private onSrcSetChange() {
     this.mediaQueryDisposal.empty();
-    this.vLoadStart.emit();
-    this.vSrcSetChange.emit(this.currentSrcSet);
+    this.vmLoadStart.emit();
+    this.vmSrcSetChange.emit(this.currentSrcSet);
     if (this.hasPlaybackQualities()) {
       this.dispatch('playbackQualities', this.getPlaybackQualities());
       this.pickInitialPlaybackQuality();
@@ -351,8 +363,7 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   }
 
   private hasCustomPoster() {
-    const root = findRootPlayer(this);
-    return !IS_IOS && !isNull(root.querySelector('vime-ui vime-poster'));
+    return !IS_IOS && !isUndefined(this.vmPoster);
   }
 
   private cancelTimeUpdates() {
@@ -457,14 +468,14 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   }
 
   private onError() {
-    this.dispatch('errors', [this.mediaEl!.error]);
+    this.vmError.emit(this.mediaEl!.error);
   }
 
   private attemptToPlay() {
     try {
       this.mediaEl?.play();
     } catch (e) {
-      this.dispatch('errors', [e]);
+      this.vmError.emit(e);
     }
   }
 
@@ -515,7 +526,7 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   }
 
   private onTracksChange() {
-    this.dispatch('textTracks', this.mediaEl!.textTracks);
+    // this.dispatch('textTracks', this.mediaEl!.textTracks);
   }
 
   private listenToTextTracksChanges() {

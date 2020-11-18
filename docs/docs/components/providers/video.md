@@ -1,5 +1,5 @@
 ---
-title: vime-video
+title: vm-video
 sidebar_label: Video
 ---
 
@@ -29,8 +29,8 @@ values={[
 <TabItem value="html">
 
 ```html {2-17}
-<vime-player controls>
-  <vime-video poster="/media/poster.png">
+<vm-player controls>
+  <vm-video poster="/media/poster.png">
     <source data-src="/media/video.mp4" type="video/mp4" />
     <track
       default
@@ -45,9 +45,9 @@ values={[
       srclang="es"
       label="Spanish"
     />
-  </vime-video>
+  </vm-video>
   <!-- ... -->
-</vime-player>
+</vm-player>
 ```
 
 </TabItem>
@@ -57,12 +57,12 @@ values={[
 
 ```tsx {2,7-22}
 import React from 'react';
-import { VimePlayer, VimeVideo } from '@vime/react';
+import { Player, Video } from '@vime/react';
 
 function Example() {
   return (
-    <VimePlayer controls>
-      <VimeVideo>
+    <Player controls>
+      <Video>
         <source data-src="/media/video.mp4" type="video/mp4" />
         <track
           default
@@ -77,9 +77,9 @@ function Example() {
           srcLang="es"
           label="Spanish"
         />
-      </VimeVideo>
+      </Video>
       {/* ... */}
-    </VimePlayer>
+    </Player>
   );
 }
 ```
@@ -91,8 +91,8 @@ function Example() {
 
 ```html {3-18,24,29} title="example.vue"
 <template>
-  <VimePlayer controls>
-    <VimeVideo>
+  <Player controls>
+    <video>
       <source data-src="/media/video.mp4" type="video/mp4" />
       <track
         default
@@ -107,18 +107,18 @@ function Example() {
         srclang="es"
         label="Spanish"
       />
-    </VimeVideo>
+    </video>
     <!-- ... -->
-  </VimePlayer>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeVideo } from '@vime/vue';
+  import { Player, Video } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeVideo,
+      Player,
+      Video,
     },
   };
 </script>
@@ -130,8 +130,8 @@ function Example() {
 <TabItem value="svelte">
 
 ```html {2-17,22} title="example.svelte"
-<VimePlayer controls>
-  <VimeVideo videoId="411652396">
+<Player controls>
+  <video videoId="411652396">
     <source data-src="/media/video.mp4" type="video/mp4" />
     <track
       default
@@ -146,12 +146,12 @@ function Example() {
       srclang="es"
       label="Spanish"
     />
-  </VimeVideo>
+  </video>
   <!-- ... -->
-</VimePlayer>
+</Player>
 
 <script lang="ts">
-  import { VimePlayer, VimeVideo } from '@vime/svelte';
+  import { Player, Video } from '@vime/svelte';
 </script>
 ```
 
@@ -164,8 +164,8 @@ function Example() {
 class Example {
   render() {
     return (
-      <vime-player controls>
-        <vime-video poster="/media/poster.png">
+      <vm-player controls>
+        <vm-video poster="/media/poster.png">
           <source data-src="/media/video.mp4" type="video/mp4" />
           <track
             default
@@ -180,9 +180,9 @@ class Example {
             srclang="es"
             label="Spanish"
           />
-        </vime-video>
+        </vm-video>
         {/* ... */}
-      </vime-player>
+      </vm-player>
     );
   }
 }
@@ -194,8 +194,8 @@ class Example {
 <TabItem value="angular">
 
 ```html {2-17} title="example.html"
-<vime-player controls>
-  <vime-video poster="/media/poster.png">
+<vm-player controls>
+  <vm-video poster="/media/poster.png">
     <source data-src="/media/video.mp4" type="video/mp4" />
     <track
       default
@@ -210,9 +210,9 @@ class Example {
       srclang="fr"
       label="French"
     />
-  </vime-video>
+  </vm-video>
   <!-- ... -->
-</vime-player>
+</vm-player>
 ```
 
 </TabItem>
@@ -243,23 +243,23 @@ class Example {
 
 ### Used by
 
-- [vime-dash](dash.md)
-- [vime-hls](hls.md)
-- [vime-playground](../core/playground.md)
+- [vm-dash](dash.md)
+- [vm-hls](hls.md)
+- [vm-playground](../core/playground.md)
 
 ### Depends on
 
-- [vime-file](file.md)
+- [vm-file](file.md)
 
 ### Graph
 
 ```mermaid
 graph TD;
-  vime-video --> vime-file
-  vime-dash --> vime-video
-  vime-hls --> vime-video
-  vime-playground --> vime-video
-  style vime-video fill:#f9f,stroke:#333,stroke-width:4px
+  vm-video --> vm-file
+  vm-dash --> vm-video
+  vm-hls --> vm-video
+  vm-playground --> vm-video
+  style vm-video fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ---

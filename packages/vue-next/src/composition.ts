@@ -13,7 +13,7 @@ import {
  * @param el A HTMLElement that is within the player's subtree.
  */
 export const usePlayer = <T extends HTMLElement>(el: Ref<T | null>) => {
-  const player = ref<HTMLVimePlayerElement | null>(null);
+  const player = ref<HTMLVmPlayerElement | null>(null);
 
   const findPlayer = () => {
     player.value = el.value ? findRootPlayer(el.value) : null;
@@ -22,7 +22,7 @@ export const usePlayer = <T extends HTMLElement>(el: Ref<T | null>) => {
   onMounted(findPlayer);
   watch(el, findPlayer);
 
-  return readonly(player) as Readonly<Ref<HTMLVimePlayerElement | null>>;
+  return readonly(player) as Readonly<Ref<HTMLVmPlayerElement | null>>;
 };
 
 export type PropBinding<P extends keyof PlayerProps> = P extends keyof WritableProps

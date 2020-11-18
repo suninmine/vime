@@ -6,7 +6,7 @@ let page: SpecPage;
 beforeEach(async () => {
   page = await newSpecPage({
     components: [Embed],
-    html: '<vime-embed></vime-embed>',
+    html: '<vm-embed></vm-embed>',
   });
 });
 
@@ -17,18 +17,18 @@ it('should be structurally sound', () => {
 it('should increment iframe id', async () => {
   page = await newSpecPage({
     components: [Embed],
-    html: '<vime-embed></vime-embed><vime-embed></vime-embed>',
+    html: '<vm-embed><vm-embed></vm-embed></vm-embed>',
   });
   const frames = page.doc.querySelectorAll('iframe');
   expect(frames).toHaveLength(2);
   // Starts at 3 because of the 2 prior tests.
-  expect(frames[0].id).toEqual('vime-iframe-3');
-  expect(frames[1].id).toEqual('vime-iframe-4');
+  expect(frames[0].id).toEqual('vm-iframe-3');
+  expect(frames[1].id).toEqual('vm-iframe-4');
 });
 
 it('should fire event when src/params change', async () => {
   const cb = jest.fn();
-  page.root!.addEventListener('vEmbedSrcChange', cb);
+  page.root!.addEventListener('vmEmbedSrcChange', cb);
   page.rootInstance!.embedSrc = 'http://apples.com';
   await page.waitForChanges();
   expect(cb).toHaveBeenCalled();

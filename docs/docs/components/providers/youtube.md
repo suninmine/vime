@@ -1,5 +1,5 @@
 ---
-title: vime-youtube
+title: vm-youtube
 sidebar_label: Youtube
 ---
 
@@ -42,10 +42,10 @@ values={[
 <TabItem value="html">
 
 ```html {2}
-<vime-player controls>
-  <vime-youtube video-id="DyTCOwB0DVw"></vime-youtube>
+<vm-player controls>
+  <vm-youtube video-id="DyTCOwB0DVw"></vm-youtube>
   <!-- ... -->
-</vime-player>
+</vm-player>
 ```
 
 </TabItem>
@@ -55,14 +55,14 @@ values={[
 
 ```tsx {2,7}
 import React from 'react';
-import { VimePlayer, VimeYoutube } from '@vime/react';
+import { Player, Youtube } from '@vime/react';
 
 function Example() {
   return (
-    <VimePlayer controls>
-      <VimeYoutube videoId="DyTCOwB0DVw" />
+    <Player controls>
+      <Youtube videoId="DyTCOwB0DVw" />
       {/* ... */}
-    </VimePlayer>
+    </Player>
   );
 }
 ```
@@ -74,19 +74,19 @@ function Example() {
 
 ```html {3,9,14} title="example.vue"
 <template>
-  <VimePlayer controls>
-    <VimeYoutube videoId="DyTCOwB0DVw" />
+  <Player controls>
+    <Youtube videoId="DyTCOwB0DVw" />
     <!-- ... -->
-  </VimePlayer>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeYoutube } from '@vime/vue';
+  import { Player, Youtube } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeYoutube,
+      Player,
+      Youtube,
     },
   };
 </script>
@@ -98,13 +98,13 @@ function Example() {
 <TabItem value="svelte">
 
 ```html {2,7} title="example.svelte"
-<VimePlayer controls>
-  <VimeYoutube videoId="DyTCOwB0DVw" />
+<Player controls>
+  <Youtube videoId="DyTCOwB0DVw" />
   <!-- ... -->
-</VimePlayer>
+</Player>
 
 <script lang="ts">
-  import { VimePlayer, VimeYoutube } from '@vime/svelte';
+  import { Player, Youtube } from '@vime/svelte';
 </script>
 ```
 
@@ -117,10 +117,10 @@ function Example() {
 class Example {
   render() {
     return (
-      <vime-player controls>
-        <vime-youtube videoId="DyTCOwB0DVw" />
+      <vm-player controls>
+        <vm-youtube videoId="DyTCOwB0DVw" />
         {/* ... */}
-      </vime-player>
+      </vm-player>
     );
   }
 }
@@ -132,10 +132,10 @@ class Example {
 <TabItem value="angular">
 
 ```html {2} title="example.html"
-<vime-player controls>
-  <vime-youtube cookies="true" video-id="DyTCOwB0DVw"></vime-youtube>
+<vm-player controls>
+  <vm-youtube cookies="true" video-id="DyTCOwB0DVw"></vm-youtube>
   <!-- ... -->
-</vime-player>
+</vm-player>
 ```
 
 </TabItem>
@@ -156,19 +156,19 @@ class Example {
 
 ### Used by
 
-- [vime-playground](../core/playground.md)
+- [vm-playground](../core/playground.md)
 
 ### Depends on
 
-- [vime-embed](../core/embed.md)
+- [vm-embed](../core/embed.md)
 
 ### Graph
 
 ```mermaid
 graph TD;
-  vime-youtube --> vime-embed
-  vime-playground --> vime-youtube
-  style vime-youtube fill:#f9f,stroke:#333,stroke-width:4px
+  vm-youtube --> vm-embed
+  vm-playground --> vm-youtube
+  style vm-youtube fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ---

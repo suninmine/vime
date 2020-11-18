@@ -1,5 +1,5 @@
 ---
-title: vime-embed
+title: vm-embed
 sidebar_label: Embed
 ---
 
@@ -30,7 +30,7 @@ values={[
 <TabItem value="html">
 
 ```html
-<vime-embed
+<vm-embed
   embed-src="https://www.youtube-nocookie.com/embed/DyTCOwB0DVw"
   params="autoplay=1&muted=1&controls=0"
   media-title="Agent 327: Operation Barbershop"
@@ -38,9 +38,9 @@ values={[
 />
 
 <script>
-  const embed = document.querySelector('vime-embed');
+  const embed = document.querySelector('vm-embed');
 
-  embed.addEventListener('vEmbedMessage', (e) => {
+  embed.addEventListener('vmEmbedMessage', (e) => {
     const message = e.detail;
     // ...
   });
@@ -54,7 +54,7 @@ values={[
 
 ```tsx {2,11-17}
 import React from 'react';
-import { VimeEmbed } from '@vime/react';
+import { Embed } from '@vime/react';
 
 function Example() {
   const onMessage = (event: CustomEvent<any>) => {
@@ -63,12 +63,12 @@ function Example() {
   };
 
   return (
-    <VimeEmbed
+    <Embed
       embedSrc="https://www.youtube-nocookie.com/embed/DyTCOwB0DVw"
       params={{ autoplay: 1, muted: 1, controls: 0 }}
       mediaTitle="Agent 327: Operation Barbershop"
       origin="https://www.youtube-nocookie.com"
-      onVEmbedMessage={onMessage}
+      onVmEmbedMessage={onMessage}
     />
   );
 }
@@ -81,21 +81,21 @@ function Example() {
 
 ```html {2-8,12,16} title="example.vue"
 <template>
-  <VimeEmbed
+  <embed
     embedSrc="https://www.youtube-nocookie.com/embed/DyTCOwB0DVw"
     mediaTitle="Agent 327: Operation Barbershop"
     origin="https://www.youtube-nocookie.com"
     :params="params"
-    @vEmbedMessage="onMessage"
+    @vmEmbedMessage="onMessage"
   />
 </template>
 
 <script>
-  import { VimeEmbed } from '@vime/vue';
+  import { Embed } from '@vime/vue';
 
   export default {
     components: {
-      VimeEmbed,
+      Embed,
     },
 
     data: {
@@ -121,18 +121,18 @@ function Example() {
 <TabItem value="svelte">
 
 ```tsx
-<VimeEmbed
+<Embed
   embedSrc="https://www.youtube-nocookie.com/embed/DyTCOwB0DVw"
   origin="https://www.youtube-nocookie.com"
   mediaTitle="Agent 327: Operation Barbershop"
   params={params}
-  on:vEmbedMessage={onMessage}
+  on:vmEmbedMessage={onMessage}
 />
 ```
 
 ```html {2}
 <script lang="ts">
-  import { VimeEmbed } from '@vime/svelte';
+  import { Embed } from '@vime/svelte';
 
   const params = {
     autoplay: 1,
@@ -161,12 +161,12 @@ class Example {
 
   render() {
     return (
-      <vime-embed
+      <vm-embed
         embedSrc="https://www.youtube-nocookie.com/embed/DyTCOwB0DVw"
         params={{ autoplay: 1, muted: 1, controls: 0 }}
         mediaTitle="Agent 327: Operation Barbershop"
         origin="https://www.youtube-nocookie.com"
-        onVEmbedMessage={this.onMessage.bind(this)}
+        onVmEmbedMessage={this.onMessage.bind(this)}
       />
     );
   }
@@ -179,12 +179,12 @@ class Example {
 <TabItem value="angular">
 
 ```html title="example.html"
-<vime-embed
+<vm-embed
   embed-src="https://www.youtube-nocookie.com/embed/DyTCOwB0DVw"
   media-title="Agent 327: Operation Barbershop"
   origin="https://www.youtube-nocookie.com"
   [params]="params"
-  (vEmbedMessage)="onMessage($event)"
+  (vmEmbedMessage)="onMessage($event)"
 />
 ```
 
@@ -221,11 +221,11 @@ class Example {
 
 ## Events
 
-| Event             | Description                                                                                                                                        | Type                  |
-| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
-| `vEmbedLoaded`    | Emitted when the embedded player and any new media has loaded.                                                                                     | `CustomEvent<void>`   |
-| `vEmbedMessage`   | Emitted when a new message is received from the embedded player via `postMessage`.                                                                 | `CustomEvent<any>`    |
-| `vEmbedSrcChange` | Emitted when the `embedSrc` or `params` props change. The payload contains the `params` serialized into a query string and appended to `embedSrc`. | `CustomEvent<string>` |
+| Event              | Description                                                                                                                                        | Type                  |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
+| `vmEmbedLoaded`    | Emitted when the embedded player and any new media has loaded.                                                                                     | `CustomEvent<void>`   |
+| `vmEmbedMessage`   | Emitted when a new message is received from the embedded player via `postMessage`.                                                                 | `CustomEvent<any>`    |
+| `vmEmbedSrcChange` | Emitted when the `embedSrc` or `params` props change. The payload contains the `params` serialized into a query string and appended to `embedSrc`. | `CustomEvent<string>` |
 
 ## Methods
 
@@ -241,18 +241,18 @@ Type: `Promise<void>`
 
 ### Used by
 
-- [vime-dailymotion](../providers/dailymotion.md)
-- [vime-vimeo](../providers/vimeo.md)
-- [vime-youtube](../providers/youtube.md)
+- [vm-dailymotion](../providers/dailymotion.md)
+- [vm-vimeo](../providers/vimeo.md)
+- [vm-youtube](../providers/youtube.md)
 
 ### Graph
 
 ```mermaid
 graph TD;
-  vime-dailymotion --> vime-embed
-  vime-vimeo --> vime-embed
-  vime-youtube --> vime-embed
-  style vime-embed fill:#f9f,stroke:#333,stroke-width:4px
+  vm-dailymotion --> vm-embed
+  vm-vimeo --> vm-embed
+  vm-youtube --> vm-embed
+  style vm-embed fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ---

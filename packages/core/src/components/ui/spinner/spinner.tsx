@@ -1,13 +1,15 @@
 import {
-  h, Component, State, Prop, Watch, Host, Event, EventEmitter,
+  h, Component, State, Prop, Watch, Event, EventEmitter,
 } from '@stencil/core';
 import { PlayerProps } from '../../core/player/PlayerProps';
-import { withPlayerContext } from '../../core/player/PlayerContext';
+import { withPlayerContext } from '../../core/player/withPlayerContext';
 import { Provider } from '../../providers/Provider';
+import { withComponentRegistry } from '../../core/player/withComponentRegistry';
 
 @Component({
-  tag: 'vime-spinner',
-  styleUrl: 'spinner.scss',
+  tag: 'vm-spinner',
+  styleUrl: 'spinner.css',
+  shadow: true,
 })
 export class Spinner {
   private blacklist = [Provider.YouTube];
@@ -21,6 +23,12 @@ export class Spinner {
    */
   @Prop() isVideoView: PlayerProps['isVideoView'] = false;
 
+  @Watch('isVideoView')
+  onVideoViewChange() {
+    this.isHidden = !this.isVideoView;
+    this.onVisiblityChange();
+  }
+
   /**
    * @internal
    */
@@ -29,18 +37,12 @@ export class Spinner {
   /**
    * Emitted when the spinner will be shown.
    */
-  @Event({ bubbles: false }) vWillShow!: EventEmitter<void>;
+  @Event({ bubbles: false }) vmWillShow!: EventEmitter<void>;
 
   /**
    * Emitted when the spinner will be hidden.
    */
-  @Event({ bubbles: false }) vWillHide!: EventEmitter<void>;
-
-  @Watch('isVideoView')
-  onVideoViewChange() {
-    this.isHidden = !this.isVideoView;
-    this.onVisiblityChange();
-  }
+  @Event({ bubbles: false }) vmWillHide!: EventEmitter<void>;
 
   /**
    * @internal
@@ -54,6 +56,7 @@ export class Spinner {
   }
 
   constructor() {
+    withComponentRegistry(this);
     withPlayerContext(this, [
       'isVideoView',
       'buffering',
@@ -62,19 +65,27 @@ export class Spinner {
   }
 
   private onVisiblityChange() {
-    (!this.isHidden && this.isActive) ? this.vWillShow.emit() : this.vWillHide.emit();
+    (!this.isHidden && this.isActive) ? this.vmWillShow.emit() : this.vmWillHide.emit();
   }
 
   render() {
     return (
-      <Host
+      <div
         class={{
+          spinner: true,
           hidden: this.isHidden || this.blacklist.includes(this.currentProvider!),
           active: this.isActive,
         }}
       >
-        <div>Loading...</div>
-      </Host>
+        <div
+          class={{
+            spin: true,
+            active: this.isActive,
+          }}
+        >
+          Loading...
+        </div>
+      </div>
     );
   }
 }

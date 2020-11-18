@@ -1,12 +1,14 @@
 import {
-  h, Host, Component, Prop, State, Watch,
+  h, Component, Prop, State, Watch,
 } from '@stencil/core';
-import { withPlayerContext } from '../../core/player/PlayerContext';
+import { withComponentRegistry } from '../../core/player/withComponentRegistry';
+import { withPlayerContext } from '../../core/player/withPlayerContext';
 import { PlayerProps } from '../../core/player/PlayerProps';
 
 @Component({
-  tag: 'vime-skeleton',
-  styleUrl: 'skeleton.scss',
+  tag: 'vm-skeleton',
+  styleUrl: 'skeleton.css',
+  shadow: true,
 })
 export class Skeleton {
   @State() hidden = false;
@@ -33,19 +35,21 @@ export class Skeleton {
   }
 
   constructor() {
+    withComponentRegistry(this);
     withPlayerContext(this, ['ready']);
   }
 
   render() {
     return (
-      <Host
+      <div
         class={{
+          skeleton: true,
           hidden: this.hidden,
           sheen: (this.effect === 'sheen'),
         }}
       >
         <div class="indicator" />
-      </Host>
+      </div>
     );
   }
 }

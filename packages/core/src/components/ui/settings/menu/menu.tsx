@@ -1,31 +1,31 @@
-/* eslint-disable no-param-reassign */
-
 import {
-  h, Host, Component, Prop, Listen, Event, EventEmitter, Element, State, Watch, Method, writeTask,
+  h, Component, Prop, Listen, Event, EventEmitter, Element, State, Watch, Method, writeTask,
 } from '@stencil/core';
 import { buildNoAncestorSelector } from '../../../../utils/dom';
 import { isUndefined, isNull } from '../../../../utils/unit';
+import { withComponentRegistry } from '../../../core/player/withComponentRegistry';
 
 /**
  * @slot - Used to pass in the body of the menu which usually contains menu items, radio groups
  * and/or submenus.
  */
 @Component({
-  tag: 'vime-menu',
-  styleUrl: 'menu.scss',
+  tag: 'vm-menu',
+  styleUrl: 'menu.css',
+  shadow: true,
 })
 export class Menu {
   private shouldFocusOnOpen = false;
 
-  private submenus!: NodeListOf<HTMLVimeMenuElement>;
+  private submenus!: NodeListOf<HTMLVmMenuElement>;
 
-  @Element() el!: HTMLVimeMenuElement;
+  @Element() el!: HTMLVmMenuElement;
 
-  @State() menuItems!: NodeListOf<HTMLVimeMenuItemElement>;
+  @State() menuItems!: NodeListOf<HTMLVmMenuItemElement>;
 
   @Watch('menuItems')
   onMenuItemsChange() {
-    this.vMenuItemsChange.emit(this.menuItems);
+    this.vmMenuItemsChange.emit(this.menuItems);
   }
 
   @State() currFocusedMenuItem = 0;
@@ -33,7 +33,7 @@ export class Menu {
   @Watch('currFocusedMenuItem')
   async onFocusedMenuItemChange() {
     const menuItem = await this.getFocusedMenuItem();
-    this.vFocusMenuItemChange.emit(menuItem);
+    this.vmFocusMenuItemChange.emit(menuItem);
   }
 
   /**
@@ -48,7 +48,7 @@ export class Menu {
       this.findSubmenus();
     }
 
-    this.active ? this.vOpen.emit() : this.vClose.emit();
+    this.active ? this.vmOpen.emit() : this.vmClose.emit();
   }
 
   /**
@@ -64,22 +64,26 @@ export class Menu {
   /**
    * Emitted when the menu is open/active.
    */
-  @Event() vOpen!: EventEmitter<void>;
+  @Event() vmOpen!: EventEmitter<void>;
 
   /**
    * Emitted when the menu has closed/is not active.
    */
-  @Event() vClose!: EventEmitter<void>;
+  @Event() vmClose!: EventEmitter<void>;
 
   /**
    * Emitted when the menu items present changes.
    */
-  @Event() vMenuItemsChange!: EventEmitter<NodeListOf<HTMLVimeMenuItemElement> | undefined>;
+  @Event() vmMenuItemsChange!: EventEmitter<NodeListOf<HTMLVmMenuItemElement> | undefined>;
 
   /**
    * Emitted when the currently focused menu item changes.
    */
-  @Event() vFocusMenuItemChange!: EventEmitter<HTMLVimeMenuItemElement | undefined>;
+  @Event() vmFocusMenuItemChange!: EventEmitter<HTMLVmMenuItemElement | undefined>;
+
+  constructor() {
+    withComponentRegistry(this);
+  }
 
   connectedCallback() {
     this.findMenuItems();
@@ -121,7 +125,7 @@ export class Menu {
 
   private findMenuItems() {
     this.menuItems = document.querySelectorAll(
-      buildNoAncestorSelector(`#${this.identifier}`, 'vime-menu', 'vime-menu-item', 5),
+      buildNoAncestorSelector(`#${this.identifier}`, 'vm-menu', 'vm-menu-item', 5),
     );
   }
 
@@ -142,7 +146,7 @@ export class Menu {
     if (isUndefined(menuItem)) return;
     menuItem!.click();
     writeTask(() => {
-      const submenu = document.querySelector(`#${menuItem!.menu}`) as HTMLVimeMenuElement;
+      const submenu = document.querySelector(`#${menuItem!.menu}`) as HTMLVmMenuElement;
       submenu?.focus();
     });
   }
@@ -202,7 +206,7 @@ export class Menu {
 
   private findSubmenus() {
     this.submenus = document.querySelectorAll(
-      buildNoAncestorSelector(`#${this.identifier}`, 'vime-menu', 'vime-menu', 4),
+      buildNoAncestorSelector(`#${this.identifier}`, 'vm-menu', 'vm-menu', 4),
     );
   }
 
@@ -211,7 +215,7 @@ export class Menu {
     return !isUndefined(Array.from(this.submenus).find((menu) => menu.id === submenu!.id));
   }
 
-  private toggleSubmenu(submenu: HTMLVimeMenuElement, isActive: boolean) {
+  private toggleSubmenu(submenu: HTMLVmMenuElement, isActive: boolean) {
     if (!this.isValidSubmenu(submenu)) return;
 
     Array.from(this.menuItems)
@@ -221,15 +225,15 @@ export class Menu {
     submenu.active = isActive;
   }
 
-  @Listen('vOpen')
+  @Listen('vmOpen')
   onSubmenuOpen(event: CustomEvent<void>) {
-    const submenu = event.target as HTMLVimeMenuElement;
+    const submenu = event.target as HTMLVmMenuElement;
     this.toggleSubmenu(submenu, true);
   }
 
-  @Listen('vClose')
+  @Listen('vmClose')
   onSubmenuClose(event: CustomEvent<void>) {
-    const submenu = event.target as HTMLVimeMenuElement;
+    const submenu = event.target as HTMLVmMenuElement;
     this.toggleSubmenu(submenu, false);
   }
 
@@ -245,8 +249,9 @@ export class Menu {
 
   render() {
     return (
-      <Host
+      <div
         id={this.identifier}
+        class="menu"
         role="menu"
         tabindex="-1"
         aria-labelledby={this.controller}
@@ -259,7 +264,7 @@ export class Menu {
         <div>
           <slot />
         </div>
-      </Host>
+      </div>
     );
   }
 }

@@ -4,16 +4,16 @@ import { ViewType } from '../../../core/player/ViewType';
 import { Captions } from '../captions';
 
 let page: SpecPage;
-let provider: HTMLVimeFaketubeElement;
-let captions: HTMLVimeCaptionsElement;
+let provider: HTMLVmFaketubeElement;
+let captions: HTMLVmCaptionsElement;
 
 beforeEach(async () => {
   ({ page, provider } = await newUISpecPage(
     [Captions],
-    '<vime-captions/>',
+    '<vm-captions/>',
   ));
 
-  captions = page.root!.querySelector('vime-captions')!;
+  captions = page.root!.querySelector('vm-captions')!;
 });
 
 it('should be structurally sound', () => {

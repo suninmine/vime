@@ -14,5 +14,5 @@ export {
 } from '@vime/core';
 
 export * from './components';
-export { VimeModule } from './VimeModule';
 export * from './VimeComponent';
+export { VimeModule } from './VimeModule';

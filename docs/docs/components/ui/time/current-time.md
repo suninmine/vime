@@ -1,5 +1,5 @@
 ---
-title: vime-current-time
+title: vm-current-time
 sidebar_label: CurrentTime
 ---
 
@@ -34,7 +34,7 @@ values={[
 <TabItem value="html">
 
 ```html
-<vime-current-time />
+<vm-current-time />
 ```
 
 </TabItem>
@@ -44,10 +44,10 @@ values={[
 
 ```tsx {2,5}
 import React from 'react';
-import { VimeCurrentTime } from '@vime/react';
+import { CurrentTime } from '@vime/react';
 
 function Example() {
-  return <VimeCurrentTime />;
+  return <CurrentTime />;
 }
 ```
 
@@ -58,15 +58,15 @@ function Example() {
 
 ```html {2,6,10} title="example.vue"
 <template>
-  <VimeCurrentTime />
+  <CurrentTime />
 </template>
 
 <script>
-  import { VimeCurrentTime } from '@vime/vue';
+  import { CurrentTime } from '@vime/vue';
 
   export default {
     components: {
-      VimeCurrentTime,
+      CurrentTime,
     },
   };
 </script>
@@ -78,10 +78,10 @@ function Example() {
 <TabItem value="svelte">
 
 ```html {1,4} title="example.svelte"
-<VimeCurrentTime />
+<CurrentTime />
 
 <script lang="ts">
-  import { VimeCurrentTime } from '@vime/svelte';
+  import { CurrentTime } from '@vime/svelte';
 </script>
 ```
 
@@ -93,7 +93,7 @@ function Example() {
 ```tsx {3}
 class Example {
   render() {
-    return <vime-current-time />;
+    return <vm-current-time />;
   }
 }
 ```
@@ -104,7 +104,7 @@ class Example {
 <TabItem value="angular">
 
 ```html title="example.html"
-<vime-current-time />
+<vm-current-time />
 ```
 
 </TabItem>
@@ -122,21 +122,21 @@ class Example {
 
 ### Used by
 
-- [vime-default-controls](../controls/default-controls.md)
-- [vime-time-progress](time-progress.md)
+- [vm-default-controls](../controls/default-controls.md)
+- [vm-time-progress](time-progress.md)
 
 ### Depends on
 
-- [vime-time](time.md)
+- [vm-time](time.md)
 
 ### Graph
 
 ```mermaid
 graph TD;
-  vime-current-time --> vime-time
-  vime-default-controls --> vime-current-time
-  vime-time-progress --> vime-current-time
-  style vime-current-time fill:#f9f,stroke:#333,stroke-width:4px
+  vm-current-time --> vm-time
+  vm-default-controls --> vm-current-time
+  vm-time-progress --> vm-current-time
+  style vm-current-time fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ---

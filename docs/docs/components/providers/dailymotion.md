@@ -1,5 +1,5 @@
 ---
-title: vime-dailymotion
+title: vm-dailymotion
 sidebar_label: Dailymotion
 ---
 
@@ -36,10 +36,10 @@ values={[
 <TabItem value="html">
 
 ```html {2}
-<vime-player controls>
-  <vime-dailymotion video-id="k3b11PemcuTrmWvYe0q"></vime-dailymotion>
+<vm-player controls>
+  <vm-dailymotion video-id="k3b11PemcuTrmWvYe0q"></vm-dailymotion>
   <!-- ... -->
-</vime-player>
+</vm-player>
 ```
 
 </TabItem>
@@ -49,14 +49,14 @@ values={[
 
 ```tsx {2,7}
 import React from 'react';
-import { VimePlayer, VimeDailymotion } from '@vime/react';
+import { Player, Dailymotion } from '@vime/react';
 
 function Example() {
   return (
-    <VimePlayer controls>
-      <VimeDailymotion videoId="k3b11PemcuTrmWvYe0q" />
+    <Player controls>
+      <Dailymotion videoId="k3b11PemcuTrmWvYe0q" />
       {/* ... */}
-    </VimePlayer>
+    </Player>
   );
 }
 ```
@@ -68,19 +68,19 @@ function Example() {
 
 ```html {3,9,14} title="example.vue"
 <template>
-  <VimePlayer controls>
-    <VimeDailymotion videoId="k3b11PemcuTrmWvYe0q" />
+  <Player controls>
+    <Dailymotion videoId="k3b11PemcuTrmWvYe0q" />
     <!-- ... -->
-  </VimePlayer>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeDailymotion } from '@vime/vue';
+  import { Player, Dailymotion } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeDailymotion,
+      Player,
+      Dailymotion,
     },
   };
 </script>
@@ -92,13 +92,13 @@ function Example() {
 <TabItem value="svelte">
 
 ```html {2,7} title="example.svelte"
-<VimePlayer controls>
-  <VimeDailymotion videoId="k3b11PemcuTrmWvYe0q" />
+<Player controls>
+  <Dailymotion videoId="k3b11PemcuTrmWvYe0q" />
   <!-- ... -->
-</VimePlayer>
+</Player>
 
 <script lang="ts">
-  import { VimePlayer, VimeDailymotion } from '@vime/svelte';
+  import { Player, Dailymotion } from '@vime/svelte';
 </script>
 ```
 
@@ -111,10 +111,10 @@ function Example() {
 class Example {
   render() {
     return (
-      <vime-player controls>
-        <vime-dailymotion videoId="k3b11PemcuTrmWvYe0q" />
+      <vm-player controls>
+        <vm-dailymotion videoId="k3b11PemcuTrmWvYe0q" />
         {/* ... */}
-      </vime-player>
+      </vm-player>
     );
   }
 }
@@ -126,13 +126,10 @@ class Example {
 <TabItem value="angular">
 
 ```html {2-5} title="example.html"
-<vime-player controls>
-  <vime-dailymotion
-    color="fff"
-    video-id="k3b11PemcuTrmWvYe0q"
-  ></vime-dailymotion>
+<vm-player controls>
+  <vm-dailymotion color="fff" video-id="k3b11PemcuTrmWvYe0q"></vm-dailymotion>
   <!-- ... -->
-</vime-player>
+</vm-player>
 ```
 
 </TabItem>
@@ -154,23 +151,29 @@ class Example {
 | `syndication`          | `syndication`           | Forwards your syndication key to the player.                                                                                                    | `string ∣ undefined` | `undefined` |
 | `videoId` _(required)_ | `video-id`              | The Dailymotion resource ID of the video to load.                                                                                               | `string`             | `undefined` |
 
+## Events
+
+| Event     | Description                         | Type                              |
+| --------- | ----------------------------------- | --------------------------------- |
+| `vmError` | Emitted when an error has occurred. | `CustomEvent<string ∣ undefined>` |
+
 ## Dependencies
 
 ### Used by
 
-- [vime-playground](../core/playground.md)
+- [vm-playground](../core/playground.md)
 
 ### Depends on
 
-- [vime-embed](../core/embed.md)
+- [vm-embed](../core/embed.md)
 
 ### Graph
 
 ```mermaid
 graph TD;
-  vime-dailymotion --> vime-embed
-  vime-playground --> vime-dailymotion
-  style vime-dailymotion fill:#f9f,stroke:#333,stroke-width:4px
+  vm-dailymotion --> vm-embed
+  vm-playground --> vm-dailymotion
+  style vm-dailymotion fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ---

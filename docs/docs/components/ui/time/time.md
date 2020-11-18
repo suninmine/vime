@@ -1,5 +1,5 @@
 ---
-title: vime-time
+title: vm-time
 sidebar_label: Time
 ---
 
@@ -34,7 +34,7 @@ values={[
 <TabItem value="html">
 
 ```html
-<vime-time label="Time" seconds="120" />
+<vm-time label="Time" seconds="120" />
 ```
 
 </TabItem>
@@ -44,10 +44,10 @@ values={[
 
 ```tsx {2,5}
 import React from 'react';
-import { VimeTime } from '@vime/react';
+import { Time } from '@vime/react';
 
 function Example() {
-  return <VimeTime label="Time" seconds={120} />;
+  return <Time label="Time" seconds={120} />;
 }
 ```
 
@@ -58,15 +58,15 @@ function Example() {
 
 ```html {2,6,10} title="example.vue"
 <template>
-  <VimeTime label="Time" :seconds="120" />
+  <time label="Time" :seconds="120" />
 </template>
 
 <script>
-  import { VimeTime } from '@vime/vue';
+  import { Time } from '@vime/vue';
 
   export default {
     components: {
-      VimeTime,
+      Time,
     },
   };
 </script>
@@ -78,12 +78,12 @@ function Example() {
 <TabItem value="svelte">
 
 ```tsx
-<VimeTime label="Time" seconds={120} />
+<Time label="Time" seconds={120} />
 ```
 
 ```html
 <script lang="ts">
-  import { VimeTime } from '@vime/svelte';
+  import { Time } from '@vime/svelte';
 </script>
 ```
 
@@ -95,7 +95,7 @@ function Example() {
 ```tsx {3}
 class Example {
   render() {
-    return <vime-time label="Time" seconds={120} />;
+    return <vm-time label="Time" seconds={120} />;
   }
 }
 ```
@@ -106,7 +106,7 @@ class Example {
 <TabItem value="angular">
 
 ```html title="example.html"
-<vime-time label="Time" [seconds]="120" />
+<vm-time label="Time" [seconds]="120" />
 ```
 
 </TabItem>
@@ -134,16 +134,16 @@ class Example {
 
 ### Used by
 
-- [vime-current-time](current-time.md)
-- [vime-end-time](end-time.md)
+- [vm-current-time](current-time.md)
+- [vm-end-time](end-time.md)
 
 ### Graph
 
 ```mermaid
 graph TD;
-  vime-current-time --> vime-time
-  vime-end-time --> vime-time
-  style vime-time fill:#f9f,stroke:#333,stroke-width:4px
+  vm-current-time --> vm-time
+  vm-end-time --> vm-time
+  style vm-time fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ---

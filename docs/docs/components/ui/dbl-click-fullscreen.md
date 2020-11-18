@@ -1,5 +1,5 @@
 ---
-title: vime-dbl-click-fullscreen
+title: vm-dbl-click-fullscreen
 sidebar_label: DblClickFullscreen
 ---
 
@@ -27,13 +27,13 @@ values={[
 <TabItem value="html">
 
 ```html {5}
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-dbl-click-fullscreen></vime-dbl-click-fullscreen>
-  </vime-ui>
-</vime-player>
+    <vm-dbl-click-fullscreen></vm-dbl-click-fullscreen>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -43,17 +43,17 @@ values={[
 
 ```tsx {2,10}
 import React from 'react';
-import { VimePlayer, VimeUi, VimeDblClickFullscreen } from '@vime/react';
+import { Player, Ui, DblClickFullscreen } from '@vime/react';
 
 function Example() {
   return (
-    <VimePlayer>
+    <Player>
       {/* ... */}
-      <VimeUi>
+      <Ui>
         {/* ... */}
-        <VimeDblClickFullscreen />
-      </VimeUi>
-    </VimePlayer>
+        <DblClickFullscreen />
+      </Ui>
+    </Player>
   );
 }
 ```
@@ -65,23 +65,23 @@ function Example() {
 
 ```html {6,12,18} title="example.vue"
 <template>
-  <VimePlayer>
+  <Player>
     <!-- ... -->
-    <VimeUi>
+    <Ui>
       <!-- ... -->
-      <VimeDblClickFullscreen />
-    </VimeUi>
-  </VimePlayer>
+      <DblClickFullscreen />
+    </Ui>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeUi, VimeDblClickFullscreen } from '@vime/vue';
+  import { Player, Ui, DblClickFullscreen } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeUi,
-      VimeDblClickFullscreen,
+      Player,
+      Ui,
+      DblClickFullscreen,
     },
   };
 </script>
@@ -93,16 +93,16 @@ function Example() {
 <TabItem value="svelte">
 
 ```html {5,10} title="example.svelte"
-<VimePlayer>
+<Player>
   <!-- ... -->
-  <VimeUi>
+  <Ui>
     <!-- ... -->
-    <VimeDblClickFullscreen />
-  </VimeUi>
-</VimePlayer>
+    <DblClickFullscreen />
+  </Ui>
+</Player>
 
 <script lang="ts">
-  import { VimePlayer, VimeUi, VimeDblClickFullscreen } from '@vime/svelte';
+  import { Player, Ui, DblClickFullscreen } from '@vime/svelte';
 </script>
 ```
 
@@ -115,13 +115,13 @@ function Example() {
 class Example {
   render() {
     return (
-      <vime-player>
+      <vm-player>
         {/* ... */}
-        <vime-ui>
+        <vm-ui>
           {/* ... */}
-          <vime-dbl-click-fullscreen />
-        </vime-ui>
-      </vime-player>
+          <vm-dbl-click-fullscreen />
+        </vm-ui>
+      </vm-player>
     );
   }
 }
@@ -133,13 +133,13 @@ class Example {
 <TabItem value="angular">
 
 ```html {5} title="example.html"
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-dbl-click-fullscreen></vime-dbl-click-fullscreen>
-  </vime-ui>
-</vime-player>
+    <vm-dbl-click-fullscreen></vm-dbl-click-fullscreen>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -163,14 +163,14 @@ class Example {
 
 ### Used by
 
-- [vime-default-ui](default-ui.md)
+- [vm-default-ui](default-ui.md)
 
 ### Graph
 
 ```mermaid
 graph TD;
-  vime-default-ui --> vime-dbl-click-fullscreen
-  style vime-dbl-click-fullscreen fill:#f9f,stroke:#333,stroke-width:4px
+  vm-default-ui --> vm-dbl-click-fullscreen
+  style vm-dbl-click-fullscreen fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ---

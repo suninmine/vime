@@ -9,7 +9,7 @@ sidebar_label: Design Principles
   - No shadow DOM so all components can be directly referenced and modified freely through the DOM or framework.
   - We provide all the building blocks for you to create your own UI.
   - CSS variables are available for all components so you can restyle anything you want.
-  - Every single component is optional aside from the root `vime-player` component.
+  - Every single component is optional aside from the root `vm-player` component.
   - All component's core behaviour, style and function can be modified via properties and methods.
   - Multi-provider support so you're free to choose what type of media to play and where you host
     your content.

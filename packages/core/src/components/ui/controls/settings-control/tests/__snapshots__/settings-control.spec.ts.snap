@@ -1,12 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should be structurally sound 1`] = `
-<vime-settings-control class="hidden">
-  <vime-control hidden="" identifier="vime-settings-control-1" label="Settings">
-    <vime-icon href="#vime-settings"></vime-icon>
-    <vime-tooltip position="top">
+<vm-settings-control class="hidden">
+  <vm-control hidden="" identifier="vime-settings-control-1" label="Settings">
+    <vm-icon href="#vime-settings"></vm-icon>
+    <vm-tooltip position="top">
       Settings
-    </vime-tooltip>
-  </vime-control>
-</vime-settings-control>
+    </vm-tooltip>
+  </vm-control>
+</vm-settings-control>
 `;

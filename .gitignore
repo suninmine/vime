@@ -46,6 +46,7 @@ chrome-profiler-events*.json
 speed-measure-plugin*.json
 !yarn.lock
 
+docs/yarn.lock
 examples/*/yarn.lock
 
 /tmp

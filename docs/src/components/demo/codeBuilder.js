@@ -16,16 +16,16 @@ const isReact = (lib) => lib === 'react';
 const isStencil = (lib) => lib === 'stencil';
 
 const audio = (jsx = false) => `
-    <${jsx ? 'VimeAudio' : 'vime-audio'}>
+    <${jsx ? 'Audio' : 'vm-audio'}>
       <source 
         data-src="https://media.vimejs.com/audio.mp3" 
         type="video/mp4"
       />
-    </${jsx ? 'VimeAudio' : 'vime-audio'}>
+    </${jsx ? 'Audio' : 'vm-audio'}>
 `.trim();
 
 const video = (jsx = false, lib) => `
-    <${jsx ? 'VimeVideo' : 'vime-video'}
+    <${jsx ? 'Video' : 'vm-video'}
       ${(jsx || isStencil(lib)) ? 'crossOrigin' : 'cross-origin'}
       poster="${poster}"
     >
@@ -34,23 +34,23 @@ const video = (jsx = false, lib) => `
         type="video/mp4"
       />
       ${track}
-    </${jsx ? 'VimeVideo' : 'vime-video'}>
+    </${jsx ? 'Video' : 'vm-video'}>
 `.trim();
 
 const youtube = (jsx = false, lib) => `
-    <${jsx ? 'VimeYoutube' : 'vime-youtube'} ${(jsx || isStencil(lib)) ? 'videoId' : 'video-id'}="DyTCOwB0DVw"${(jsx || isStencil(lib)) ? ' />' : '></vime-youtube>'}
+    <${jsx ? 'Youtube' : 'vm-youtube'} ${(jsx || isStencil(lib)) ? 'videoId' : 'video-id'}="DyTCOwB0DVw"${(jsx || isStencil(lib)) ? ' />' : '><vm-youtube>'}
 `.trim();
 
 const vimeo = (jsx = false, lib) => `
-    <${jsx ? 'VimeVimeo' : 'vime-vimeo'} ${(jsx || isStencil(lib)) ? 'videoId' : 'video-id'}="411652396"${(jsx || isStencil(lib)) ? ' />' : '></vime-vimeo>'}
+    <${jsx ? 'Vimeo' : 'vm-vimeo'} ${(jsx || isStencil(lib)) ? 'videoId' : 'video-id'}="411652396"${(jsx || isStencil(lib)) ? ' />' : '><vm-vimeo>'}
 `.trim();
 
 const dailymotion = (jsx = false, lib) => `
-    <${jsx ? 'VimeDailymotion' : 'vime-dailymotion'} ${(jsx || isStencil(lib)) ? 'videoId' : 'video-id'}="k3b11PemcuTrmWvYe0q"${(jsx || isStencil(lib)) ? ' />' : '></vime-dailymotion>'}
+    <${jsx ? 'Dailymotion' : 'vm-dailymotion'} ${(jsx || isStencil(lib)) ? 'videoId' : 'video-id'}="k3b11PemcuTrmWvYe0q"${(jsx || isStencil(lib)) ? ' />' : '><vm-dailymotion>'}
 `.trim();
 
 const hls = (jsx = false, lib) => `
-    <${jsx ? 'VimeHls' : 'vime-hls'}
+    <${jsx ? 'Hls' : 'vm-hls'}
       ${(jsx || isStencil(lib)) ? 'crossOrigin' : 'cross-origin'}
       poster="${poster}"
     >
@@ -58,14 +58,14 @@ const hls = (jsx = false, lib) => `
         data-src="https://media.vimejs.com/hls/index.m3u8" 
         type="application/x-mpegURL" 
       />
-    </${jsx ? 'VimeHls' : 'vime-hls'}>  
+    </${jsx ? 'Hls' : 'vm-hls'}>  
 `.trim();
 
 const dash = (jsx = false, lib) => `
-    <${jsx ? 'VimeDash' : 'vime-dash'} 
+    <${jsx ? 'Dash' : 'vm-dash'} 
       src="https://media.vimejs.com/mpd/manifest.mpd" 
       poster="${poster}"
-    ${(jsx || isStencil(lib)) ? '/>' : '></vime-dash>'}
+    ${(jsx || isStencil(lib)) ? '/>' : '><vm-dash>'}
 `.trim();
 
 const providers = {
@@ -90,24 +90,24 @@ const player = (opts, lib, jsx) => {
   const styleProp = propIf(opts.showDefaultUi, style);
 
   return `
-  <${jsx ? 'VimePlayer' : 'vime-player'}${controlsProp}${themeProp}${styleProp}
+  <${jsx ? 'Player' : 'vm-player'}${controlsProp}${themeProp}${styleProp}
   >
-    ${providers[opts.provider || 'video'](jsx, lib)}${opts.showDefaultUi ? `\n\n    ${jsx ? '<VimeDefaultUi />' : `<vime-default-ui${isStencil(lib) ? ' />' : '></vime-default-ui>'}`}` : ''}
-  </${jsx ? 'VimePlayer' : 'vime-player'}>
+    ${providers[opts.provider || 'video'](jsx, lib)}${opts.showDefaultUi ? `\n\n    ${jsx ? '<DefaultUi />' : `<vm-default-ui${isStencil(lib) ? ' />' : '><vm-default-ui>'}`}` : ''}
+  </${jsx ? 'Player' : 'vm-player'}>
 `.trim();
 }
 
 const providerImports = {
-  audio: 'VimeAudio',
-  video: 'VimeVideo',
-  hls: 'VimeHls',
-  dash: 'VimeDash',
-  youtube: 'VimeYoutube',
-  vimeo: 'VimeVimeo',
-  dailymotion: 'VimeDailymotion',
+  audio: 'Audio',
+  video: 'Video',
+  hls: 'Hls',
+  dash: 'Dash',
+  youtube: 'Youtube',
+  vimeo: 'Vimeo',
+  dailymotion: 'Dailymotion',
 };
 
-const importStmt = (opts, lib) => `import { VimePlayer, ${providerImports[opts.provider]}${opts.showDefaultUi ? ', VimeDefaultUi ' : ' '}} from '@vime/${lib}';`;
+const importStmt = (opts, lib) => `import { Player, ${providerImports[opts.provider]}${opts.showDefaultUi ? ', DefaultUi ' : ' '}} from '@vime/${lib}';`;
 
 const reactCode = (opts) => `
 import React from 'react';
@@ -128,20 +128,20 @@ ${importStmt(opts, 'vue')}
 
 export default {
   components: {
-    VimePlayer,
-    ${providerImports[opts.provider]}${opts.showDefaultUi ? ',\n    VimeDefaultUi' : ''},
+    Player,
+    ${providerImports[opts.provider]}${opts.showDefaultUi ? ',\n    DefaultUi' : ''},
   },
 };
 </script>
 `.trim();
 
 const indentBack = (code) => code.replace(/\n\s\s/gm, '\n')
-  .replace(/\s<VimeDefaultUi/gm, '\n  <VimeDefaultUi')
-  .replace(/\s<vime-default/gm, '\n  <vime-default');
+  .replace(/\s<DefaultUi/gm, '\n  <DefaultUi')
+  .replace(/\s<vm-default/gm, '\n  <vm-default');
 
 const indentStencil = (code) => code.replace(/\n\s\s/gm, '\n      ')
-  .replace(/\s<VimeDefaultUi/gm, '\n        <VimeDefaultUi')
-  .replace(/\s<vime-default/gm, '\n        <vime-default');
+  .replace(/\s<DefaultUi/gm, '\n        <DefaultUi')
+  .replace(/\s<vm-default/gm, '\n        <vm-default');
 
 const svelteCode = (opts) => `
 ${indentBack(player(opts, 'svelte', true))}

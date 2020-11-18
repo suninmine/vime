@@ -1,23 +1,23 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should be structurally sound when active 1`] = `
-<vime-pip-control class="hidden">
-  <vime-control hidden="" keys="p" label="Picture-in-Picture" pressed="">
-    <vime-icon href="#vime-exit-pip"></vime-icon>
-    <vime-tooltip position="top">
+<vm-pip-control class="hidden">
+  <vm-control hidden="" keys="p" label="Picture-in-Picture" pressed="">
+    <vm-icon href="#vime-exit-pip"></vm-icon>
+    <vm-tooltip position="top">
       Expand (p)
-    </vime-tooltip>
-  </vime-control>
-</vime-pip-control>
+    </vm-tooltip>
+  </vm-control>
+</vm-pip-control>
 `;
 
 exports[`should be structurally sound when not active 1`] = `
-<vime-pip-control class="hidden">
-  <vime-control hidden="" keys="p" label="Picture-in-Picture">
-    <vime-icon href="#vime-enter-pip"></vime-icon>
-    <vime-tooltip position="top">
+<vm-pip-control class="hidden">
+  <vm-control hidden="" keys="p" label="Picture-in-Picture">
+    <vm-icon href="#vime-enter-pip"></vm-icon>
+    <vm-tooltip position="top">
       Miniplayer (p)
-    </vime-tooltip>
-  </vime-control>
-</vime-pip-control>
+    </vm-tooltip>
+  </vm-control>
+</vm-pip-control>
 `;

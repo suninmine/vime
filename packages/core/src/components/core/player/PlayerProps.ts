@@ -14,9 +14,9 @@ export const initialState: { [P in keyof PlayerProps]: PlayerProps[P] } = {
   mediaTitle: undefined,
   currentSrc: undefined,
   currentPoster: undefined,
+  icons: 'vime',
   currentTime: 0,
   autoplay: false,
-  attached: false,
   ready: false,
   playbackReady: false,
   loop: false,
@@ -33,8 +33,6 @@ export const initialState: { [P in keyof PlayerProps]: PlayerProps[P] } = {
   buffering: false,
   controls: false,
   isControlsActive: false,
-  errors: [],
-  textTracks: undefined,
   volume: 50,
   isFullscreenActive: false,
   aspectRatio: '16:9',
@@ -46,9 +44,7 @@ export const initialState: { [P in keyof PlayerProps]: PlayerProps[P] } = {
   isVideo: false,
   isMobile: false,
   isTouch: false,
-  isCaptionsActive: false,
   isSettingsActive: false,
-  currentCaption: undefined,
   isLive: false,
   isPiPActive: false,
   autopause: true,
@@ -79,9 +75,7 @@ export type WritableProps = Pick<PlayerProps,
 | 'playbackRate'
 | 'playsinline'
 | 'volume'
-| 'errors'
 | 'isSettingsActive'
-| 'isCaptionsActive'
 | 'isControlsActive'
 >;
 
@@ -99,12 +93,10 @@ const writableProps = new Set<PlayerProp>([
   'translations',
   'playbackQuality',
   'muted',
-  'errors',
   'playbackRate',
   'playsinline',
   'volume',
   'isSettingsActive',
-  'isCaptionsActive',
   'isControlsActive',
 ]);
 
@@ -132,80 +124,23 @@ const resetableProps = new Set<PlayerProp>([
   'playbackEnded',
   'playbackQuality',
   'playbackQualities',
-  'textTracks',
   'mediaType',
-  'isCaptionsActive',
 ]);
 
 export const shouldPropResetOnMediaChange = (prop: PlayerProp) => resetableProps.has(prop);
 
 /**
- * Properties that can only be written to by a provider.
- */
-export type ProviderWritableProps = WritableProps & Pick<PlayerProps,
-'ready'
-| 'playing'
-| 'playbackReady'
-| 'playbackStarted'
-| 'playbackEnded'
-| 'seeking'
-| 'buffered'
-| 'buffering'
-| 'duration'
-| 'viewType'
-| 'mediaTitle'
-| 'mediaType'
-| 'textTracks'
-| 'currentSrc'
-| 'currentPoster'
-| 'playbackRates'
-| 'playbackQualities'
-| 'isPiPActive'
-| 'isFullscreenActive'
->;
-
-const providerWritableProps = new Set<PlayerProp>([
-  'ready',
-  'playing',
-  'playbackReady',
-  'playbackStarted',
-  'playbackEnded',
-  'seeking',
-  'buffered',
-  'buffering',
-  'duration',
-  'viewType',
-  'mediaTitle',
-  'mediaType',
-  'textTracks',
-  'currentSrc',
-  'currentPoster',
-  'playbackRates',
-  'playbackQualities',
-  'isPiPActive',
-  'isFullscreenActive',
-]);
-
-export const isProviderWritableProp = (
-  prop: PlayerProp,
-) => isWritableProp(prop) || providerWritableProps.has(prop);
-
-/**
  * Properties that can only be written to by the player directly.
  */
 export type PlayerWritableProps = WritableProps & Pick<PlayerProps,
-| 'currentCaption'
 | 'isMobile'
 | 'isTouch'
-| 'isCaptionsActive'
 | 'isFullscreenActive'
 >;
 
 const playerWritableProps = new Set<PlayerProp>([
-  'currentCaption',
   'isMobile',
   'isTouch',
-  'isCaptionsActive',
   'isFullscreenActive',
 ]);
 
@@ -217,14 +152,16 @@ export type PlayerProp = keyof PlayerProps;
 
 export interface PlayerProps {
   /**
-   * `@readonly` Whether the player is attached to the DOM.
-   */
-  attached: boolean
-
-  /**
    * This property has no role other than scoping CSS selectors.
    */
   theme?: string;
+
+  /**
+   * The default icon library to be used throughout the player. You can use a predefined
+   * icon library such as vime, material, remix or boxicons. If you'd like to provide your own
+   * see the `<vm-icon-library>` component. Remember to pass in the name of your icon library here.
+   */
+  icons: string;
 
   /**
    * Whether playback should be paused. Defaults to `true` if no media has loaded or playback has
@@ -378,16 +315,6 @@ export interface PlayerProps {
   isControlsActive: boolean
 
   /**
-   * `@readonly` A collection of errors that have occurred ordered by `[oldest, ..., newest]`.
-   */
-  errors: any[]
-
-  /**
-   * `@readonly` The text tracks (WebVTT) associated with the current media.
-   */
-  textTracks?: TextTrackList
-
-  /**
    * An `int` between `0` (silent) and `100` (loudest) indicating the audio volume.
    */
   volume: number
@@ -455,11 +382,6 @@ export interface PlayerProps {
   isTouch: boolean
 
   /**
-   * `@readonly` Whether any captions or subtitles are currently showing.
-   */
-  isCaptionsActive: boolean
-
-  /**
    * `@readonly` Whether the settings menu has been opened and is currently visible. This is
    * currently only supported by custom settings.
    */
@@ -470,13 +392,6 @@ export interface PlayerProps {
    * Defaults to `undefined` when no provider has been loaded.
    */
   currentProvider?: Provider;
-
-  /**
-   * `@readonly` The selected caption/subtitle text track to display. Defaults to `undefined` if
-   * there is none. This does not mean this track is active, only that is the current selection. To
-   * know if it is active, check the `isCaptionsActive` prop.
-   */
-  currentCaption?: TextTrack
 
   /**
    * `@readonly` Whether the current media is being broadcast live (`duration === Infinity`).

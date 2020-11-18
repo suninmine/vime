@@ -1,5 +1,5 @@
 ---
-title: vime-live-indicator
+title: vm-live-indicator
 sidebar_label: LiveIndicator
 ---
 
@@ -34,16 +34,16 @@ values={[
 <TabItem value="html">
 
 ```html {7}
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-controls>
+    <vm-controls>
       <!-- ... -->
-      <vime-live-indicator></vime-live-indicator>
-    </vime-controls>
-  </vime-ui>
-</vime-player>
+      <vm-live-indicator></vm-live-indicator>
+    </vm-controls>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -53,24 +53,19 @@ values={[
 
 ```tsx {6,16}
 import React from 'react';
-import {
-  VimePlayer,
-  VimeUi,
-  VimeControls,
-  VimeLiveIndicator,
-} from '@vime/react';
+import { Player, Ui, Controls, LiveIndicator } from '@vime/react';
 
 function Example() {
   return (
-    <VimePlayer>
+    <Player>
       {/* ... */}
-      <VimeUi>
+      <Ui>
         {/* ... */}
-        <VimeControls>
-          <VimeLiveIndicator />
-        </VimeControls>
-      </VimeUi>
-    </VimePlayer>
+        <Controls>
+          <LiveIndicator />
+        </Controls>
+      </Ui>
+    </Player>
   );
 }
 ```
@@ -82,31 +77,26 @@ function Example() {
 
 ```html {7,18,26} title="example.vue"
 <template>
-  <VimePlayer>
+  <Player>
     <!-- ... -->
-    <VimeUi>
+    <Ui>
       <!-- ... -->
-      <VimeControls>
-        <VimeLiveIndicator />
-      </VimeControls>
-    </VimeUi>
-  </VimePlayer>
+      <Controls>
+        <LiveIndicator />
+      </Controls>
+    </Ui>
+  </Player>
 </template>
 
 <script>
-  import {
-    VimePlayer,
-    VimeUi,
-    VimeControls,
-    VimeLiveIndicator,
-  } from '@vime/vue';
+  import { Player, Ui, Controls, LiveIndicator } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeUi,
-      VimeControls,
-      VimeLiveIndicator,
+      Player,
+      Ui,
+      Controls,
+      LiveIndicator,
     },
   };
 </script>
@@ -118,24 +108,18 @@ function Example() {
 <TabItem value="svelte">
 
 ```html {6,17} title="example.svelte"
-<VimePlayer>
+<Player>
   <!-- ... -->
-  <VimeUi>
+  <Ui>
     <!-- ... -->
-    <VimeControls>
-      <VimeLiveIndicator />
-    </VimeControls>
-  </VimeUi>
-</VimePlayer>
+    <Controls>
+      <LiveIndicator />
+    </Controls>
+  </Ui>
+</Player>
 
 <script lang="ts">
-  import {
-    VimePlayer,
-    VimeUi,
-    VimeIcons,
-    VimeControls,
-    VimeLiveIndicator,
-  } from '@vime/svelte';
+  import { Player, Ui, Icons, Controls, LiveIndicator } from '@vime/svelte';
 </script>
 ```
 
@@ -148,15 +132,15 @@ function Example() {
 class Example {
   render() {
     return (
-      <vime-player>
+      <vm-player>
         {/* ... */}
-        <vime-ui>
+        <vm-ui>
           {/* ... */}
-          <vime-controls>
-            <vime-live-indicator />
-          </vime-controls>
-        </vime-ui>
-      </vime-player>
+          <vm-controls>
+            <vm-live-indicator />
+          </vm-controls>
+        </vm-ui>
+      </vm-player>
     );
   }
 }
@@ -168,16 +152,16 @@ class Example {
 <TabItem value="angular">
 
 ```html {7} title="example.html"
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-controls>
+    <vm-controls>
       <!-- ... -->
-      <vime-live-indicator></vime-live-indicator>
-    </vime-controls>
-  </vime-ui>
-</vime-player>
+      <vm-live-indicator></vm-live-indicator>
+    </vm-controls>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -195,14 +179,14 @@ class Example {
 
 ### Used by
 
-- [vime-default-controls](controls/default-controls.md)
+- [vm-default-controls](controls/default-controls.md)
 
 ### Graph
 
 ```mermaid
 graph TD;
-  vime-default-controls --> vime-live-indicator
-  style vime-live-indicator fill:#f9f,stroke:#333,stroke-width:4px
+  vm-default-controls --> vm-live-indicator
+  style vm-live-indicator fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ---

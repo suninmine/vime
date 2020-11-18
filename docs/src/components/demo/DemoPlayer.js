@@ -1,21 +1,21 @@
 import React, { Fragment } from 'react';
 import { 
-  VimePlayer, 
-  VimeVideo, 
-  VimeDefaultUi, 
-  VimeYoutube, 
-  VimeVimeo,
-  VimeDailymotion,
-  VimeDash,
-  VimeHls,
-  VimeAudio,
+  Player, 
+  Video, 
+  DefaultUi, 
+  Youtube, 
+  Vimeo,
+  Dailymotion,
+  Dash,
+  Hls,
+  Audio,
 } from '@vime/react';
 
 const poster = 'https://media.vimejs.com/poster.png';
 
-const YouTube = () => (<VimeYoutube videoId="DyTCOwB0DVw" />);
-const Vimeo = () => (<VimeVimeo videoId="411652396" />);
-const Dailymotion = () => (<VimeDailymotion videoId="k3b11PemcuTrmWvYe0q" />);
+const YouTube = () => (<Youtube videoId="DyTCOwB0DVw" />);
+const Vimeo = () => (<Vimeo videoId="411652396" />);
+const Dailymotion = () => (<Dailymotion videoId="k3b11PemcuTrmWvYe0q" />);
 
 const Tracks = () => (
   <Fragment>
@@ -30,37 +30,37 @@ const Tracks = () => (
 );
 
 const Hls = () => (
-  <VimeHls crossOrigin="" poster={poster}>
+  <Hls crossOrigin="" poster={poster}>
     <source data-src="https://media.vimejs.com/hls/index.m3u8" type="application/x-mpegURL" />
     <Tracks />
-  </VimeHls>  
+  </Hls>  
 );
 
 const Dash = () => (
-  <VimeDash src="https://media.vimejs.com/mpd/manifest.mpd" poster={poster} />
+  <Dash src="https://media.vimejs.com/mpd/manifest.mpd" poster={poster} />
 );
 
 const Audio = () => (
-  <VimeAudio crossOrigin="">
+  <Audio crossOrigin="">
     <source data-src="https://media.vimejs.com/audio.mp3" type="audio/mp3" />
-  </VimeAudio>
+  </Audio>
 );
 
 const Video = () => (
-  <VimeVideo crossOrigin="" poster={poster}>
+  <Video crossOrigin="" poster={poster}>
     <source 
       data-src="https://media.vimejs.com/720p.mp4" 
       type="video/mp4" 
     />
     <Tracks />
-  </VimeVideo> 
+  </Video> 
 );
 
 const ProviderMap = {
   audio: <Audio />,
   video: <Video />,
   youtube: <YouTube />,
-  vimeo: <Vimeo />,
+  vimeo: <o />,
   dailymotion: <Dailymotion />,
   hls: <Hls />,
   dash: <Dash />,
@@ -84,7 +84,7 @@ const DemoPlayer = ({
   provider = 'video',
   showDefaultUi = false,
 }) => (
-  <VimePlayer 
+  <Player 
     key={genKey(provider, showDefaultUi)}
     theme={theme} 
     style={{ '--vm-player-theme': color }} 
@@ -92,8 +92,8 @@ const DemoPlayer = ({
     noSkeleton
   >
     {ProviderMap[provider]}
-    {showDefaultUi && <VimeDefaultUi />}
-  </VimePlayer>
+    {showDefaultUi && <DefaultUi />}
+  </Player>
 );
 
 export default DemoPlayer;

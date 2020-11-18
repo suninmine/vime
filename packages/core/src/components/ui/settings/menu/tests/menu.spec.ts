@@ -6,7 +6,7 @@ let page: SpecPage;
 beforeEach(async () => {
   page = await newSpecPage({
     components: [Menu],
-    html: '<vime-menu />',
+    html: '<vm-menu />',
   });
 });
 

@@ -1,7 +1,8 @@
 import {
   h, Prop, Method, Component, Event, EventEmitter, State, Watch,
 } from '@stencil/core';
-import { MediaProvider, withProviderConnect, withProviderContext } from '../MediaProvider';
+import { MediaProvider } from '../MediaProvider';
+import { withProviderConnect } from '../ProviderConnect';
 import { decodeQueryString } from '../../../utils/network';
 import { isString } from '../../../utils/unit';
 import { ViewType } from '../../core/player/ViewType';
@@ -13,6 +14,8 @@ import { DailymotionEvent } from './DailymotionEvent';
 import { MediaType } from '../../core/player/MediaType';
 import { createProviderDispatcher, ProviderDispatcher } from '../ProviderDispatcher';
 import { Logger } from '../../core/player/PlayerLogger';
+import { withComponentRegistry } from '../../core/player/withComponentRegistry';
+import { withProviderContext } from '../withProviderContext';
 
 interface VideoInfo {
   poster?: string
@@ -22,10 +25,12 @@ interface VideoInfo {
 const videoInfoCache = new Map<string, VideoInfo>();
 
 @Component({
-  tag: 'vime-dailymotion',
+  tag: 'vm-dailymotion',
+  styleUrl: 'dailymotion.css',
+  shadow: true,
 })
-export class Dailymotion implements MediaProvider<HTMLVimeEmbedElement> {
-  private embed!: HTMLVimeEmbedElement;
+export class Dailymotion implements MediaProvider<HTMLVmEmbedElement> {
+  private embed!: HTMLVmEmbedElement;
 
   private dispatch!: ProviderDispatcher;
 
@@ -153,9 +158,15 @@ export class Dailymotion implements MediaProvider<HTMLVimeEmbedElement> {
   /**
    * @internal
    */
-  @Event() vLoadStart!: EventEmitter<void>;
+  @Event() vmLoadStart!: EventEmitter<void>;
+
+  /**
+   * Emitted when an error has occurred.
+   */
+  @Event() vmError!: EventEmitter<string | undefined>;
 
   constructor() {
+    withComponentRegistry(this);
     withProviderConnect(this);
     withProviderContext(this);
   }
@@ -217,7 +228,7 @@ export class Dailymotion implements MediaProvider<HTMLVimeEmbedElement> {
   }
 
   private onEmbedSrcChange() {
-    this.vLoadStart.emit();
+    this.vmLoadStart.emit();
   }
 
   private onEmbedMessage(event: CustomEvent<DailymotionMessage>) {
@@ -307,7 +318,7 @@ export class Dailymotion implements MediaProvider<HTMLVimeEmbedElement> {
         this.dispatch('isFullscreenActive', msg.fullscreen === 'true');
         break;
       case DailymotionEvent.Error:
-        this.dispatch('errors', [new Error(msg.error!)]);
+        this.vmError.emit(msg.error);
         break;
     }
   }
@@ -349,15 +360,15 @@ export class Dailymotion implements MediaProvider<HTMLVimeEmbedElement> {
 
   render() {
     return (
-      <vime-embed
+      <vm-embed
         embedSrc={this.embedSrc}
         mediaTitle={this.mediaTitle}
         origin={this.getOrigin()}
         params={this.buildParams()}
         decoder={decodeQueryString}
         preconnections={this.getPreconnections()}
-        onVEmbedMessage={this.onEmbedMessage.bind(this)}
-        onVEmbedSrcChange={this.onEmbedSrcChange.bind(this)}
+        onVmEmbedMessage={this.onEmbedMessage.bind(this)}
+        onVmEmbedSrcChange={this.onEmbedSrcChange.bind(this)}
         ref={(el: any) => { this.embed = el; }}
       />
     );

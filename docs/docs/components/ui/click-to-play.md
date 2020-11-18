@@ -1,5 +1,5 @@
 ---
-title: vime-click-to-play
+title: vm-click-to-play
 sidebar_label: ClickToPlay
 ---
 
@@ -27,13 +27,13 @@ values={[
 <TabItem value="html">
 
 ```html {5}
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-click-to-play></vime-click-to-play>
-  </vime-ui>
-</vime-player>
+    <vm-click-to-play></vm-click-to-play>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -43,17 +43,17 @@ values={[
 
 ```tsx {2,10}
 import React from 'react';
-import { VimePlayer, VimeUi, VimeClickToPlay } from '@vime/react';
+import { Player, Ui, ClickToPlay } from '@vime/react';
 
 function Example() {
   return (
-    <VimePlayer>
+    <Player>
       {/* ... */}
-      <VimeUi>
+      <Ui>
         {/* ... */}
-        <VimeClickToPlay />
-      </VimeUi>
-    </VimePlayer>
+        <ClickToPlay />
+      </Ui>
+    </Player>
   );
 }
 ```
@@ -65,23 +65,23 @@ function Example() {
 
 ```html {6,12,18} title="example.vue"
 <template>
-  <VimePlayer>
+  <Player>
     <!-- ... -->
-    <VimeUi>
+    <Ui>
       <!-- ... -->
-      <VimeClickToPlay />
-    </VimeUi>
-  </VimePlayer>
+      <ClickToPlay />
+    </Ui>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeUi, VimeClickToPlay } from '@vime/vue';
+  import { Player, Ui, ClickToPlay } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeUi,
-      VimeClickToPlay,
+      Player,
+      Ui,
+      ClickToPlay,
     },
   };
 </script>
@@ -93,16 +93,16 @@ function Example() {
 <TabItem value="svelte">
 
 ```html {5,10} title="example.svelte"
-<VimePlayer>
+<Player>
   <!-- ... -->
-  <VimeUi>
+  <Ui>
     <!-- ... -->
-    <VimeClickToPlay />
-  </VimeUi>
-</VimePlayer>
+    <ClickToPlay />
+  </Ui>
+</Player>
 
 <script lang="ts">
-  import { VimePlayer, VimeUi, VimeClickToPlay } from '@vime/svelte';
+  import { Player, Ui, ClickToPlay } from '@vime/svelte';
 </script>
 ```
 
@@ -115,13 +115,13 @@ function Example() {
 class Example {
   render() {
     return (
-      <vime-player>
+      <vm-player>
         {/* ... */}
-        <vime-ui>
+        <vm-ui>
           {/* ... */}
-          <vime-click-to-play />
-        </vime-ui>
-      </vime-player>
+          <vm-click-to-play />
+        </vm-ui>
+      </vm-player>
     );
   }
 }
@@ -133,13 +133,13 @@ class Example {
 <TabItem value="angular">
 
 ```html {5} title="example.html"
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-click-to-play></vime-click-to-play>
-  </vime-ui>
-</vime-player>
+    <vm-click-to-play></vm-click-to-play>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -163,14 +163,14 @@ class Example {
 
 ### Used by
 
-- [vime-default-ui](default-ui.md)
+- [vm-default-ui](default-ui.md)
 
 ### Graph
 
 ```mermaid
 graph TD;
-  vime-default-ui --> vime-click-to-play
-  style vime-click-to-play fill:#f9f,stroke:#333,stroke-width:4px
+  vm-default-ui --> vm-click-to-play
+  style vm-click-to-play fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ---

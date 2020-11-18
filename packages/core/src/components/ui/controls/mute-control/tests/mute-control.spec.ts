@@ -3,15 +3,15 @@ import { newUISpecPage } from '../../../ui/tests';
 import { MuteControl } from '../mute-control';
 
 let page: SpecPage;
-let control: HTMLVimeMuteControlElement;
+let control: HTMLVmMuteControlElement;
 
 beforeEach(async () => {
   ({ page } = await newUISpecPage(
     [MuteControl],
-    '<vime-mute-control />',
+    '<vm-mute-control />',
   ));
 
-  control = page.root!.querySelector('vime-mute-control')!;
+  control = page.root!.querySelector('vm-mute-control')!;
 });
 
 it('should be structurally sound', () => {

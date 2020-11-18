@@ -1,5 +1,5 @@
 ---
-title: vime-captions
+title: vm-captions
 sidebar_label: Captions
 ---
 
@@ -41,13 +41,13 @@ values={[
 <TabItem value="html">
 
 ```html {5}
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-captions></vime-captions>
-  </vime-ui>
-</vime-player>
+    <vm-captions></vm-captions>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -57,17 +57,17 @@ values={[
 
 ```tsx {2,10}
 import React from 'react';
-import { VimePlayer, VimeUi, VimeCaptions } from '@vime/react';
+import { Player, Ui, Captions } from '@vime/react';
 
 function Example() {
   return (
-    <VimePlayer>
+    <Player>
       {/* ... */}
-      <VimeUi>
+      <Ui>
         {/* ... */}
-        <VimeCaptions />
-      </VimeUi>
-    </VimePlayer>
+        <Captions />
+      </Ui>
+    </Player>
   );
 }
 ```
@@ -79,23 +79,23 @@ function Example() {
 
 ```html {6,12,18} title="example.vue"
 <template>
-  <VimePlayer>
+  <Player>
     <!-- ... -->
-    <VimeUi>
+    <Ui>
       <!-- ... -->
-      <VimeCaptions />
-    </VimeUi>
-  </VimePlayer>
+      <Captions />
+    </Ui>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeUi, VimeCaptions } from '@vime/vue';
+  import { Player, Ui, Captions } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeUi,
-      VimeCaptions,
+      Player,
+      Ui,
+      Captions,
     },
   };
 </script>
@@ -107,16 +107,16 @@ function Example() {
 <TabItem value="svelte">
 
 ```html {5,10} title="example.svelte"
-<VimePlayer>
+<Player>
   <!-- ... -->
-  <VimeUi>
+  <Ui>
     <!-- ... -->
-    <VimeCaptions />
-  </VimeUi>
-</VimePlayer>
+    <Captions />
+  </Ui>
+</Player>
 
 <script lang="ts">
-  import { VimePlayer, VimeUi, VimeCaptions } from '@vime/svelte';
+  import { Player, Ui, Captions } from '@vime/svelte';
 </script>
 ```
 
@@ -129,13 +129,13 @@ function Example() {
 class Example {
   render() {
     return (
-      <vime-player>
+      <vm-player>
         {/* ... */}
-        <vime-ui>
+        <vm-ui>
           {/* ... */}
-          <vime-captions />
-        </vime-ui>
-      </vime-player>
+          <vm-captions />
+        </vm-ui>
+      </vm-player>
     );
   }
 }
@@ -147,13 +147,13 @@ class Example {
 <TabItem value="angular">
 
 ```html {5} title="example.html"
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-captions></vime-captions>
-  </vime-ui>
-</vime-player>
+    <vm-captions></vm-captions>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -167,13 +167,6 @@ class Example {
 | ---------------- | ----------------- | --------------------------------------------------------------------------------------------------- | --------- | ------- |
 | `controlsHeight` | `controls-height` | The height of any lower control bar in pixels so that the captions can reposition when it's active. | `number`  | `0`     |
 | `hidden`         | `hidden`          | Whether the captions should be visible or not.                                                      | `boolean` | `false` |
-
-## Events
-
-| Event          | Description                                                                                                             | Type                                 |
-| -------------- | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------ |
-| `vCuesChange`  | Emitted when the active cues change. A cue is active when `currentTime >= cue.startTime && currentTime <= cue.endTime`. | `CustomEvent<TextTrackCue[]>`        |
-| `vTrackChange` | Emitted when the current track changes.                                                                                 | `CustomEvent<TextTrack ∣ undefined>` |
 
 ## CSS Custom Properties
 
@@ -193,14 +186,14 @@ class Example {
 
 ### Used by
 
-- [vime-default-ui](default-ui.md)
+- [vm-default-ui](default-ui.md)
 
 ### Graph
 
 ```mermaid
 graph TD;
-  vime-default-ui --> vime-captions
-  style vime-captions fill:#f9f,stroke:#333,stroke-width:4px
+  vm-default-ui --> vm-captions
+  style vm-captions fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ---

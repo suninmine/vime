@@ -4,18 +4,18 @@ import { newUISpecPage } from '../../../ui/tests';
 import { ViewType } from '../../../../core/player/ViewType';
 
 let page: SpecPage;
-let provider: HTMLVimeFaketubeElement;
-let controls: HTMLVimeControlsElement;
+let provider: HTMLVmFaketubeElement;
+let controls: HTMLVmControlsElement;
 
 jest.useFakeTimers();
 
 beforeEach(async () => {
   ({ page, provider } = await newUISpecPage(
     [Controls],
-    '<vime-controls />',
+    '<vm-controls />',
   ));
 
-  controls = page.root!.querySelector('vime-controls')!;
+  controls = page.root!.querySelector('vm-controls')!;
 });
 
 it('should be structurally sound', () => {

@@ -1,16 +1,19 @@
 import { h, Component, Prop } from '@stencil/core';
+import { withComponentRegistry } from '../../core/player/withComponentRegistry';
 
 /**
  * @slot - Used to extend the default user interface with custom UI components.
  */
 @Component({
-  tag: 'vime-default-ui',
+  tag: 'vm-default-ui',
+  styleUrl: 'default-ui.css',
+  shadow: true,
 })
 export class DefaultUI {
   /**
-   * Whether the default icons should not be loaded.
+   * Whether the default icon library should be registered.
    */
-  @Prop() noIcons = false;
+  @Prop() noIconLibrary = false;
 
   /**
    * Whether clicking the player should not toggle playback.
@@ -47,25 +50,23 @@ export class DefaultUI {
    */
   @Prop() noSettings = false;
 
-  /**
-   * Whether the skeleton loading animation should be shown while the player is loading.
-   */
-  @Prop() noSkeleton = false;
+  constructor() {
+    withComponentRegistry(this);
+  }
 
   render() {
     return (
-      <vime-ui>
-        {!this.noIcons && <vime-icons />}
-        {!this.noSkeleton && <vime-skeleton />}
-        {!this.noClickToPlay && <vime-click-to-play />}
-        {!this.noDblClickFullscreen && <vime-dbl-click-fullscreen />}
-        {!this.noCaptions && <vime-captions />}
-        {!this.noPoster && <vime-poster />}
-        {!this.noSpinner && <vime-spinner />}
-        {!this.noControls && <vime-default-controls />}
-        {!this.noSettings && <vime-default-settings />}
+      <vm-ui>
+        {!this.noIconLibrary && <vm-icon-library />}
+        {!this.noClickToPlay && <vm-click-to-play />}
+        {!this.noDblClickFullscreen && <vm-dbl-click-fullscreen />}
+        {!this.noCaptions && <vm-captions />}
+        {!this.noPoster && <vm-poster />}
+        {!this.noSpinner && <vm-spinner />}
+        {!this.noControls && <vm-default-controls />}
+        {!this.noSettings && <vm-default-settings />}
         <slot />
-      </vime-ui>
+      </vm-ui>
     );
   }
 }

@@ -1,5 +1,5 @@
 ---
-title: vime-menu-item
+title: vm-menu-item
 sidebar_label: MenuItem
 ---
 
@@ -42,15 +42,15 @@ values={[
 <TabItem value="html">
 
 ```html {6}
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-settings>
-      <vime-menu-item label="Playback Quality" hint="Auto"></vime-menu-item>
-    </vime-settings>
-  </vime-ui>
-</vime-player>
+    <vm-settings>
+      <vm-menu-item label="Playback Quality" hint="Auto"></vm-menu-item>
+    </vm-settings>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -60,19 +60,19 @@ values={[
 
 ```tsx {2,11}
 import React from 'react';
-import { VimePlayer, VimeUi, VimeSettings, VimeMenuItem } from '@vime/react';
+import { Player, Ui, Settings, MenuItem } from '@vime/react';
 
 function Example() {
   return (
-    <VimePlayer>
+    <Player>
       {/* ... */}
-      <VimeUi>
+      <Ui>
         {/* ... */}
-        <VimeSettings>
-          <VimeMenuItem label="Playback Quality" hint="Auto" />
-        </VimeSettings>
-      </VimeUi>
-    </VimePlayer>
+        <Settings>
+          <MenuItem label="Playback Quality" hint="Auto" />
+        </Settings>
+      </Ui>
+    </Player>
   );
 }
 ```
@@ -84,26 +84,26 @@ function Example() {
 
 ```html {7,14,21} title="example.vue"
 <template>
-  <VimePlayer>
+  <Player>
     <!-- ... -->
-    <VimeUi>
+    <Ui>
       <!-- ... -->
-      <VimeSettings>
-        <VimeMenuItem label="Playback Quality" hint="Auto" />
-      </VimeSettings>
-    </VimeUi>
-  </VimePlayer>
+      <Settings>
+        <menuitem label="Playback Quality" hint="Auto" />
+      </Settings>
+    </Ui>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeUi, VimeSettings, VimeMenuItem } from '@vime/vue';
+  import { Player, Ui, Settings, MenuItem } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeUi,
-      VimeSettings,
-      VimeMenuItem,
+      Player,
+      Ui,
+      Settings,
+      MenuItem,
     },
   };
 </script>
@@ -115,18 +115,18 @@ function Example() {
 <TabItem value="svelte">
 
 ```html {6,16} title="example.svelte"
-<VimePlayer>
+<Player>
   <!-- ... -->
-  <VimeUi>
+  <Ui>
     <!-- ... -->
-    <VimeSettings>
-      <VimeMenuItem label="Playback Quality" hint="Auto" />
-    </VimeSettings>
-  </VimeUi>
-</VimePlayer>
+    <Settings>
+      <menuitem label="Playback Quality" hint="Auto" />
+    </Settings>
+  </Ui>
+</Player>
 
 <script lang="ts">
-  import { VimePlayer, VimeUi, VimeSettings, VimeMenuItem } from '@vime/svelte';
+  import { Player, Ui, Settings, MenuItem } from '@vime/svelte';
 </script>
 ```
 
@@ -139,15 +139,15 @@ function Example() {
 class Example {
   render() {
     return (
-      <vime-player>
+      <vm-player>
         {/* ... */}
-        <vime-ui>
+        <vm-ui>
           {/* ... */}
-          <vime-settings>
-            <vime-menu-item label="Playback Quality" hint="Auto" />
-          </vime-settings>
-        </vime-ui>
-      </vime-player>
+          <vm-settings>
+            <vm-menu-item label="Playback Quality" hint="Auto" />
+          </vm-settings>
+        </vm-ui>
+      </vm-player>
     );
   }
 }
@@ -159,15 +159,15 @@ class Example {
 <TabItem value="angular">
 
 ```html {6} title="example.html"
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-settings>
-      <vime-menu-item label="Playback Quality" hint="Auto"></vime-menu-item>
-    </vime-settings>
-  </vime-ui>
-</vime-player>
+    <vm-settings>
+      <vm-menu-item label="Playback Quality" hint="Auto"></vm-menu-item>
+    </vm-settings>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -177,17 +177,18 @@ class Example {
 
 ## Properties
 
-| Property             | Attribute      | Description                                                                                                                                                                                               | Type                  | Default             |
-| -------------------- | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | ------------------- |
-| `badge`              | `badge`        | This can provide additional context about the value of a menu item. For example, if the item is a radio button for a set of video qualities, the badge could describe whether the quality is UHD, HD etc. | `string ∣ undefined`  | `undefined`         |
-| `checked`            | `checked`      | If this item is to behave as a radio button, then this property determines whether the radio is selected or not. Sets the `aria-checked` property.                                                        | `boolean ∣ undefined` | `undefined`         |
-| `checkedIcon`        | `checked-icon` | The URL to an SVG element or fragment to load.                                                                                                                                                            | `string ∣ undefined`  | `'#vime-checkmark'` |
-| `expanded`           | `expanded`     | If the item has a popup menu, this indicates whether the menu is open or not. Sets the `aria-expanded` property.                                                                                          | `boolean ∣ undefined` | `undefined`         |
-| `hidden`             | `hidden`       | Whether the item is displayed or not.                                                                                                                                                                     | `boolean`             | `false`             |
-| `hint`               | `hint`         | This can provide additional context about some underlying state of the item. For example, if the menu item opens/closes a submenu with options, the hint could be the currently selected option.          | `string ∣ undefined`  | `undefined`         |
-| `identifier`         | `identifier`   | The `id` attribute of the item.                                                                                                                                                                           | `string ∣ undefined`  | `undefined`         |
-| `label` _(required)_ | `label`        | The label/title of the item.                                                                                                                                                                              | `string`              | `undefined`         |
-| `menu`               | `menu`         | If the item has a popup menu, then this should be the `id` of said menu. Sets the `aria-controls` property.                                                                                               | `string ∣ undefined`  | `undefined`         |
+| Property             | Attribute    | Description                                                                                                                                                                                               | Type                  | Default     |
+| -------------------- | ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | ----------- |
+| `badge`              | `badge`      | This can provide additional context about the value of a menu item. For example, if the item is a radio button for a set of video qualities, the badge could describe whether the quality is UHD, HD etc. | `string ∣ undefined`  | `undefined` |
+| `checkIcon`          | `check-icon` | The name of the checkmark icon to resolve from the icon library.                                                                                                                                          | `string ∣ undefined`  | `'check'`   |
+| `checked`            | `checked`    | If this item is to behave as a radio button, then this property determines whether the radio is selected or not. Sets the `aria-checked` property.                                                        | `boolean ∣ undefined` | `undefined` |
+| `expanded`           | `expanded`   | If the item has a popup menu, this indicates whether the menu is open or not. Sets the `aria-expanded` property.                                                                                          | `boolean ∣ undefined` | `undefined` |
+| `hidden`             | `hidden`     | Whether the item is displayed or not.                                                                                                                                                                     | `boolean`             | `false`     |
+| `hint`               | `hint`       | This can provide additional context about some underlying state of the item. For example, if the menu item opens/closes a submenu with options, the hint could be the currently selected option.          | `string ∣ undefined`  | `undefined` |
+| `icons`              | `icons`      | The name of an icon library to use. Defaults to the library defined by the `icons` player property.                                                                                                       | `string ∣ undefined`  | `undefined` |
+| `identifier`         | `identifier` | The `id` attribute of the item.                                                                                                                                                                           | `string ∣ undefined`  | `undefined` |
+| `label` _(required)_ | `label`      | The label/title of the item.                                                                                                                                                                              | `string`              | `undefined` |
+| `menu`               | `menu`       | If the item has a popup menu, then this should be the `id` of said menu. Sets the `aria-controls` property.                                                                                               | `string ∣ undefined`  | `undefined` |
 
 ## CSS Custom Properties
 
@@ -212,23 +213,23 @@ class Example {
 
 ### Used by
 
-- [vime-default-settings](default-settings.md)
-- [vime-menu-radio](menu-radio.md)
-- [vime-submenu](submenu.md)
+- [vm-default-settings](default-settings.md)
+- [vm-menu-radio](menu-radio.md)
+- [vm-submenu](submenu.md)
 
 ### Depends on
 
-- [vime-icon](../icon.md)
+- [vm-icon](../icon.md)
 
 ### Graph
 
 ```mermaid
 graph TD;
-  vime-menu-item --> vime-icon
-  vime-default-settings --> vime-menu-item
-  vime-menu-radio --> vime-menu-item
-  vime-submenu --> vime-menu-item
-  style vime-menu-item fill:#f9f,stroke:#333,stroke-width:4px
+  vm-menu-item --> vm-icon
+  vm-default-settings --> vm-menu-item
+  vm-menu-radio --> vm-menu-item
+  vm-submenu --> vm-menu-item
+  style vm-menu-item fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ---

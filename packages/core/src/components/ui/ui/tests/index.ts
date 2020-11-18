@@ -7,17 +7,17 @@ export const newUISpecPage = async (components: any[], ui: string) => {
   const page = await newSpecPage({
     components: [Player, FakeTube, UI, ...components],
     html: `
-      <vime-player>
-        <vime-faketube></vime-faketube>
+      <vm-player>
+        <vm-faketube></vm-faketube>
         
-        <vime-ui>
+        <vm-ui>
           ${ui}
-        </vime-ui>
-      </vime-player>
+        </vm-ui>
+      </vm-player>
     `,
   });
 
-  const provider = page.root!.querySelector('vime-faketube')!;
+  const provider = page.root!.querySelector('vm-faketube')!;
 
   return { page, provider };
 };

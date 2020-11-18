@@ -1,5 +1,5 @@
 ---
-title: vime-spinner
+title: vm-spinner
 sidebar_label: Spinner
 ---
 
@@ -34,13 +34,13 @@ values={[
 <TabItem value="html">
 
 ```html {5}
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-spinner></vime-spinner>
-  </vime-ui>
-</vime-player>
+    <vm-spinner></vm-spinner>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -50,17 +50,17 @@ values={[
 
 ```tsx {2,10}
 import React from 'react';
-import { VimePlayer, VimeUi, VimeSpinner } from '@vime/react';
+import { Player, Ui, Spinner } from '@vime/react';
 
 function Example() {
   return (
-    <VimePlayer>
+    <Player>
       {/* ... */}
-      <VimeUi>
+      <Ui>
         {/* ... */}
-        <VimeSpinner />
-      </VimeUi>
-    </VimePlayer>
+        <Spinner />
+      </Ui>
+    </Player>
   );
 }
 ```
@@ -72,23 +72,23 @@ function Example() {
 
 ```html {6,12,18} title="example.vue"
 <template>
-  <VimePlayer>
+  <Player>
     <!-- ... -->
-    <VimeUi>
+    <Ui>
       <!-- ... -->
-      <VimeSpinner />
-    </VimeUi>
-  </VimePlayer>
+      <Spinner />
+    </Ui>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeUi, VimeSpinner } from '@vime/vue';
+  import { Player, Ui, Spinner } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeUi,
-      VimeSpinner,
+      Player,
+      Ui,
+      Spinner,
     },
   };
 </script>
@@ -100,16 +100,16 @@ function Example() {
 <TabItem value="svelte">
 
 ```html {5,10} title="example.svelte"
-<VimePlayer>
+<Player>
   <!-- ... -->
-  <VimeUi>
+  <Ui>
     <!-- ... -->
-    <VimeSpinner />
-  </VimeUi>
-</VimePlayer>
+    <Spinner />
+  </Ui>
+</Player>
 
 <script lang="ts">
-  import { VimePlayer, VimeUi, VimeSpinner } from '@vime/svelte';
+  import { Player, Ui, Spinner } from '@vime/svelte';
 </script>
 ```
 
@@ -122,13 +122,13 @@ function Example() {
 class Example {
   render() {
     return (
-      <vime-player>
+      <vm-player>
         {/* ... */}
-        <vime-ui>
+        <vm-ui>
           {/* ... */}
-          <vime-spinner />
-        </vime-ui>
-      </vime-player>
+          <vm-spinner />
+        </vm-ui>
+      </vm-player>
     );
   }
 }
@@ -140,13 +140,13 @@ class Example {
 <TabItem value="angular">
 
 ```html {5} title="example.html"
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-spinner></vime-spinner>
-  </vime-ui>
-</vime-player>
+    <vm-spinner></vm-spinner>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -156,10 +156,10 @@ class Example {
 
 ## Events
 
-| Event       | Description                              | Type                |
-| ----------- | ---------------------------------------- | ------------------- |
-| `vWillHide` | Emitted when the spinner will be hidden. | `CustomEvent<void>` |
-| `vWillShow` | Emitted when the spinner will be shown.  | `CustomEvent<void>` |
+| Event        | Description                              | Type                |
+| ------------ | ---------------------------------------- | ------------------- |
+| `vmWillHide` | Emitted when the spinner will be hidden. | `CustomEvent<void>` |
+| `vmWillShow` | Emitted when the spinner will be shown.  | `CustomEvent<void>` |
 
 ## CSS Custom Properties
 
@@ -178,14 +178,14 @@ class Example {
 
 ### Used by
 
-- [vime-default-ui](default-ui.md)
+- [vm-default-ui](default-ui.md)
 
 ### Graph
 
 ```mermaid
 graph TD;
-  vime-default-ui --> vime-spinner
-  style vime-spinner fill:#f9f,stroke:#333,stroke-width:4px
+  vm-default-ui --> vm-spinner
+  style vm-spinner fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ---

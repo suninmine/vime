@@ -1,5 +1,5 @@
 ---
-title: vime-faketube
+title: vm-faketube
 sidebar_label: Faketube
 ---
 
@@ -19,7 +19,7 @@ Type: `Promise<void>`
 
 ### `dispatchLoadStart() => Promise<void>`
 
-Dispatches the `vLoadStart` event.
+Dispatches the `vmLoadStart` event.
 
 #### Returns
 

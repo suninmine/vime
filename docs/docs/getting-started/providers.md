@@ -43,8 +43,8 @@ in the `Components > Providers` section in the sidebar (on your left), we see th
 
 ```html {3-17} title="player.html"
 <!-- By default there are no controls so let's turn them on. -->
-<vime-player controls>
-  <vime-video cross-origin="true" poster="https://media.vimejs.com/poster.png">
+<vm-player controls>
+  <vm-video cross-origin="true" poster="https://media.vimejs.com/poster.png">
     <!-- These are passed directly to the underlying HTML5 `<video>` element. -->
     <!-- Why `data-src`? Lazy loading, you can always use `src` if you prefer.  -->
     <source 
@@ -58,10 +58,10 @@ in the `Components > Providers` section in the sidebar (on your left), we see th
       srclang="en" 
       label="English" 
     />
-  </vime-video> 
+  </vm-video> 
 
   <!-- ... -->
-</vime-player>
+</vm-player>
 ```
 
 </TabItem>
@@ -70,13 +70,13 @@ in the `Components > Providers` section in the sidebar (on your left), we see th
 
 ```tsx {8-22} title="Player.tsx"
 import React from 'react';
-import { VimePlayer, VimeVideo } from '@vime/react';
+import { Player, Video } from '@vime/react';
 
 function Player() {
   return (
     {/* By default there are no controls so let's turn them on. */}
-    <VimePlayer controls>
-      <VimeVideo crossOrigin="" poster="https://media.vimejs.com/poster.png">
+    <Player controls>
+      <Video crossOrigin="" poster="https://media.vimejs.com/poster.png">
         {/* These are passed directly to the underlying HTML5 `<video>` element. */}
         {/* Why `data-src`? Lazy loading, you can always use `src` if you prefer.  */}
         <source 
@@ -90,10 +90,10 @@ function Player() {
           srcLang="en" 
           label="English" 
         />
-      </VimeVideo> 
+      </Video> 
 
       {/* ... */}
-    </VimePlayer>
+    </Player>
   );
 }
 ```
@@ -105,8 +105,8 @@ function Player() {
 ```html {4-18} title="Player.vue"
 <template>
   <!-- By default there are no controls so let's turn them on. -->
-  <VimePlayer controls>
-    <VimeVideo crossOrigin="" poster="https://media.vimejs.com/poster.png">
+  <Player controls>
+    <Video crossOrigin="" poster="https://media.vimejs.com/poster.png">
       <!-- These are passed directly to the underlying HTML5 `<video>` element. -->
       <!-- Why `data-src`? Lazy loading, you can always use `src` if you prefer.  -->
       <source 
@@ -120,19 +120,19 @@ function Player() {
         srclang="en" 
         label="English" 
       />
-    </VimeVideo> 
+    </Video> 
 
     <!-- ... -->
-  </VimePlayer>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeVideo } from '@vime/vue';
+  import { Player, Video } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeVideo,
+      Player,
+      Video,
     },
   };
 </script>
@@ -144,8 +144,8 @@ function Player() {
 
 ```html {3-17} title="Player.svelte"
 <!-- By default there are no controls so let's turn them on. -->
-<VimePlayer controls>
-  <VimeVideo crossOrigin="" poster="https://media.vimejs.com/poster.png">
+<Player controls>
+  <Video crossOrigin="" poster="https://media.vimejs.com/poster.png">
     <!-- These are passed directly to the underlying HTML5 `<video>` element. -->
     <!-- Why `data-src`? Lazy loading, you can always use `src` if you prefer.  -->
     <source 
@@ -159,13 +159,13 @@ function Player() {
       srclang="en" 
       label="English" 
     />
-  </VimeVideo> 
+  </Video> 
 
   <!-- ... -->
-</VimePlayer>
+</Player>
 
 <script lang="ts">
-  import { VimePlayer, VimeVideo } from '@vime/svelte';
+  import { Player, Video } from '@vime/svelte';
 </script>
 ```
 
@@ -180,8 +180,8 @@ class Player {
   render() {
     return (
       {/* By default there are no controls so let's turn them on. */}
-      <vime-player controls>
-        <vime-video crossOrigin="" poster="https://media.vimejs.com/poster.png">
+      <vm-player controls>
+        <vm-video crossOrigin="" poster="https://media.vimejs.com/poster.png">
           {/* These are passed directly to the underlying HTML5 `<video>` element. */}
           {/* Why `data-src`? Lazy loading, you can always use `src` if you prefer.  */}
           <source 
@@ -195,8 +195,8 @@ class Player {
             srclang="en" 
             label="English" 
           />
-        </vime-video> 
-      </vime-player>
+        </vm-video> 
+      </vm-player>
     );
   }
 }
@@ -208,8 +208,8 @@ class Player {
 
 ```html {3-17} title="player.html"
 <!-- By default there are no controls so let's turn them on. -->
-<vime-player controls>
-  <vime-video cross-origin="true" poster="https://media.vimejs.com/poster.png">
+<vm-player controls>
+  <vm-video cross-origin="true" poster="https://media.vimejs.com/poster.png">
     <!-- These are passed directly to the underlying HTML5 `<video>` element. -->
     <!-- Why `data-src`? Lazy loading, you can always use `src` if you prefer.  -->
     <source 
@@ -223,10 +223,10 @@ class Player {
       srclang="en" 
       label="English" 
     />
-  </vime-video> 
+  </vm-video> 
 
   <!-- ... -->
-</vime-player>
+</vm-player>
 ```
 
 </TabItem>

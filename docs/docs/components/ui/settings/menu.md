@@ -1,5 +1,5 @@
 ---
-title: vime-menu
+title: vm-menu
 sidebar_label: Menu
 ---
 
@@ -40,15 +40,15 @@ values={[
 <TabItem value="html">
 
 ```html {5-7}
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-menu identifer="menu-id" controller="menu-controller-id" active>
+    <vm-menu identifer="menu-id" controller="menu-controller-id" active>
       <!-- ... -->
-    </vime-menu>
-  </vime-ui>
-</vime-player>
+    </vm-menu>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -58,7 +58,7 @@ values={[
 
 ```tsx {2,20-28}
 import React, { useState } from "react";
-import { VimePlayer, VimeUi, VimeMenu } from "@vime/react";
+import { Player, Ui, Menu } from "@vime/react";
 
 function Example() {
   const [isMenuActive, setIsMenuActive] = useState(false);
@@ -72,21 +72,21 @@ function Example() {
   };
 
   return (
-    <VimePlayer>
+    <Player>
       {/* ... */}
-      <VimeUi>
+      <Ui>
         {/* ... */}
-        <VimeMenu
+        <Menu
           identifer="menu-id"
           controller="menu-controller-id"
           active={isMenuActive}
-          onVOpen={onOpen}
-          onVClose={onClose}
+          onVmOpen={onOpen}
+          onVmClose={onClose}
         >
           <!-- ... -->
-        </VimeMenu>
-      </VimeUi>
-    </VimePlayer>
+        </Menu>
+      </Ui>
+    </Player>
   );
 }
 ```
@@ -98,31 +98,31 @@ function Example() {
 
 ```html {6-14,20,26} title="example.vue"
 <template>
-  <VimePlayer>
+  <Player>
     <!-- ... -->
-    <VimeUi>
+    <Ui>
       <!-- ... -->
-      <VimeMenu
+      <menu
         identifer="menu-id"
         controller="menu-controller-id"
         :active="isMenuActive"
-        @vOpen="onOpen"
-        @vClose="onClose"
+        @vmOpen="onOpen"
+        @vmClose="onClose"
       >
         <!-- ... -->
-      </VimeMenu>
-    </VimeUi>
-  </VimePlayer>
+      </menu>
+    </Ui>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeUi, VimeMenu } from '@vime/vue';
+  import { Player, Ui, Menu } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeUi,
-      VimeMenu,
+      Player,
+      Ui,
+      Menu,
     },
     data: {
       isMenuActive: false,
@@ -146,26 +146,26 @@ function Example() {
 <TabItem value="svelte">
 
 ```tsx {5-13}
-<VimePlayer>
+<Player>
   <!-- ... -->
-  <VimeUi>
+  <Ui>
     <!-- ... -->
-    <VimeMenu
+    <Menu
       identifer="menu-id"
       controller="menu-controller-id"
       active={isMenuActive}
-      on:vOpen={onOpen}
-      on:vClose={onClose}
+      on:vmOpen={onOpen}
+      on:vmClose={onClose}
     >
       <!-- ... -->
-    </VimeMenu>
-  </VimeUi>
-</VimePlayer>
+    </Menu>
+  </Ui>
+</Player>
 ```
 
 ```html {2}
 <script lang="ts">
-  import { VimePlayer, VimeUi, VimeMenu } from '@vime/svelte';
+  import { Player, Ui, Menu } from '@vime/svelte';
 
   let isMenuActive = false;
 
@@ -198,21 +198,21 @@ class Example {
 
   render() {
     return (
-      <vime-player>
+      <vm-player>
         {/* ... */}
-        <vime-ui>
+        <vm-ui>
           {/* ... */}
-          <vime-menu
+          <vm-menu
             identifer="menu-id"
             controller="menu-controller-id"
             active={this.isMenuActive}
-            onVOpen={this.onOpen.bind(this)}
-            onVClose={this.onClose.bind(this)}
+            onVmOpen={this.onOpen.bind(this)}
+            onVmClose={this.onClose.bind(this)}
           >
             {/* ... */}
-          </vime-menu>
-        </vime-ui>
-      </vime-player>
+          </vm-menu>
+        </vm-ui>
+      </vm-player>
     );
   }
 }
@@ -224,21 +224,21 @@ class Example {
 <TabItem value="angular">
 
 ```html {5-13} title="example.html"
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-menu
+    <vm-menu
       identifer="menu-id"
       controller="menu-controller-id"
       [active]="isMenuActive"
-      (vOpen)="onOpen()"
-      (vClose)="onClose()"
+      (vmOpen)="onOpen()"
+      (vmClose)="onClose()"
     >
       <!-- ... -->
-    </vime-menu>
-  </vime-ui>
-</vime-player>
+    </vm-menu>
+  </vm-ui>
+</vm-player>
 ```
 
 ```ts title="example.ts"
@@ -270,12 +270,12 @@ class Example {
 
 ## Events
 
-| Event                  | Description                                           | Type                                                           |
-| ---------------------- | ----------------------------------------------------- | -------------------------------------------------------------- |
-| `vClose`               | Emitted when the menu has closed/is not active.       | `CustomEvent<void>`                                            |
-| `vFocusMenuItemChange` | Emitted when the currently focused menu item changes. | `CustomEvent<HTMLVimeMenuItemElement ∣ undefined>`             |
-| `vMenuItemsChange`     | Emitted when the menu items present changes.          | `CustomEvent<NodeListOf<HTMLVimeMenuItemElement> ∣ undefined>` |
-| `vOpen`                | Emitted when the menu is open/active.                 | `CustomEvent<void>`                                            |
+| Event                   | Description                                           | Type                                                         |
+| ----------------------- | ----------------------------------------------------- | ------------------------------------------------------------ |
+| `vmClose`               | Emitted when the menu has closed/is not active.       | `CustomEvent<void>`                                          |
+| `vmFocusMenuItemChange` | Emitted when the currently focused menu item changes. | `CustomEvent<HTMLVmMenuItemElement ∣ undefined>`             |
+| `vmMenuItemsChange`     | Emitted when the menu items present changes.          | `CustomEvent<NodeListOf<HTMLVmMenuItemElement> ∣ undefined>` |
+| `vmOpen`                | Emitted when the menu is open/active.                 | `CustomEvent<void>`                                          |
 
 ## Methods
 
@@ -296,13 +296,13 @@ Returns the controller responsible for opening/closing this menu.
 
 Type: `Promise<HTMLElement>`
 
-### `getFocusedMenuItem() => Promise<HTMLVimeMenuItemElement>`
+### `getFocusedMenuItem() => Promise<HTMLVmMenuItemElement>`
 
 Returns the currently focused menu item.
 
 #### Returns
 
-Type: `Promise<HTMLVimeMenuItemElement>`
+Type: `Promise<HTMLVmMenuItemElement>`
 
 ## Slots
 
@@ -324,16 +324,16 @@ Type: `Promise<HTMLVimeMenuItemElement>`
 
 ### Used by
 
-- [vime-settings](settings.md)
-- [vime-submenu](submenu.md)
+- [vm-settings](settings.md)
+- [vm-submenu](submenu.md)
 
 ### Graph
 
 ```mermaid
 graph TD;
-  vime-settings --> vime-menu
-  vime-submenu --> vime-menu
-  style vime-menu fill:#f9f,stroke:#333,stroke-width:4px
+  vm-settings --> vm-menu
+  vm-submenu --> vm-menu
+  style vm-menu fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ---

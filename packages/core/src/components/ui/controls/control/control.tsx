@@ -1,28 +1,30 @@
 import {
-  h, Host, Component, Prop, State, Element,
+  h, Component, Prop, State, Element,
   Event, EventEmitter, Watch,
 } from '@stencil/core';
 import { PlayerProps } from '../../../core/player/PlayerProps';
 import { isNull, isUndefined } from '../../../../utils/unit';
-import { Disposal } from '../../../core/player/Disposal';
+import { Disposal } from '../../../../utils/Disposal';
 import { listen } from '../../../../utils/dom';
 import { KeyboardControl } from './KeyboardControl';
-import { findRootPlayer } from '../../../core/player/utils';
-import { withPlayerContext } from '../../../core/player/PlayerContext';
+import { findPlayer } from '../../../core/player/findPlayer';
+import { withPlayerContext } from '../../../core/player/withPlayerContext';
+import { withComponentRegistry } from '../../../core/player/withComponentRegistry';
 
 /**
  * @slot - Used to pass in the content of the control (text/icon/tooltip).
  */
 @Component({
-  tag: 'vime-control',
-  styleUrl: 'control.scss',
+  tag: 'vm-control',
+  styleUrl: 'control.css',
+  shadow: true,
 })
 export class Control implements KeyboardControl {
   private button!: HTMLButtonElement;
 
   private keyboardDisposal = new Disposal();
 
-  @Element() el!: HTMLVimeControlElement;
+  @Element() el!: HTMLVmControlElement;
 
   @State() describedBy?: string;
 
@@ -34,11 +36,11 @@ export class Control implements KeyboardControl {
   @Prop() keys?: string;
 
   @Watch('keys')
-  onKeysChange() {
+  async onKeysChange() {
     this.keyboardDisposal.empty();
     if (isUndefined(this.keys)) return;
 
-    const player = findRootPlayer(this);
+    const player = await findPlayer(this);
     const codes = (this.keys! as string).split('/');
 
     this.keyboardDisposal.add(listen(player, 'keydown', (event: KeyboardEvent) => {
@@ -87,9 +89,10 @@ export class Control implements KeyboardControl {
   /**
    * Emitted when the user is interacting with the control by focusing, touching or hovering on it.
    */
-  @Event() vInteractionChange!: EventEmitter<boolean>;
+  @Event() vmInteractionChange!: EventEmitter<boolean>;
 
   constructor() {
+    withComponentRegistry(this);
     withPlayerContext(this, ['isTouch']);
   }
 
@@ -112,7 +115,7 @@ export class Control implements KeyboardControl {
   }
 
   private findTooltip() {
-    const tooltip = this.el.querySelector('vime-tooltip');
+    const tooltip = this.el.querySelector('vm-tooltip');
     if (!isNull(tooltip)) this.describedBy = tooltip!.id;
     return tooltip;
   }
@@ -120,14 +123,14 @@ export class Control implements KeyboardControl {
   private onShowTooltip() {
     const tooltip = this.findTooltip();
     if (!isNull(tooltip)) tooltip!.active = true;
-    this.vInteractionChange.emit(true);
+    this.vmInteractionChange.emit(true);
   }
 
   private onHideTooltip() {
     const tooltip = this.findTooltip();
     if (!isNull(tooltip)) tooltip!.active = false;
     this.button.blur();
-    this.vInteractionChange.emit(false);
+    this.vmInteractionChange.emit(false);
   }
 
   private onFocus() {
@@ -150,37 +153,32 @@ export class Control implements KeyboardControl {
 
   render() {
     return (
-      <Host
+      <button
         class={{
           hidden: this.hidden,
+          notTouch: !this.isTouch,
+          tapHighlight: this.showTapHighlight,
         }}
+        id={this.identifier}
+        type="button"
+        aria-label={this.label}
+        aria-haspopup={!isUndefined(this.menu) ? 'true' : undefined}
+        aria-controls={this.menu}
+          // eslint-disable-next-line no-nested-ternary
+        aria-expanded={!isUndefined(this.menu) ? (this.expanded ? 'true' : 'false') : undefined}
+          // eslint-disable-next-line no-nested-ternary
+        aria-pressed={!isUndefined(this.pressed) ? (this.pressed ? 'true' : 'false') : undefined}
+        aria-hidden={this.hidden ? 'true' : 'false'}
+        aria-describedby={this.describedBy}
+        onTouchStart={this.onTouchStart.bind(this)}
+        onFocus={this.onFocus.bind(this)}
+        onBlur={this.onBlur.bind(this)}
+        onMouseEnter={this.onMouseEnter.bind(this)}
+        onMouseLeave={this.onMouseLeave.bind(this)}
+        ref={(el: any) => { this.button = el; }}
       >
-        <button
-          class={{
-            notTouch: !this.isTouch,
-            tapHighlight: this.showTapHighlight,
-          }}
-          id={this.identifier}
-          type="button"
-          aria-label={this.label}
-          aria-haspopup={!isUndefined(this.menu) ? 'true' : undefined}
-          aria-controls={this.menu}
-          // eslint-disable-next-line no-nested-ternary
-          aria-expanded={!isUndefined(this.menu) ? (this.expanded ? 'true' : 'false') : undefined}
-          // eslint-disable-next-line no-nested-ternary
-          aria-pressed={!isUndefined(this.pressed) ? (this.pressed ? 'true' : 'false') : undefined}
-          aria-hidden={this.hidden ? 'true' : 'false'}
-          aria-describedby={this.describedBy}
-          onTouchStart={this.onTouchStart.bind(this)}
-          onFocus={this.onFocus.bind(this)}
-          onBlur={this.onBlur.bind(this)}
-          onMouseEnter={this.onMouseEnter.bind(this)}
-          onMouseLeave={this.onMouseLeave.bind(this)}
-          ref={(el: any) => { this.button = el; }}
-        >
-          <slot />
-        </button>
-      </Host>
+        <slot />
+      </button>
     );
   }
 }

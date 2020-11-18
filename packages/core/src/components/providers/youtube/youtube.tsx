@@ -1,7 +1,8 @@
 import {
   h, Component, Method, Prop, State, Watch, EventEmitter, Event,
 } from '@stencil/core';
-import { MediaProvider, withProviderConnect, withProviderContext } from '../MediaProvider';
+import { MediaProvider } from '../MediaProvider';
+import { withProviderConnect } from '../ProviderConnect';
 import { decodeJSON, loadImage } from '../../../utils/network';
 import { YouTubeCommand, YouTubeCommandArg } from './YouTubeCommand';
 import { YouTubeParams } from './YouTubeParams';
@@ -15,14 +16,18 @@ import { YouTubePlayerState } from './YouTubePlayerState';
 import { YouTubeMessage } from './YouTubeMessage';
 import { createProviderDispatcher, ProviderDispatcher } from '../ProviderDispatcher';
 import { Logger } from '../../core/player/PlayerLogger';
+import { withProviderContext } from '../withProviderContext';
+import { withComponentRegistry } from '../../core/player/withComponentRegistry';
 
 const posterCache = new Map<string, string>();
 
 @Component({
-  tag: 'vime-youtube',
+  tag: 'vm-youtube',
+  styleUrl: 'youtube.css',
+  shadow: true,
 })
-export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
-  private embed!: HTMLVimeEmbedElement;
+export class YouTube implements MediaProvider<HTMLVmEmbedElement> {
+  private embed!: HTMLVmEmbedElement;
 
   private dispatch!: ProviderDispatcher;
 
@@ -119,9 +124,10 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
   /**
    * @internal
    */
-  @Event() vLoadStart!: EventEmitter<void>;
+  @Event() vmLoadStart!: EventEmitter<void>;
 
   constructor() {
+    withComponentRegistry(this);
     withProviderConnect(this);
     withProviderContext(this);
   }
@@ -201,7 +207,7 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
 
   private onEmbedSrcChange() {
     this.hasCued = false;
-    this.vLoadStart.emit();
+    this.vmLoadStart.emit();
   }
 
   private onEmbedLoaded() {
@@ -386,16 +392,16 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
 
   render() {
     return (
-      <vime-embed
+      <vm-embed
         embedSrc={this.embedSrc}
         mediaTitle={this.mediaTitle}
         origin={this.getOrigin()}
         params={this.buildParams()}
         decoder={decodeJSON}
         preconnections={this.getPreconnections()}
-        onVEmbedLoaded={this.onEmbedLoaded.bind(this)}
-        onVEmbedMessage={this.onEmbedMessage.bind(this)}
-        onVEmbedSrcChange={this.onEmbedSrcChange.bind(this)}
+        onVmEmbedLoaded={this.onEmbedLoaded.bind(this)}
+        onVmEmbedMessage={this.onEmbedMessage.bind(this)}
+        onVmEmbedSrcChange={this.onEmbedSrcChange.bind(this)}
         ref={(el: any) => { this.embed = el; }}
       />
     );

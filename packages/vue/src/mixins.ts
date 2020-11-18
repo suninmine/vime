@@ -1,13 +1,13 @@
 import Vue from 'vue';
 import { createDispatcher, PlayerProp, usePlayerContext } from '@vime/core';
 
-const findPlayer = (component?: Vue): HTMLVimePlayerElement | null => {
+const findPlayer = (component?: Vue): HTMLVmPlayerElement | null => {
   if (!component) return null;
-  const players = Array.from(document.querySelectorAll('vime-player'));
+  const players = Array.from(document.querySelectorAll('vm-player'));
   return players.find((player) => player.contains(component.$el)) ?? null;
 };
 
-export const VimeMixin = (props: PlayerProp[]) => ({
+export const Mixin = (props: PlayerProp[]) => ({
   data() {
     return {
       player: null,

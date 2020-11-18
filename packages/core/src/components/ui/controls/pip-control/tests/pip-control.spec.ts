@@ -3,15 +3,15 @@ import { newUISpecPage } from '../../../ui/tests';
 import { PiPControl } from '../pip-control';
 
 let page: SpecPage;
-let control: HTMLVimePipControlElement;
+let control: HTMLVmPipControlElement;
 
 beforeEach(async () => {
   ({ page } = await newUISpecPage(
     [PiPControl],
-    '<vime-pip-control />',
+    '<vm-pip-control />',
   ));
 
-  control = page.root!.querySelector('vime-pip-control')!;
+  control = page.root!.querySelector('vm-pip-control')!;
 });
 
 it('should be structurally sound when not active', () => {

@@ -4,8 +4,8 @@ import '@vime/core/themes/default.css';
 // Optional light theme (extends default). ~400B
 import '@vime/core/themes/light.css';
 
-import { VimePlayer, VimeVideo, VimeFile } from '@vime/core';
+import { Player, Video, File } from '@vime/core';
 
-customElements.define('vime-player', VimePlayer);
-customElements.define('vime-video', VimeVideo);
-customElements.define('vime-file', VimeFile);
+customElements.define('vm-player', Player);
+customElements.define('vm-video', Video);
+customElements.define('vm-file', File);

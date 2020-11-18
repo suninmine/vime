@@ -4,16 +4,16 @@ import { ViewType } from '../../../core/player/ViewType';
 import { Scrim } from '../scrim';
 
 let page: SpecPage;
-let provider: HTMLVimeFaketubeElement;
-let scrim: HTMLVimeScrimElement;
+let provider: HTMLVmFaketubeElement;
+let scrim: HTMLVmScrimElement;
 
 beforeEach(async () => {
   ({ page, provider } = await newUISpecPage(
     [Scrim],
-    '<vime-scrim />',
+    '<vm-scrim />',
   ));
 
-  scrim = page.root!.querySelector('vime-scrim')!;
+  scrim = page.root!.querySelector('vm-scrim')!;
 });
 
 it('should be structurally sound', () => {

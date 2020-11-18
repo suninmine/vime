@@ -9,19 +9,19 @@ import { initialState, PlayerProp } from '../PlayerProps';
 import { getEventName } from '../PlayerEvents';
 
 let page: SpecPage;
-let player: HTMLVimePlayerElement;
+let player: HTMLVmPlayerElement;
 let adapter: MockMediaProviderAdapter;
-let provider: HTMLVimeFaketubeElement;
+let provider: HTMLVmFaketubeElement;
 
 const buildPage = async (opts?: Partial<NewSpecPageOptions>) => {
   page = await newSpecPage({
     components: [Player, FakeTube],
-    html: '<vime-player debug><vime-faketube /></vime-player>',
+    html: '<vm-player debug><vm-faketube /></vm-player>',
     ...opts,
   });
 
-  player = page.root! as HTMLVimePlayerElement;
-  provider = page.root!.querySelector('vime-faketube')!;
+  player = page.root! as HTMLVmPlayerElement;
+  provider = page.root!.querySelector('vm-faketube')!;
   adapter = await player.getAdapter() as MockMediaProviderAdapter;
 };
 
@@ -267,9 +267,9 @@ describe('props', () => {
   });
 
   it('should autopause player', async () => {
-    const playerHtml = '<vime-player><vime-faketube /></vime-player>';
+    const playerHtml = '</vm-player><vm-faketube /></vm-player>';
     await buildPage({ html: playerHtml + playerHtml });
-    const players = page.body.querySelectorAll('vime-player');
+    const players = page.body.querySelectorAll('vm-player');
     players[0].paused = false;
     await page.waitForChanges();
     expect(players[0].paused).toBeFalsy();
@@ -280,9 +280,9 @@ describe('props', () => {
   });
 
   it('should not autopause player', async () => {
-    const playerHtml = '<vime-player><vime-faketube /></vime-player>';
+    const playerHtml = '<vm-player><vm-faketube /></vm-player>';
     await buildPage({ html: playerHtml + playerHtml });
-    const players = page.body.querySelectorAll('vime-player');
+    const players = page.body.querySelectorAll('vm-player');
     players[0].paused = false;
     players[0].autopause = false;
     await page.waitForChanges();
@@ -402,7 +402,7 @@ describe('events', () => {
 
   it('should fire change event', async () => {
     const cb = jest.fn();
-    page.root!.addEventListener('vPausedChange', cb);
+    page.root!.addEventListener('vmPausedChange', cb);
     player.paused = false;
     await page.waitForChanges();
     expect(cb).toHaveBeenCalledTimes(1);
@@ -410,7 +410,7 @@ describe('events', () => {
 
   it('should fire toggle state event', async () => {
     const cb = jest.fn();
-    page.root!.addEventListener('vFullscreenChange', cb);
+    page.root!.addEventListener('vmFullscreenChange', cb);
     await provider.dispatchChange('isFullscreenActive', true);
     await page.waitForChanges();
     expect(cb).toHaveBeenCalled();
@@ -418,7 +418,7 @@ describe('events', () => {
 
   it('should fire shortened event', async () => {
     const cb = jest.fn();
-    page.root!.addEventListener('vPlaybackStarted', cb);
+    page.root!.addEventListener('vmPlaybackStarted', cb);
     await provider.dispatchChange('playbackStarted', true);
     await page.waitForChanges();
     expect(cb).toHaveBeenCalled();
@@ -426,7 +426,7 @@ describe('events', () => {
 
   it('should fire play event', async () => {
     const cb = jest.fn();
-    page.root!.addEventListener('vPlay', cb);
+    page.root!.addEventListener('vmPlay', cb);
     await provider.dispatchChange('paused', false);
     await page.waitForChanges();
     expect(cb).toHaveBeenCalled();
@@ -434,7 +434,7 @@ describe('events', () => {
 
   it('should fire seeked event', async () => {
     const cb = jest.fn();
-    page.root!.addEventListener('vSeeked', cb);
+    page.root!.addEventListener('vmSeeked', cb);
     await provider.dispatchChange('seeking', true);
     await page.waitForChanges();
     await provider.dispatchChange('seeking', false);
@@ -498,7 +498,7 @@ describe('adapter calls', () => {
 
   it('should queue and flush initial playbackReady calls', async () => {
     await buildPage({
-      html: '<vime-player paused="false" muted="true" current-time="50"><vime-faketube /></vime-player>',
+      html: '<vm-player paused="false" muted="true" current-time="50"><vm-faketube /></vm-player>',
     });
     await provider.dispatchChange('duration', 100);
     await provider.dispatchChange('playbackReady', true);
@@ -510,7 +510,7 @@ describe('adapter calls', () => {
 
   it('should not reflush playback ready calls', async () => {
     await buildPage({
-      html: '<vime-player paused="false" muted="true" current-time="50"><vime-faketube /></vime-player>',
+      html: '<vm-player paused="false" muted="true" current-time="50"><vm-faketube /></vm-player>',
     });
     await provider.dispatchChange('duration', Infinity);
     await provider.dispatchChange('playbackReady', true);

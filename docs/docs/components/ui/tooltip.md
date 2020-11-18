@@ -1,5 +1,5 @@
 ---
-title: vime-tooltip
+title: vm-tooltip
 sidebar_label: Tooltip
 ---
 
@@ -35,17 +35,17 @@ values={[
 <TabItem value="html">
 
 ```html {7}
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-controls>
-      <vime-control>
-        <vime-tooltip>Title</vime-tooltip>
-      </vime-control>
-    </vime-controls>
-  </vime-ui>
-</vime-player>
+    <vm-controls>
+      <vm-control>
+        <vm-tooltip>Title</vm-tooltip>
+      </vm-control>
+    </vm-controls>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -55,27 +55,21 @@ values={[
 
 ```tsx {7,18}
 import React from 'react';
-import {
-  VimePlayer,
-  VimeUi,
-  VimeControls,
-  VimeControl,
-  VimeTooltip,
-} from '@vime/react';
+import { Player, Ui, Controls, Control, Tooltip } from '@vime/react';
 
 function Example() {
   return (
-    <VimePlayer>
+    <Player>
       {/* ... */}
-      <VimeUi>
+      <Ui>
         {/* ... */}
-        <VimeControls>
-          <VimeControl>
-            <VimeTooltip>Title</VimeTooltip>
-          </VimeControl>
-        </VimeControls>
-      </VimeUi>
-    </VimePlayer>
+        <Controls>
+          <Control>
+            <Tooltip>Title</Tooltip>
+          </Control>
+        </Controls>
+      </Ui>
+    </Player>
   );
 }
 ```
@@ -87,35 +81,29 @@ function Example() {
 
 ```html {8,21,30} title="example.vue"
 <template>
-  <VimePlayer>
+  <Player>
     <!-- ... -->
-    <VimeUi>
+    <Ui>
       <!-- ... -->
-      <VimeControls>
-        <VimeControl>
-          <VimeTooltip>Title</VimeTooltip>
-        </VimeControl>
-      </VimeControls>
-    </VimeUi>
-  </VimePlayer>
+      <Controls>
+        <Control>
+          <Tooltip>Title</Tooltip>
+        </Control>
+      </Controls>
+    </Ui>
+  </Player>
 </template>
 
 <script>
-  import {
-    VimePlayer,
-    VimeUi,
-    VimeControls,
-    VimeControl,
-    VimeTooltip,
-  } from '@vime/vue';
+  import { Player, Ui, Controls, Control, Tooltip } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeUi,
-      VimeControls,
-      VimeControl,
-      VimeTooltip,
+      Player,
+      Ui,
+      Controls,
+      Control,
+      Tooltip,
     },
   };
 </script>
@@ -127,26 +115,20 @@ function Example() {
 <TabItem value="svelte">
 
 ```html {7,19} title="example.svelte"
-<VimePlayer>
+<Player>
   <!-- ... -->
-  <VimeUi>
+  <Ui>
     <!-- ... -->
-    <VimeControls>
-      <VimeControl>
-        <VimeTooltip>Title</VimeTooltip>
-      </VimeControl>
-    </VimeControls>
-  </VimeUi>
-</VimePlayer>
+    <Controls>
+      <Control>
+        <Tooltip>Title</Tooltip>
+      </Control>
+    </Controls>
+  </Ui>
+</Player>
 
 <script lang="ts">
-  import {
-    VimePlayer,
-    VimeUi,
-    VimeControls,
-    VimeControl,
-    VimeTooltip,
-  } from '@vime/svelte';
+  import { Player, Ui, Controls, Control, Tooltip } from '@vime/svelte';
 </script>
 ```
 
@@ -159,17 +141,17 @@ function Example() {
 class Example {
   render() {
     return (
-      <vime-player>
+      <vm-player>
         {/* ... */}
-        <vime-ui>
+        <vm-ui>
           {/* ... */}
-          <vime-controls>
-            <vime-control>
-              <vime-tooltip>Title</vime-tooltip>
-            </vime-control>
-          </vime-controls>
-        </vime-ui>
-      </vime-player>
+          <vm-controls>
+            <vm-control>
+              <vm-tooltip>Title</vm-tooltip>
+            </vm-control>
+          </vm-controls>
+        </vm-ui>
+      </vm-player>
     );
   }
 }
@@ -181,17 +163,17 @@ class Example {
 <TabItem value="angular">
 
 ```html {7} title="example.html"
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-controls>
-      <vime-control>
-        <vime-tooltip>Title</vime-tooltip>
-      </vime-control>
-    </vime-controls>
-  </vime-ui>
-</vime-player>
+    <vm-controls>
+      <vm-control>
+        <vm-tooltip>Title</vm-tooltip>
+      </vm-control>
+    </vm-controls>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -233,26 +215,24 @@ class Example {
 
 ### Used by
 
-- [vime-caption-control](controls/caption-control.md)
-- [vime-fullscreen-control](controls/fullscreen-control.md)
-- [vime-mute-control](controls/mute-control.md)
-- [vime-pip-control](controls/pip-control.md)
-- [vime-playback-control](controls/playback-control.md)
-- [vime-scrubber-control](controls/scrubber-control.md)
-- [vime-settings-control](controls/settings-control.md)
+- [vm-fullscreen-control](controls/fullscreen-control.md)
+- [vm-mute-control](controls/mute-control.md)
+- [vm-pip-control](controls/pip-control.md)
+- [vm-playback-control](controls/playback-control.md)
+- [vm-scrubber-control](controls/scrubber-control.md)
+- [vm-settings-control](controls/settings-control.md)
 
 ### Graph
 
 ```mermaid
 graph TD;
-  vime-caption-control --> vime-tooltip
-  vime-fullscreen-control --> vime-tooltip
-  vime-mute-control --> vime-tooltip
-  vime-pip-control --> vime-tooltip
-  vime-playback-control --> vime-tooltip
-  vime-scrubber-control --> vime-tooltip
-  vime-settings-control --> vime-tooltip
-  style vime-tooltip fill:#f9f,stroke:#333,stroke-width:4px
+  vm-fullscreen-control --> vm-tooltip
+  vm-mute-control --> vm-tooltip
+  vm-pip-control --> vm-tooltip
+  vm-playback-control --> vm-tooltip
+  vm-scrubber-control --> vm-tooltip
+  vm-settings-control --> vm-tooltip
+  style vm-tooltip fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ---

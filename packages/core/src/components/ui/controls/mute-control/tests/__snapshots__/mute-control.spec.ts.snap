@@ -1,12 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should be structurally sound 1`] = `
-<vime-mute-control>
-  <vime-control keys="m" label="Mute">
-    <vime-icon href="#vime-volume-high"></vime-icon>
-    <vime-tooltip position="top">
+<vm-mute-control>
+  <vm-control keys="m" label="Mute">
+    <vm-icon href="#vime-volume-high"></vm-icon>
+    <vm-tooltip position="top">
       Mute (m)
-    </vime-tooltip>
-  </vime-control>
-</vime-mute-control>
+    </vm-tooltip>
+  </vm-control>
+</vm-mute-control>
 `;

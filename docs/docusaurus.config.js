@@ -7,7 +7,7 @@ module.exports = {
   baseUrl: '/',
   onBrokenLinks: 'throw',
   favicon: 'img/favicon.ico',
-  organizationName: 'vime-js',
+  organizationName: 'vm-js',
   projectName: 'vime',
   stylesheets: [
     'https://cdn.jsdelivr.net/npm/@vime/core@^4/themes/default.css',

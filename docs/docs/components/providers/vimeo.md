@@ -1,5 +1,5 @@
 ---
-title: vime-vimeo
+title: vm-vimeo
 sidebar_label: Vimeo
 ---
 
@@ -35,10 +35,10 @@ values={[
 <TabItem value="html">
 
 ```html {2}
-<vime-player controls>
-  <vime-vimeo video-id="411652396"></vime-vimeo>
+<vm-player controls>
+  <vm-vimeo video-id="411652396"></vm-vimeo>
   <!-- ... -->
-</vime-player>
+</vm-player>
 ```
 
 </TabItem>
@@ -48,14 +48,14 @@ values={[
 
 ```tsx {2,7}
 import React from 'react';
-import { VimePlayer, VimeVimeo } from '@vime/react';
+import { Player, Vimeo } from '@vime/react';
 
 function Example() {
   return (
-    <VimePlayer controls>
-      <VimeVimeo videoId="411652396" />
+    <Player controls>
+      <Vimeo videoId="411652396" />
       {/* ... */}
-    </VimePlayer>
+    </Player>
   );
 }
 ```
@@ -67,19 +67,19 @@ function Example() {
 
 ```html {3,9,14} title="example.vue"
 <template>
-  <VimePlayer controls>
-    <VimeVimeo videoId="411652396" />
+  <Player controls>
+    <Vimeo videoId="411652396" />
     <!-- ... -->
-  </VimePlayer>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeVimeo } from '@vime/vue';
+  import { Player, Vimeo } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeVimeo,
+      Player,
+      Vimeo,
     },
   };
 </script>
@@ -91,13 +91,13 @@ function Example() {
 <TabItem value="svelte">
 
 ```html {2,7} title="example.svelte"
-<VimePlayer controls>
-  <VimeVimeo videoId="411652396" />
+<Player controls>
+  <Vimeo videoId="411652396" />
   <!-- ... -->
-</VimePlayer>
+</Player>
 
 <script lang="ts">
-  import { VimePlayer, VimeVimeo } from '@vime/svelte';
+  import { Player, Vimeo } from '@vime/svelte';
 </script>
 ```
 
@@ -110,10 +110,10 @@ function Example() {
 class Example {
   render() {
     return (
-      <vime-player controls>
-        <vime-vimeo videoId="411652396" />
+      <vm-player controls>
+        <vm-vimeo videoId="411652396" />
         {/* ... */}
-      </vime-player>
+      </vm-player>
     );
   }
 }
@@ -125,10 +125,10 @@ class Example {
 <TabItem value="angular">
 
 ```html {2} title="example.html"
-<vime-player controls>
-  <vime-vimeo cookies="true" video-id="411652396"></vime-vimeo>
+<vm-player controls>
+  <vm-vimeo cookies="true" video-id="411652396"></vm-vimeo>
   <!-- ... -->
-</vime-player>
+</vm-player>
 ```
 
 </TabItem>
@@ -147,23 +147,29 @@ class Example {
 | `poster`               | `poster`               | The absolute URL of a custom poster to be used for the current video.                                            | `string ∣ undefined` | `undefined` |
 | `videoId` _(required)_ | `video-id`             | The Vimeo resource ID of the video to load.                                                                      | `string`             | `undefined` |
 
+## Events
+
+| Event     | Description                         | Type               |
+| --------- | ----------------------------------- | ------------------ |
+| `vmError` | Emitted when an error has occurred. | `CustomEvent<any>` |
+
 ## Dependencies
 
 ### Used by
 
-- [vime-playground](../core/playground.md)
+- [vm-playground](../core/playground.md)
 
 ### Depends on
 
-- [vime-embed](../core/embed.md)
+- [vm-embed](../core/embed.md)
 
 ### Graph
 
 ```mermaid
 graph TD;
-  vime-vimeo --> vime-embed
-  vime-playground --> vime-vimeo
-  style vime-vimeo fill:#f9f,stroke:#333,stroke-width:4px
+  vm-vimeo --> vm-embed
+  vm-playground --> vm-vimeo
+  style vm-vimeo fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ---

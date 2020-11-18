@@ -1,5 +1,8 @@
-vime-faketube {
-  display: block;
+:host {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: auto;
+  z-index: var(--vm-media-z-index);
 }

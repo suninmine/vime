@@ -1,12 +1,13 @@
 import {
   h, Prop, Method, Event, EventEmitter,
 } from '@stencil/core';
-import {
-  MediaProvider, withProviderContext, MediaProviderAdapter, withProviderConnect,
-} from '../MediaProvider';
+import { MediaProvider, MediaProviderAdapter } from '../MediaProvider';
+import { withProviderConnect } from '../ProviderConnect';
 import { ViewType } from '../../core/player/ViewType';
 import { createProviderDispatcher, ProviderDispatcher } from '../ProviderDispatcher';
 import { Logger } from '../../core/player/PlayerLogger';
+import { withComponentRegistry } from '../../core/player/withComponentRegistry';
+import { withProviderContext } from '../withProviderContext';
 
 // @component
 export class Name implements MediaProvider {
@@ -51,9 +52,10 @@ export class Name implements MediaProvider {
    * @internal
    */
   // @TODO we have to call this event as soon as media starts loading.
-  @Event() vLoadStart!: EventEmitter<void>;
+  @Event() vmLoadStart!: EventEmitter<void>;
 
   constructor() {
+    withComponentRegistry(this);
     withProviderConnect(this);
     withProviderContext(this);
   }

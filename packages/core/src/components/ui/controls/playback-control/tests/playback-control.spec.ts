@@ -3,15 +3,15 @@ import { newUISpecPage } from '../../../ui/tests';
 import { PlaybackControl } from '../playback-control';
 
 let page: SpecPage;
-let control: HTMLVimePlaybackControlElement;
+let control: HTMLVmPlaybackControlElement;
 
 beforeEach(async () => {
   ({ page } = await newUISpecPage(
     [PlaybackControl],
-    '<vime-playback-control />',
+    '<vm-playback-control />',
   ));
 
-  control = page.root!.querySelector('vime-playback-control')!;
+  control = page.root!.querySelector('vm-playback-control')!;
 });
 
 it('should be structurally sound when paused', () => {

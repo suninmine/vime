@@ -6,12 +6,15 @@ import { isString, isUndefined } from '../../../utils/unit';
 import { dashRegex } from '../file/utils';
 import { loadSDK } from '../../../utils/network';
 import { MediaType } from '../../core/player/MediaType';
-import { withPlayerContext } from '../../core/player/PlayerContext';
+import { withPlayerContext } from '../../core/player/withPlayerContext';
 import { createProviderDispatcher, ProviderDispatcher } from '../ProviderDispatcher';
-import { withProviderConnect } from '../MediaProvider';
+import { withProviderConnect } from '../ProviderConnect';
+import { withComponentRegistry } from '../../core/player/withComponentRegistry';
 
 @Component({
-  tag: 'vime-dash',
+  tag: 'vm-dash',
+  styleUrl: 'dash.css',
+  shadow: true,
 })
 export class Dash implements MediaFileProvider<any> {
   private dash?: any;
@@ -20,7 +23,7 @@ export class Dash implements MediaFileProvider<any> {
 
   private mediaEl?: HTMLVideoElement;
 
-  private videoProvider!: HTMLVimeVideoElement;
+  private videoProvider!: HTMLVmVideoElement;
 
   @State() hasAttached = false;
 
@@ -33,7 +36,7 @@ export class Dash implements MediaFileProvider<any> {
   @Watch('hasAttached')
   onSrcChange() {
     if (!this.hasAttached) return;
-    this.vLoadStart.emit();
+    this.vmLoadStart.emit();
     this.dash!.attachSource(this.src);
   }
 
@@ -95,9 +98,15 @@ export class Dash implements MediaFileProvider<any> {
   /**
    * @internal
    */
-  @Event() vLoadStart!: EventEmitter<void>;
+  @Event() vmLoadStart!: EventEmitter<void>;
+
+  /**
+   * Emitted when an error has occurred.
+   */
+  @Event() vmError!: EventEmitter<any>;
 
   constructor() {
+    withComponentRegistry(this);
     withProviderConnect(this);
     withPlayerContext(this, ['autoplay']);
   }
@@ -127,12 +136,12 @@ export class Dash implements MediaFileProvider<any> {
       });
 
       this.dash!.on(DashSDK.MediaPlayer.events.ERROR, (e: any) => {
-        this.dispatch('errors', [e]);
+        this.vmError.emit(e);
       });
 
       this.hasAttached = true;
     } catch (e) {
-      this.dispatch('errors', [e]);
+      this.vmError.emit(e);
     }
   }
 
@@ -141,7 +150,7 @@ export class Dash implements MediaFileProvider<any> {
     this.hasAttached = false;
   }
 
-  @Listen('vMediaElChange')
+  @Listen('vmMediaElChange')
   async onMediaElChange(event: CustomEvent<HTMLVideoElement | undefined>) {
     this.destroyDash();
     if (isUndefined(event.detail)) return;
@@ -166,7 +175,7 @@ export class Dash implements MediaFileProvider<any> {
 
   render() {
     return (
-      <vime-video
+      <vm-video
         willAttach
         crossOrigin={this.crossOrigin}
         preload={this.preload}

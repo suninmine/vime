@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import { IS_CLIENT } from '../../../utils/support';
 import { isNullOrUndefined } from '../../../utils/unit';
 
@@ -12,7 +11,7 @@ export class LazyLoader {
   constructor(
     private el: HTMLElement,
     private attributes: string[],
-    private onLoad?: <T extends HTMLElement>(el: T) => void,
+    private onLoad?: (el: HTMLElement) => void,
   ) {
     if (isNullOrUndefined(this.el)) return;
 
@@ -72,7 +71,8 @@ export class LazyLoader {
   }
 
   private getLazyElements() {
-    return this.el.querySelectorAll<HTMLElement>('.lazy');
+    const root = !isNullOrUndefined(this.el.shadowRoot) ? this.el.shadowRoot : this.el;
+    return root!.querySelectorAll<HTMLElement>('.lazy');
   }
 
   private load() {

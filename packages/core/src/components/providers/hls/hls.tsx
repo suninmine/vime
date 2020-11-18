@@ -10,18 +10,19 @@ import { canPlayHLSNatively } from '../../../utils/support';
 import { hlsRegex, hlsTypeRegex } from '../file/utils';
 import { MediaType } from '../../core/player/MediaType';
 import { createProviderDispatcher, ProviderDispatcher } from '../ProviderDispatcher';
-import { withProviderConnect } from '../MediaProvider';
+import { withProviderConnect } from '../ProviderConnect';
+import { withComponentRegistry } from '../../core/player/withComponentRegistry';
 
 /**
  * @slot - Pass `<source>` elements to the underlying HTML5 media player.
  */
 @Component({
-  tag: 'vime-hls',
+  tag: 'vm-hls',
 })
 export class HLS implements MediaFileProvider {
   private hls?: any;
 
-  private videoProvider!: HTMLVimeVideoElement;
+  private videoProvider!: HTMLVmVideoElement;
 
   private mediaEl?: HTMLVideoElement;
 
@@ -83,9 +84,15 @@ export class HLS implements MediaFileProvider {
   /**
    * @internal
    */
-  @Event() vLoadStart!: EventEmitter<void>;
+  @Event() vmLoadStart!: EventEmitter<void>;
+
+  /**
+   * Emitted when an error has occurred.
+   */
+  @Event() vmError!: EventEmitter<any>;
 
   constructor() {
+    withComponentRegistry(this);
     withProviderConnect(this);
   }
 
@@ -114,7 +121,7 @@ export class HLS implements MediaFileProvider {
       const Hls = await loadSDK(url, 'Hls');
 
       if (!Hls.isSupported()) {
-        this.dispatch('errors', [new Error('hls.js is not supported')]);
+        this.vmError.emit('hls.js is not supported');
         return;
       }
 
@@ -125,7 +132,7 @@ export class HLS implements MediaFileProvider {
         this.onSrcChange();
       });
 
-      this.hls!.on(Hls.Events.ERROR, (e: any, data: any) => {
+      this.hls!.on(Hls.Events.ERROR, (event: any, data: any) => {
         if (data.fatal) {
           switch (data.type) {
             case Hls.ErrorTypes.NETWORK_ERROR:
@@ -140,7 +147,7 @@ export class HLS implements MediaFileProvider {
           }
         }
 
-        this.dispatch('errors', [{ e, data }]);
+        this.vmError.emit({ event, data });
       });
 
       this.hls!.on(Hls.Events.MANIFEST_PARSED, () => {
@@ -151,7 +158,7 @@ export class HLS implements MediaFileProvider {
 
       this.hls!.attachMedia(this.mediaEl);
     } catch (e) {
-      this.dispatch('errors', [e]);
+      this.vmError.emit(e);
     }
   }
 
@@ -160,7 +167,7 @@ export class HLS implements MediaFileProvider {
     this.hasAttached = false;
   }
 
-  @Listen('vMediaElChange')
+  @Listen('vmMediaElChange')
   async onMediaElChange(event: CustomEvent<HTMLVideoElement | undefined>) {
     this.destroyHls();
     if (isUndefined(event.detail)) return;
@@ -169,10 +176,10 @@ export class HLS implements MediaFileProvider {
     setTimeout(async () => { await this.setupHls(); }, 50);
   }
 
-  @Listen('vSrcSetChange')
+  @Listen('vmSrcSetChange')
   private async onSrcChange() {
     if (this.hasAttached && this.hls.url !== this.src) {
-      this.vLoadStart.emit();
+      this.vmLoadStart.emit();
       this.hls!.loadSource(this.src);
     }
   }
@@ -194,7 +201,7 @@ export class HLS implements MediaFileProvider {
 
   render() {
     return (
-      <vime-video
+      <vm-video
         willAttach={!canPlayHLSNatively()}
         crossOrigin={this.crossOrigin}
         preload={this.preload}
@@ -207,7 +214,7 @@ export class HLS implements MediaFileProvider {
         ref={(el: any) => { this.videoProvider = el; }}
       >
         <slot />
-      </vime-video>
+      </vm-video>
     );
   }
 }

@@ -4,22 +4,22 @@ import { Settings } from '../settings';
 import { SettingsController } from '../SettingsController';
 
 let page: SpecPage;
-let settings: HTMLVimeSettingsElement;
-let menu: HTMLVimeMenuElement;
+let settings: HTMLVmSettingsElement;
+let menu: HTMLVmMenuElement;
 let controller: SettingsController;
 
 beforeEach(async () => {
   ({ page } = await newUISpecPage(
     [Settings],
     `
-    <vime-settings>
+    <vm-settings>
      DefaultSlot 
-    </vime-settings>
+    </vm-settings>
     `,
   ));
 
-  settings = page.root!.querySelector('vime-settings')!;
-  menu = page.root!.querySelector('vime-settings > vime-menu')! as HTMLVimeMenuElement;
+  settings = page.root!.querySelector('vm-settings')!;
+  menu = page.root!.querySelector('vm-settings > vm-menu')! as HTMLVmMenuElement;
 
   controller = {
     menu: undefined,
@@ -37,7 +37,7 @@ it('should be structurally sound', () => {
 it('should set the controller', async () => {
   await page.waitForChanges();
   expect(menu.getAttribute('controller')).toEqual('controller');
-  expect(controller.menu).toEqual('vime-settings-2');
+  expect(controller.menu).toEqual('vm-settings-2');
 });
 
 it('should readjust position based on controls height', async () => {

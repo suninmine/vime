@@ -1,5 +1,5 @@
 ---
-title: vime-scrim
+title: vm-scrim
 sidebar_label: Scrim
 ---
 
@@ -28,13 +28,13 @@ values={[
 <TabItem value="html">
 
 ```html {5}
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-scrim></vime-scrim>
-  </vime-ui>
-</vime-player>
+    <vm-scrim></vm-scrim>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -44,17 +44,17 @@ values={[
 
 ```tsx {2,10}
 import React from 'react';
-import { VimePlayer, VimeUi, VimeScrim } from '@vime/react';
+import { Player, Ui, Scrim } from '@vime/react';
 
 function Example() {
   return (
-    <VimePlayer>
+    <Player>
       {/* ... */}
-      <VimeUi>
+      <Ui>
         {/* ... */}
-        <VimeScrim />
-      </VimeUi>
-    </VimePlayer>
+        <Scrim />
+      </Ui>
+    </Player>
   );
 }
 ```
@@ -66,23 +66,23 @@ function Example() {
 
 ```html {6,12,18} title="example.vue"
 <template>
-  <VimePlayer>
+  <Player>
     <!-- ... -->
-    <VimeUi>
+    <Ui>
       <!-- ... -->
-      <VimeScrim />
-    </VimeUi>
-  </VimePlayer>
+      <Scrim />
+    </Ui>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeUi, VimeScrim } from '@vime/vue';
+  import { Player, Ui, Scrim } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeUi,
-      VimeScrim,
+      Player,
+      Ui,
+      Scrim,
     },
   };
 </script>
@@ -94,16 +94,16 @@ function Example() {
 <TabItem value="svelte">
 
 ```html {5,10} title="example.svelte"
-<VimePlayer>
+<Player>
   <!-- ... -->
-  <VimeUi>
+  <Ui>
     <!-- ... -->
-    <VimeScrim />
-  </VimeUi>
-</VimePlayer>
+    <Scrim />
+  </Ui>
+</Player>
 
 <script lang="ts">
-  import { VimePlayer, VimeUi, VimeScrim } from '@vime/svelte';
+  import { Player, Ui, Scrim } from '@vime/svelte';
 </script>
 ```
 
@@ -116,13 +116,13 @@ function Example() {
 class Example {
   render() {
     return (
-      <vime-player>
+      <vm-player>
         {/* ... */}
-        <vime-ui>
+        <vm-ui>
           {/* ... */}
-          <vime-scrim />
-        </vime-ui>
-      </vime-player>
+          <vm-scrim />
+        </vm-ui>
+      </vm-player>
     );
   }
 }
@@ -134,13 +134,13 @@ class Example {
 <TabItem value="angular">
 
 ```html {5} title="example.html"
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-scrim></vime-scrim>
-  </vime-ui>
-</vime-player>
+    <vm-scrim></vm-scrim>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -165,14 +165,14 @@ class Example {
 
 ### Used by
 
-- [vime-default-controls](controls/default-controls.md)
+- [vm-default-controls](controls/default-controls.md)
 
 ### Graph
 
 ```mermaid
 graph TD;
-  vime-default-controls --> vime-scrim
-  style vime-scrim fill:#f9f,stroke:#333,stroke-width:4px
+  vm-default-controls --> vm-scrim
+  style vm-scrim fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ---

@@ -1,13 +1,15 @@
 import {
-  h, Host, Component, Prop, Event, EventEmitter, Element,
+  h, Component, Prop, Event, EventEmitter, Element,
 } from '@stencil/core';
+import { withComponentRegistry } from '../../core/player/withComponentRegistry';
 
 @Component({
-  tag: 'vime-slider',
-  styleUrl: 'slider.scss',
+  tag: 'vm-slider',
+  styleUrl: 'slider.css',
+  shadow: true,
 })
 export class Slider {
-  @Element() el!: HTMLVimeSliderElement;
+  @Element() el!: HTMLVmSliderElement;
 
   /**
    * A number that specifies the granularity that the value must adhere to.
@@ -42,7 +44,11 @@ export class Slider {
   /**
    * Emitted when the value of the underlying `input` field changes.
    */
-  @Event() vValueChange!: EventEmitter<number>;
+  @Event() vmValueChange!: EventEmitter<number>;
+
+  constructor() {
+    withComponentRegistry(this);
+  }
 
   private getPercentage() {
     return `${(this.value / this.max) * 100}%`;
@@ -50,7 +56,7 @@ export class Slider {
 
   private onValueChange(event: Event) {
     const value = parseFloat((event.target as HTMLInputElement)?.value);
-    this.vValueChange.emit(value);
+    this.vmValueChange.emit(value);
   }
 
   private calcTouchedValue(event: TouchEvent) {
@@ -107,7 +113,7 @@ export class Slider {
     if (input.disabled) return;
     event.preventDefault();
     this.value = this.calcTouchedValue(event);
-    this.vValueChange.emit(this.value);
+    this.vmValueChange.emit(this.value);
     input.dispatchEvent(
       new window.Event((event.type === 'touchend') ? 'change' : 'input', { bubbles: true }),
     );
@@ -115,7 +121,8 @@ export class Slider {
 
   render() {
     return (
-      <Host
+      <div
+        class="slider"
         style={{
           '--vm-value': this.getPercentage(),
         }}
@@ -134,13 +141,13 @@ export class Slider {
           aria-valuetext={this.valueText ?? this.getPercentage()}
           aria-orientation="horizontal"
           onInput={this.onValueChange.bind(this)}
-          onFocus={() => { this.el.dispatchEvent(new window.Event('focus', { bubbles: true })); }}
-          onBlur={() => { this.el.dispatchEvent(new window.Event('blur', { bubbles: true })); }}
+          onFocus={() => { this.el.dispatchEvent(new window.Event('focus', { bubbles: true, composed: true })); }}
+          onBlur={() => { this.el.dispatchEvent(new window.Event('blur', { bubbles: true, composed: true })); }}
           onTouchStart={this.onTouch.bind(this)}
           onTouchMove={this.onTouch.bind(this)}
           onTouchEnd={this.onTouch.bind(this)}
         />
-      </Host>
+      </div>
     );
   }
 }

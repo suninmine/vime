@@ -63,7 +63,7 @@ export interface PlayerMethods {
    * made, or reject with a reason for failure. This method will first attempt to use the browsers
    * native fullscreen API, and then fallback to requesting the provider to do it (if available).
    * Do not rely on a resolved promise to determine if the player is in fullscreen or not. The only
-   * way to be certain is by listening to the `vFullscreenChange` event. Some common reasons for
+   * way to be certain is by listening to the `vmFullscreenChange` event. Some common reasons for
    * failure are: the fullscreen API is not available, the request is made when `viewType` is audio,
    * or the user has not interacted with the page yet.
    */
@@ -87,7 +87,7 @@ export interface PlayerMethods {
    * Request to enter picture-in-picture (PiP) mode, returning a `Promise` that will resolve if
    * the request is made, or reject with a reason for failure. Do not rely on a resolved promise
    * to determine if the player is in PiP mode or not. The only way to be certain is by listening
-   * to the `vPiPChange` event. Some common reasons for failure are the same as the reasons for
+   * to the `vmPiPChange` event. Some common reasons for failure are the same as the reasons for
    * `enterFullscreen()`.
    */
   enterPiP(): Promise<void>
@@ -98,11 +98,6 @@ export interface PlayerMethods {
    * information.
    */
   exitPiP(): Promise<void>
-
-  /**
-   * Toggles the visibility of the captions.
-   */
-  toggleCaptionsVisibility(isVisible?: boolean): Promise<void>
 
   /**
    * Extends the translation map for a given language.

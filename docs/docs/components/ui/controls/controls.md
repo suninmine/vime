@@ -1,5 +1,5 @@
 ---
-title: vime-controls
+title: vm-controls
 sidebar_label: Controls
 ---
 
@@ -34,15 +34,15 @@ values={[
 <TabItem value="html">
 
 ```html {5-7}
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-controls full-width active-duration="3200">
+    <vm-controls full-width active-duration="3200">
       <!-- ... -->
-    </vime-controls>
-  </vime-ui>
-</vime-player>
+    </vm-controls>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -52,19 +52,19 @@ values={[
 
 ```tsx {2,10-12}
 import React from 'react';
-import { VimePlayer, VimeUi, VimeControls } from '@vime/react';
+import { Player, Ui, Controls } from '@vime/react';
 
 function Example() {
   return (
-    <VimePlayer>
+    <Player>
       {/* ... */}
-      <VimeUi>
+      <Ui>
         {/* ... */}
-        <VimeControls fullWidth activeDuration={3200}>
+        <Controls fullWidth activeDuration={3200}>
           {/* ... */}
-        </VimeControls>
-      </VimeUi>
-    </VimePlayer>
+        </Controls>
+      </Ui>
+    </Player>
   );
 }
 ```
@@ -76,24 +76,24 @@ function Example() {
 
 ```html {5-7,13,19} title="example.vue"
 <template>
-  <VimePlayer>
+  <Player>
     <!-- ... -->
-    <VimeUi>
-      <VimeControls fullWidth :activeDuration="3200">
+    <Ui>
+      <Controls fullWidth :activeDuration="3200">
         <!-- ... -->
-      </VimeControls>
-    </VimeUi>
-  </VimePlayer>
+      </Controls>
+    </Ui>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeUi, VimeControls } from '@vime/vue';
+  import { Player, Ui, Controls } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeUi,
-      VimeControls,
+      Player,
+      Ui,
+      Controls,
     },
   };
 </script>
@@ -105,20 +105,20 @@ function Example() {
 <TabItem value="svelte">
 
 ```tsx {5-7}
-<VimePlayer>
+<Player>
   <!-- ... -->
-  <VimeUi>
+  <Ui>
     <!-- ... -->
-    <VimeControls fullWidth activeDuration={3200}>
+    <Controls fullWidth activeDuration={3200}>
       <!-- ... -->
-    </VimeControls>
-  </VimeUi>
-</VimePlayer>
+    </Controls>
+  </Ui>
+</Player>
 ```
 
 ```html {2}
 <script lang="ts">
-  import { VimePlayer, VimeUi, VimeControls } from '@vime/svelte';
+  import { Player, Ui, Controls } from '@vime/svelte';
 </script>
 ```
 
@@ -131,15 +131,15 @@ function Example() {
 class Example {
   render() {
     return (
-      <vime-player>
+      <vm-player>
         {/* ... */}
-        <vime-ui>
+        <vm-ui>
           {/* ... */}
-          <vime-controls fullWidth activeDuration={3200}>
+          <vm-controls fullWidth activeDuration={3200}>
             {/* ... */}
-          </vime-controls>
-        </vime-ui>
-      </vime-player>
+          </vm-controls>
+        </vm-ui>
+      </vm-player>
     );
   }
 }
@@ -151,15 +151,15 @@ class Example {
 <TabItem value="angular">
 
 ```html {5-7} title="example.html"
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-controls full-width [active-duration]="2750">
+    <vm-controls full-width [active-duration]="2750">
       <!-- ... -->
-    </vime-controls>
-  </vime-ui>
-</vime-player>
+    </vm-controls>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -202,14 +202,14 @@ class Example {
 
 ### Used by
 
-- [vime-default-controls](default-controls.md)
+- [vm-default-controls](default-controls.md)
 
 ### Graph
 
 ```mermaid
 graph TD;
-  vime-default-controls --> vime-controls
-  style vime-controls fill:#f9f,stroke:#333,stroke-width:4px
+  vm-default-controls --> vm-controls
+  style vm-controls fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ---

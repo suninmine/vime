@@ -3,15 +3,15 @@ import { newUISpecPage } from '../../ui/tests';
 import { LiveIndicator } from '../live-indicator';
 
 let page: SpecPage;
-let indicator: HTMLVimeLiveIndicatorElement;
+let indicator: HTMLVmLiveIndicatorElement;
 
 beforeEach(async () => {
   ({ page } = await newUISpecPage(
     [LiveIndicator],
-    '<vime-live-indicator />',
+    '<vm-live-indicator />',
   ));
 
-  indicator = page.root!.querySelector('vime-live-indicator')!;
+  indicator = page.root!.querySelector('vm-live-indicator')!;
 });
 
 it('should be structurally sound', () => {

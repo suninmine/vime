@@ -181,7 +181,7 @@ separate context function is used for providers simply as a shorthand, because a
 the same subset of player properties.
 
 The `createDispatcher` (`createProviderDispatcher` for providers) function creates an event dispatcher
-to send updates to the player through the `vStateChange` (`vProviderChange` for providers) event. The
+to send updates to the player through the `vmStateChange` (`vmProviderChange` for providers) event. The
 dispatcher is typed to simply take in a player property that can be written to, and its new value. You
 can refer to existing Vime components to see its usage. A separate event is used for providers
 because they have additional write privileges (`buffered`, `seeking` etc.), and it helps the
@@ -205,7 +205,7 @@ Let's pretend we're creating a new provider for Twitch, the steps will generally
 6. The Twitch player is loaded in an `<iframe>` so we'll need to setup the `Embed` component.
 
 From here onwards it's best to refer to existing providers as a guide and slowly implement each
-method you see. Don't forget to emit the `vLoadStart` event when new media is loading, and to
+method you see. Don't forget to emit the `vmLoadStart` event when new media is loading, and to
 finalize the `getAdapter` method.
 
 As we're building out our provider we'll want to see and test it in the browser. There's

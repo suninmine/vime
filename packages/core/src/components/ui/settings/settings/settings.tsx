@@ -1,15 +1,15 @@
-/* eslint-disable no-param-reassign */
-
 import {
-  h, Host, Component, Prop, Watch, Method, Element, State,
+  h, Component, Prop, Watch, Method, Element, State,
 } from '@stencil/core';
-import { Disposal } from '../../../core/player/Disposal';
+import { Disposal } from '../../../../utils/Disposal';
 import { listen } from '../../../../utils/dom';
 import { isUndefined, isNull } from '../../../../utils/unit';
 import { SettingsController } from './SettingsController';
 import { Dispatcher, createDispatcher } from '../../../core/player/PlayerDispatcher';
 import { PlayerProps } from '../../../core/player/PlayerProps';
-import { withPlayerContext } from '../../../core/player/PlayerContext';
+import { withPlayerContext } from '../../../core/player/withPlayerContext';
+import { withComponentRegistry } from '../../../core/player/withComponentRegistry';
+import { withControlsCollisionDetection } from '../../controls/controls/withControlsCollisionDetection';
 
 let idCount = 0;
 
@@ -17,13 +17,14 @@ let idCount = 0;
  * @slot - Used to pass in the body of the settings menu, which usually contains submenus.
  */
 @Component({
-  tag: 'vime-settings',
-  styleUrl: 'settings.scss',
+  tag: 'vm-settings',
+  styleUrl: 'settings.css',
+  shadow: true,
 })
 export class Settings {
   private id!: string;
 
-  private menu!: HTMLVimeMenuElement;
+  private menu!: HTMLVmMenuElement;
 
   private disposal = new Disposal();
 
@@ -31,15 +32,9 @@ export class Settings {
 
   private dispatch!: Dispatcher;
 
-  @Element() el!: HTMLVimeSettingsElement;
+  @Element() el!: HTMLVmSettingsElement;
 
   @State() controllerId?: string;
-
-  /**
-   * The height of any lower control bar in pixels so that the settings can re-position itself
-   * accordingly.
-   */
-  @Prop() controlsHeight = 0;
 
   /**
    * Pins the settings to the defined position inside the video player. This has no effect when
@@ -72,13 +67,15 @@ export class Settings {
   @Prop() isAudioView: PlayerProps['isAudioView'] = false;
 
   constructor() {
+    withComponentRegistry(this);
+    withControlsCollisionDetection(this);
     withPlayerContext(this, ['isMobile', 'isAudioView']);
   }
 
   connectedCallback() {
     this.dispatch = createDispatcher(this);
     idCount += 1;
-    this.id = `vime-settings-${idCount}`;
+    this.id = `vm-settings-${idCount}`;
   }
 
   disconnectedCallback() {
@@ -106,14 +103,14 @@ export class Settings {
     if (this.isAudioView) {
       return {
         right: '0',
-        bottom: `${this.controlsHeight}px`,
+        bottom: 'calc(var(--vm-controls-height, 0) + 4px)',
       };
     }
 
     // topLeft => { top: 0, left: 0 }
     const pos = this.pin.split(/(?=[L|R])/).map((s) => s.toLowerCase());
     return {
-      [pos.includes('top') ? 'top' : 'bottom']: `${this.controlsHeight}px`,
+      [pos.includes('top') ? 'top' : 'bottom']: 'var(--vm-controls-height, 0)',
       [pos.includes('left') ? 'left' : 'right']: '8px',
     };
   }
@@ -125,25 +122,26 @@ export class Settings {
 
   render() {
     return (
-      <Host
+      <div
         style={{
           ...this.getPosition(),
         }}
         class={{
+          settings: true,
           active: this.active,
           mobile: this.isMobile,
         }}
       >
-        <vime-menu
+        <vm-menu
           identifier={this.id}
           active={this.active}
           controller={this.controllerId ?? ''}
-          onVClose={this.onClose.bind(this)}
+          onVmClose={this.onClose.bind(this)}
           ref={(el: any) => { this.menu = el; }}
         >
           <slot />
-        </vime-menu>
-      </Host>
+        </vm-menu>
+      </div>
     );
   }
 }

@@ -1,104 +1,104 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should be structurally sound when audio + live stream 1`] = `
-<vime-default-controls>
-  <vime-controls fullwidth="">
-    <vime-playback-control tooltipdirection="right"></vime-playback-control>
-    <vime-volume-control></vime-volume-control>
-    <vime-control-spacer></vime-control-spacer>
-    <vime-live-indicator></vime-live-indicator>
+<vm-default-controls>
+  <vm-controls fullwidth="">
+    <vm-playback-control tooltipdirection="right"></vm-playback-control>
+    <vm-volume-control></vm-volume-control>
+    <vm-control-spacer></vm-control-spacer>
+    <vm-live-indicator></vm-live-indicator>
     <div style="margin-left: 0; padding-right: 2px;"></div>
-  </vime-controls>
-</vime-default-controls>
+  </vm-controls>
+</vm-default-controls>
 `;
 
 exports[`should be structurally sound when audio 1`] = `
-<vime-default-controls>
-  <vime-controls fullwidth="">
-    <vime-playback-control tooltipdirection="right"></vime-playback-control>
-    <vime-volume-control></vime-volume-control>
-    <vime-current-time></vime-current-time>
-    <vime-scrubber-control></vime-scrubber-control>
-    <vime-end-time></vime-end-time>
-    <vime-settings-control tooltipdirection="left"></vime-settings-control>
+<vm-default-controls>
+  <vm-controls fullwidth="">
+    <vm-playback-control tooltipdirection="right"></vm-playback-control>
+    <vm-volume-control></vm-volume-control>
+    <vm-current-time></vm-current-time>
+    <vm-scrubber-control></vm-scrubber-control>
+    <vm-end-time></vm-end-time>
+    <vm-settings-control tooltipdirection="left"></vm-settings-control>
     <div style="margin-left: 0; padding-right: 2px;"></div>
-  </vime-controls>
-</vime-default-controls>
+  </vm-controls>
+</vm-default-controls>
 `;
 
 exports[`should be structurally sound when desktop video + live stream 1`] = `
-<vime-default-controls>
-  <vime-scrim gradient="up"></vime-scrim>
-  <vime-controls activeduration="2750" fullwidth="">
-    <vime-control-group space="none">
-      <vime-playback-control tooltipdirection="right"></vime-playback-control>
-      <vime-volume-control></vime-volume-control>
-      <vime-control-spacer></vime-control-spacer>
-      <vime-live-indicator></vime-live-indicator>
-      <vime-pip-control></vime-pip-control>
-      <vime-fullscreen-control tooltipdirection="left"></vime-fullscreen-control>
-    </vime-control-group>
-  </vime-controls>
-</vime-default-controls>
+<vm-default-controls>
+  <vm-scrim gradient="up"></vm-scrim>
+  <vm-controls activeduration="2750" fullwidth="">
+    <vm-control-group space="none">
+      <vm-playback-control tooltipdirection="right"></vm-playback-control>
+      <vm-volume-control></vm-volume-control>
+      <vm-control-spacer></vm-control-spacer>
+      <vm-live-indicator></vm-live-indicator>
+      <vm-pip-control></vm-pip-control>
+      <vm-fullscreen-control tooltipdirection="left"></vm-fullscreen-control>
+    </vm-control-group>
+  </vm-controls>
+</vm-default-controls>
 `;
 
 exports[`should be structurally sound when desktop video 1`] = `
-<vime-default-controls>
-  <vime-scrim gradient="up"></vime-scrim>
-  <vime-controls activeduration="2750" fullwidth="">
-    <vime-control-group>
-      <vime-scrubber-control></vime-scrubber-control>
-    </vime-control-group>
-    <vime-control-group space="top">
-      <vime-playback-control tooltipdirection="right"></vime-playback-control>
-      <vime-volume-control></vime-volume-control>
-      <vime-time-progress></vime-time-progress>
-      <vime-control-spacer></vime-control-spacer>
-      <vime-caption-control></vime-caption-control>
-      <vime-pip-control></vime-pip-control>
-      <vime-settings-control></vime-settings-control>
-      <vime-fullscreen-control tooltipdirection="left"></vime-fullscreen-control>
-    </vime-control-group>
-  </vime-controls>
-</vime-default-controls>
+<vm-default-controls>
+  <vm-scrim gradient="up"></vm-scrim>
+  <vm-controls activeduration="2750" fullwidth="">
+    <vm-control-group>
+      <vm-scrubber-control></vm-scrubber-control>
+    </vm-control-group>
+    <vm-control-group space="top">
+      <vm-playback-control tooltipdirection="right"></vm-playback-control>
+      <vm-volume-control></vm-volume-control>
+      <vm-time-progress></vm-time-progress>
+      <vm-control-spacer></vm-control-spacer>
+      <vm-caption-control></vm-caption-control>
+      <vm-pip-control></vm-pip-control>
+      <vm-settings-control></vm-settings-control>
+      <vm-fullscreen-control tooltipdirection="left"></vm-fullscreen-control>
+    </vm-control-group>
+  </vm-controls>
+</vm-default-controls>
 `;
 
 exports[`should be structurally sound when mobile video + live stream 1`] = `
-<vime-default-controls>
-  <vime-scrim></vime-scrim>
-  <vime-controls activeduration="2750" fullwidth="" pin="topLeft">
-    <vime-control-spacer></vime-control-spacer>
-    <vime-volume-control></vime-volume-control>
-    <vime-fullscreen-control></vime-fullscreen-control>
-  </vime-controls>
-  <vime-controls activeduration="2750" pin="center">
-    <vime-playback-control style="--vm-control-scale: 1.5;"></vime-playback-control>
-  </vime-controls>
-</vime-default-controls>
+<vm-default-controls>
+  <vm-scrim></vm-scrim>
+  <vm-controls activeduration="2750" fullwidth="" pin="topLeft">
+    <vm-control-spacer></vm-control-spacer>
+    <vm-volume-control></vm-volume-control>
+    <vm-fullscreen-control></vm-fullscreen-control>
+  </vm-controls>
+  <vm-controls activeduration="2750" pin="center">
+    <vm-playback-control style="--vm-control-scale: 1.5;"></vm-playback-control>
+  </vm-controls>
+</vm-default-controls>
 `;
 
 exports[`should be structurally sound when mobile video 1`] = `
-<vime-default-controls>
-  <vime-scrim></vime-scrim>
-  <vime-controls activeduration="2750" fullwidth="" pin="topLeft">
-    <vime-control-spacer></vime-control-spacer>
-    <vime-volume-control></vime-volume-control>
-    <vime-caption-control></vime-caption-control>
-    <vime-settings-control></vime-settings-control>
-  </vime-controls>
-  <vime-controls activeduration="2750" pin="center">
-    <vime-playback-control style="--vm-control-scale: 1.5;"></vime-playback-control>
-  </vime-controls>
-  <vime-controls activeduration="2750" fullwidth="" pin="bottomLeft">
-    <vime-control-group>
-      <vime-current-time></vime-current-time>
-      <vime-control-spacer></vime-control-spacer>
-      <vime-end-time></vime-end-time>
-      <vime-fullscreen-control></vime-fullscreen-control>
-    </vime-control-group>
-    <vime-control-group space="top">
-      <vime-scrubber-control></vime-scrubber-control>
-    </vime-control-group>
-  </vime-controls>
-</vime-default-controls>
+<vm-default-controls>
+  <vm-scrim></vm-scrim>
+  <vm-controls activeduration="2750" fullwidth="" pin="topLeft">
+    <vm-control-spacer></vm-control-spacer>
+    <vm-volume-control></vm-volume-control>
+    <vm-caption-control></vm-caption-control>
+    <vm-settings-control></vm-settings-control>
+  </vm-controls>
+  <vm-controls activeduration="2750" pin="center">
+    <vm-playback-control style="--vm-control-scale: 1.5;"></vm-playback-control>
+  </vm-controls>
+  <vm-controls activeduration="2750" fullwidth="" pin="bottomLeft">
+    <vm-control-group>
+      <vm-current-time></vm-current-time>
+      <vm-control-spacer></vm-control-spacer>
+      <vm-end-time></vm-end-time>
+      <vm-fullscreen-control></vm-fullscreen-control>
+    </vm-control-group>
+    <vm-control-group space="top">
+      <vm-scrubber-control></vm-scrubber-control>
+    </vm-control-group>
+  </vm-controls>
+</vm-default-controls>
 `;

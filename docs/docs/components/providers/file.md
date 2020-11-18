@@ -1,5 +1,5 @@
 ---
-title: vime-file
+title: vm-file
 sidebar_label: File
 ---
 
@@ -28,10 +28,11 @@ loading file-based media.
 
 ## Events
 
-| Event            | Description                                                | Type                                                           |
-| ---------------- | ---------------------------------------------------------- | -------------------------------------------------------------- |
-| `vMediaElChange` | Emitted when the underlying media element changes.         | `CustomEvent<HTMLAudioElement ∣ HTMLVideoElement ∣ undefined>` |
-| `vSrcSetChange`  | Emitted when the child `<source />` elements are modified. | `CustomEvent<MediaResource[]>`                                 |
+| Event             | Description                                                | Type                                                           |
+| ----------------- | ---------------------------------------------------------- | -------------------------------------------------------------- |
+| `vmError`         | Emitted when an error has occurred.                        | `CustomEvent<any>`                                             |
+| `vmMediaElChange` | Emitted when the underlying media element changes.         | `CustomEvent<HTMLAudioElement ∣ HTMLVideoElement ∣ undefined>` |
+| `vmSrcSetChange`  | Emitted when the child `<source />` elements are modified. | `CustomEvent<MediaResource[]>`                                 |
 
 ## Slots
 
@@ -43,16 +44,16 @@ loading file-based media.
 
 ### Used by
 
-- [vime-audio](audio.md)
-- [vime-video](video.md)
+- [vm-audio](audio.md)
+- [vm-video](video.md)
 
 ### Graph
 
 ```mermaid
 graph TD;
-  vime-audio --> vime-file
-  vime-video --> vime-file
-  style vime-file fill:#f9f,stroke:#333,stroke-width:4px
+  vm-audio --> vm-file
+  vm-video --> vm-file
+  style vm-file fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ---

@@ -1,5 +1,5 @@
 ---
-title: vime-pip-control
+title: vm-pip-control
 sidebar_label: PipControl
 ---
 
@@ -35,16 +35,16 @@ values={[
 <TabItem value="html">
 
 ```html {7}
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-controls>
+    <vm-controls>
       <!-- ... -->
-      <vime-pip-control></vime-pip-control>
-    </vime-controls>
-  </vime-ui>
-</vime-player>
+      <vm-pip-control></vm-pip-control>
+    </vm-controls>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -54,19 +54,19 @@ values={[
 
 ```tsx {2,11}
 import React from 'react';
-import { VimePlayer, VimeUi, VimeControls, VimePipControl } from '@vime/react';
+import { Player, Ui, Controls, PipControl } from '@vime/react';
 
 function Example() {
   return (
-    <VimePlayer>
+    <Player>
       {/* ... */}
-      <VimeUi>
+      <Ui>
         {/* ... */}
-        <VimeControls>
-          <VimePipControl />
-        </VimeControls>
-      </VimeUi>
-    </VimePlayer>
+        <Controls>
+          <PipControl />
+        </Controls>
+      </Ui>
+    </Player>
   );
 }
 ```
@@ -78,26 +78,26 @@ function Example() {
 
 ```html {7,14,21} title="example.vue"
 <template>
-  <VimePlayer>
+  <Player>
     <!-- ... -->
-    <VimeUi>
+    <Ui>
       <!-- ... -->
-      <VimeControls>
-        <VimePipControl />
-      </VimeControls>
-    </VimeUi>
-  </VimePlayer>
+      <Controls>
+        <PipControl />
+      </Controls>
+    </Ui>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeUi, VimeControls, VimePipControl } from '@vime/vue';
+  import { Player, Ui, Controls, PipControl } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeUi,
-      VimeControls,
-      VimePipControl,
+      Player,
+      Ui,
+      Controls,
+      PipControl,
     },
   };
 </script>
@@ -109,23 +109,18 @@ function Example() {
 <TabItem value="svelte">
 
 ```html {6,16} title="example.svelte"
-<VimePlayer>
+<Player>
   <!-- ... -->
-  <VimeUi>
+  <Ui>
     <!-- ... -->
-    <VimeControls>
-      <VimePipControl />
-    </VimeControls>
-  </VimeUi>
-</VimePlayer>
+    <Controls>
+      <PipControl />
+    </Controls>
+  </Ui>
+</Player>
 
 <script lang="ts">
-  import {
-    VimePlayer,
-    VimeUi,
-    VimeControls,
-    VimePipControl,
-  } from '@vime/svelte';
+  import { Player, Ui, Controls, PipControl } from '@vime/svelte';
 </script>
 ```
 
@@ -138,15 +133,15 @@ function Example() {
 class Example {
   render() {
     return (
-      <vime-player>
+      <vm-player>
         {/* ... */}
-        <vime-ui>
+        <vm-ui>
           {/* ... */}
-          <vime-controls>
-            <vime-pip-control />
-          </vime-controls>
-        </vime-ui>
-      </vime-player>
+          <vm-controls>
+            <vm-pip-control />
+          </vm-controls>
+        </vm-ui>
+      </vm-player>
     );
   }
 }
@@ -158,16 +153,16 @@ class Example {
 <TabItem value="angular">
 
 ```html {7} title="example.html"
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-controls>
+    <vm-controls>
       <!-- ... -->
-      <vime-pip-control></vime-pip-control>
-    </vime-controls>
-  </vime-ui>
-</vime-player>
+      <vm-pip-control></vm-pip-control>
+    </vm-controls>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -177,36 +172,37 @@ class Example {
 
 ## Properties
 
-| Property           | Attribute           | Description                                                                                                                                                   | Type                           | Default             |
-| ------------------ | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ | ------------------- |
-| `enterIcon`        | `enter-icon`        | The URL to an SVG element or fragment to display for entering PiP.                                                                                            | `string`                       | `'#vime-enter-pip'` |
-| `exitIcon`         | `exit-icon`         | The URL to an SVG element or fragment to display for exiting PiP.                                                                                             | `string`                       | `'#vime-exit-pip'`  |
-| `hideTooltip`      | `hide-tooltip`      | Whether the tooltip should not be displayed.                                                                                                                  | `boolean`                      | `false`             |
-| `keys`             | `keys`              | A slash (`/`) separated string of JS keyboard keys (`KeyboardEvent.key`), that when caught in a `keydown` event, will trigger a `click` event on the control. | `string ∣ undefined`           | `'p'`               |
-| `tooltipDirection` | `tooltip-direction` | The direction in which the tooltip should grow.                                                                                                               | `"left" ∣ "right" ∣ undefined` | `undefined`         |
-| `tooltipPosition`  | `tooltip-position`  | Whether the tooltip is positioned above/below the control.                                                                                                    | `"bottom" ∣ "top"`             | `'top'`             |
+| Property           | Attribute           | Description                                                                                                                                                   | Type                           | Default       |
+| ------------------ | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ | ------------- |
+| `enterIcon`        | `enter-icon`        | The name of the enter pip icon to resolve from the icon library.                                                                                              | `string`                       | `'pip-enter'` |
+| `exitIcon`         | `exit-icon`         | The name of the exit pip icon to resolve from the icon library.                                                                                               | `string`                       | `'pip-exit'`  |
+| `hideTooltip`      | `hide-tooltip`      | Whether the tooltip should not be displayed.                                                                                                                  | `boolean`                      | `false`       |
+| `icons`            | `icons`             | The name of an icon library to use. Defaults to the library defined by the `icons` player property.                                                           | `string ∣ undefined`           | `undefined`   |
+| `keys`             | `keys`              | A slash (`/`) separated string of JS keyboard keys (`KeyboardEvent.key`), that when caught in a `keydown` event, will trigger a `click` event on the control. | `string ∣ undefined`           | `'p'`         |
+| `tooltipDirection` | `tooltip-direction` | The direction in which the tooltip should grow.                                                                                                               | `"left" ∣ "right" ∣ undefined` | `undefined`   |
+| `tooltipPosition`  | `tooltip-position`  | Whether the tooltip is positioned above/below the control.                                                                                                    | `"bottom" ∣ "top"`             | `'top'`       |
 
 ## Dependencies
 
 ### Used by
 
-- [vime-default-controls](default-controls.md)
+- [vm-default-controls](default-controls.md)
 
 ### Depends on
 
-- [vime-control](control.md)
-- [vime-icon](../icon.md)
-- [vime-tooltip](../tooltip.md)
+- [vm-control](control.md)
+- [vm-icon](../icon.md)
+- [vm-tooltip](../tooltip.md)
 
 ### Graph
 
 ```mermaid
 graph TD;
-  vime-pip-control --> vime-control
-  vime-pip-control --> vime-icon
-  vime-pip-control --> vime-tooltip
-  vime-default-controls --> vime-pip-control
-  style vime-pip-control fill:#f9f,stroke:#333,stroke-width:4px
+  vm-pip-control --> vm-control
+  vm-pip-control --> vm-icon
+  vm-pip-control --> vm-tooltip
+  vm-default-controls --> vm-pip-control
+  style vm-pip-control fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ---

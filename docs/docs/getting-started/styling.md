@@ -23,16 +23,16 @@ between light/dark by using the `theme` player property...
 
 ```html title="player.html"
 <!-- Default is 'dark'. -->
-<vime-player theme="light">
+<vm-player theme="light">
   <!-- ... -->
-</vime-player>
+</vm-player>
 ```
 
 One of the easiest ways to personalize the player to our brand or preference is by 
 setting the `vm-player-theme` CSS property, which will add a splash of color throughout the player...
 
 ```css title="player-theme.css"
-vime-player {
+vm-player {
   --vm-player-theme: #de4269;
 }
 ```
@@ -47,7 +47,7 @@ that accept that property.
 The following will apply to all controls in the player...
 
 ```css
-vime-player {
+vm-player {
   --vm-control-scale: 1.75;
 }
 ```
@@ -57,9 +57,9 @@ vime-player {
 The following will only apply to this specific control...
 
 ```html
-<vime-control style="--vm-control-scale: 1.75;">
+<vm-control style="--vm-control-scale: 1.75;">
   <!-- ... -->
-</vime-control>
+</vm-control>
 ```
 
 Another way you can find out what CSS properties can be used to style a specific component is 
@@ -71,24 +71,40 @@ will be available as well.
 Here are some additional selectors you can add to your styling toolkit:
 
 ```css title="player-theme.css"
-vime-player.mobile {
+vm-player[idle] {
+  /* Add styles here for when the player is idle. */
+}
+
+vm-player[mobile] {
   /* Add styles here for when the player is loaded on a mobile device. */
 }
 
-vime-player.live {
+vm-player[touch] {
+  /* Add styles here for when the player is used on a touch device. */
+}
+
+vm-player[live] {
   /* Add styles here for when the media is a live stream. */
 }
 
-vime-player.audio {
+vm-player[audio] {
   /* Add styles here for when the media is of type `audio`. */
 }
 
-vime-player.video {
+vm-player[video] {
   /* Add styles here for when the media is of type `video`. */
 }
 
+vm-player[pip] {
+  /* Add styles here for when the player is in picture-in-picture mode. */
+}
+
+vm-player[fullscreen] {
+  /* Add styles here for when the player is in fullscreen mode. */
+}
+
 /* You can replace 'light' with 'dark' or any custom theme name you'd like. */
-vime-player[theme="light"] {
+vm-player[theme="light"] {
   /* Add styles here for when the theme is set to `light`.  */
 }
 ```

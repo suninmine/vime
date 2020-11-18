@@ -1,5 +1,5 @@
 ---
-title: vime-submenu
+title: vm-submenu
 sidebar_label: Submenu
 ---
 
@@ -36,17 +36,17 @@ values={[
 <TabItem value="html">
 
 ```html {6-8}
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-settings>
-      <vime-submenu label="Title">
+    <vm-settings>
+      <vm-submenu label="Title">
         <!-- ... -->
-      </vime-submenu>
-    </vime-settings>
-  </vime-ui>
-</vime-player>
+      </vm-submenu>
+    </vm-settings>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -56,19 +56,19 @@ values={[
 
 ```tsx {2,11}
 import React from 'react';
-import { VimePlayer, VimeUi, VimeSettings, VimeSubmenu } from '@vime/react';
+import { Player, Ui, Settings, Submenu } from '@vime/react';
 
 function Example() {
   return (
-    <VimePlayer>
+    <Player>
       {/* ... */}
-      <VimeUi>
+      <Ui>
         {/* ... */}
-        <VimeSettings>
-          <VimeSubmenu label="Title">{/* ... */}</VimeSubmenu>
-        </VimeSettings>
-      </VimeUi>
-    </VimePlayer>
+        <Settings>
+          <Submenu label="Title">{/* ... */}</Submenu>
+        </Settings>
+      </Ui>
+    </Player>
   );
 }
 ```
@@ -80,28 +80,28 @@ function Example() {
 
 ```html {7-9,16,23} title="example.vue"
 <template>
-  <VimePlayer>
+  <Player>
     <!-- ... -->
-    <VimeUi>
+    <Ui>
       <!-- ... -->
-      <VimeSettings>
-        <VimeSubmenu label="Title">
+      <Settings>
+        <Submenu label="Title">
           <!-- ... -->
-        </VimeSubmenu>
-      </VimeSettings>
-    </VimeUi>
-  </VimePlayer>
+        </Submenu>
+      </Settings>
+    </Ui>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeUi, VimeSettings, VimeSubmenu } from '@vime/vue';
+  import { Player, Ui, Settings, Submenu } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeUi,
-      VimeSettings,
-      VimeSubmenu,
+      Player,
+      Ui,
+      Settings,
+      Submenu,
     },
   };
 </script>
@@ -113,20 +113,20 @@ function Example() {
 <TabItem value="svelte">
 
 ```html {6-8,18} title="example.svelte"
-<VimePlayer>
+<Player>
   <!-- ... -->
-  <VimeUi>
+  <Ui>
     <!-- ... -->
-    <VimeSettings>
-      <VimeSubmenu label="Title">
+    <Settings>
+      <Submenu label="Title">
         <!-- ... -->
-      </VimeSubmenu>
-    </VimeSettings>
-  </VimeUi>
-</VimePlayer>
+      </Submenu>
+    </Settings>
+  </Ui>
+</Player>
 
 <script lang="ts">
-  import { VimePlayer, VimeUi, VimeSettings, VimeSubmenu } from '@vime/svelte';
+  import { Player, Ui, Settings, Submenu } from '@vime/svelte';
 </script>
 ```
 
@@ -139,15 +139,15 @@ function Example() {
 class Example {
   render() {
     return (
-      <vime-player>
+      <vm-player>
         {/* ... */}
-        <vime-ui>
+        <vm-ui>
           {/* ... */}
-          <vime-settings>
-            <vime-submenu label="Title">{/* ... */}</vime-submenu>
-          </vime-settings>
-        </vime-ui>
-      </vime-player>
+          <vm-settings>
+            <vm-submenu label="Title">{/* ... */}</vm-submenu>
+          </vm-settings>
+        </vm-ui>
+      </vm-player>
     );
   }
 }
@@ -159,17 +159,17 @@ class Example {
 <TabItem value="angular">
 
 ```html {6-8} title="example.html"
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-settings>
-      <vime-submenu label="Title">
+    <vm-settings>
+      <vm-submenu label="Title">
         <!-- ... -->
-      </vime-submenu>
-    </vime-settings>
-  </vime-ui>
-</vime-player>
+      </vm-submenu>
+    </vm-settings>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -196,22 +196,22 @@ class Example {
 
 ### Used by
 
-- [vime-default-settings](default-settings.md)
+- [vm-default-settings](default-settings.md)
 
 ### Depends on
 
-- [vime-menu-item](menu-item.md)
-- [vime-menu](menu.md)
+- [vm-menu-item](menu-item.md)
+- [vm-menu](menu.md)
 
 ### Graph
 
 ```mermaid
 graph TD;
-  vime-submenu --> vime-menu-item
-  vime-submenu --> vime-menu
-  vime-menu-item --> vime-icon
-  vime-default-settings --> vime-submenu
-  style vime-submenu fill:#f9f,stroke:#333,stroke-width:4px
+  vm-submenu --> vm-menu-item
+  vm-submenu --> vm-menu
+  vm-menu-item --> vm-icon
+  vm-default-settings --> vm-submenu
+  style vm-submenu fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ---

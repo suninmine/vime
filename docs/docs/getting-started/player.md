@@ -30,13 +30,13 @@ Let's setup the "shell" of the player so we can start laying out the rest of it:
 <TabItem value="html">
 
 ```html title="player.html"
-<vime-player>
+<vm-player>
   <!-- Provider component is placed here. -->
 
-  <vime-ui>
+  <vm-ui>
     <!-- UI components are placed here. -->
-  </vime-ui>
-</vime-player>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -45,17 +45,17 @@ Let's setup the "shell" of the player so we can start laying out the rest of it:
 
 ```tsx title="Player.tsx"
 import React from 'react';
-import { VimePlayer, VimeUi } from '@vime/react';
+import { Player, Ui } from '@vime/react';
 
 function Player() {
   return (
-    <VimePlayer>
+    <Player>
       {/* Provider component is placed here. */}
 
-      <VimeUi>
+      <Ui>
         {/* UI components are placed here. */}
-      </VimeUi>
-    </VimePlayer>
+      </Ui>
+    </Player>
   );
 }
 ```
@@ -66,22 +66,22 @@ function Player() {
 
 ```html title="Player.vue"
 <template>
-  <VimePlayer>
+  <Player>
     <!-- Provider component is placed here. -->
 
-    <VimeUi>
+    <Ui>
       <!-- UI components are placed here. -->
-    </VimeUi>
-  </VimePlayer>
+    </Ui>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeUi } from '@vime/vue';
+  import { Player, Ui } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeUi,
+      Player,
+      Ui,
     },
   };
 </script>
@@ -92,16 +92,16 @@ function Player() {
 <TabItem value="svelte">
 
 ```html title="Player.svelte"
-<VimePlayer>
+<Player>
   <!-- Provider component is placed here. -->
 
-  <VimeUi>
+  <Ui>
     <!-- UI components are placed here. -->
-  </VimeUi>
-</VimePlayer>
+  </Ui>
+</Player>
 
 <script lang="ts">
-  import { VimePlayer, VimeUi } from '@vime/svelte';
+  import { Player, Ui } from '@vime/svelte';
 </script>
 ```
 
@@ -115,13 +115,13 @@ class Player {
 
   render() {
     return (
-      <vime-player>
+      <vm-player>
         {/* Provider component is placed here. */}
 
-        <vime-ui>
+        <vm-ui>
           {/* UI components are placed here. */}
-        </vime-ui>
-      </vime-player>
+        </vm-ui>
+      </vm-player>
     );
   }
 }
@@ -132,13 +132,13 @@ class Player {
 <TabItem value="angular">
 
 ```html title="player.html"
-<vime-player>
+<vm-player>
   <!-- Provider component is placed here. -->
 
-  <vime-ui>
+  <vm-ui>
     <!-- UI components are placed here. -->
-  </vime-ui>
-</vime-player>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>

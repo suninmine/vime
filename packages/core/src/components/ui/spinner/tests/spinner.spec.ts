@@ -4,16 +4,16 @@ import { newUISpecPage } from '../../ui/tests';
 import { ViewType } from '../../../core/player/ViewType';
 
 let page: SpecPage;
-let provider: HTMLVimeFaketubeElement;
-let spinner: HTMLVimeSpinnerElement;
+let provider: HTMLVmFaketubeElement;
+let spinner: HTMLVmSpinnerElement;
 
 beforeEach(async () => {
   ({ page, provider } = await newUISpecPage(
     [Spinner],
-    '<vime-spinner />',
+    '<vm-spinner />',
   ));
 
-  spinner = page.root!.querySelector('vime-spinner')!;
+  spinner = page.root!.querySelector('vm-spinner')!;
 });
 
 it('should be structurally sound', () => {
@@ -44,18 +44,18 @@ it('should not be visible if not buffering', async () => {
   expect(spinner).not.toHaveClass('active');
 });
 
-it('should emit vWillShow event when visible', async () => {
+it('should emit vmWillShow event when visible', async () => {
   const cb = jest.fn();
-  spinner.addEventListener('vWillShow', cb);
+  spinner.addEventListener('vmWillShow', cb);
   await provider.dispatchChange('viewType', ViewType.Video);
   await provider.dispatchChange('buffering', true);
   await page.waitForChanges();
   expect(cb).toHaveBeenCalled();
 });
 
-it('should emit vWillHide event when not visible', async () => {
+it('should emit vmWillHide event when not visible', async () => {
   const cb = jest.fn();
-  spinner.addEventListener('vWillHide', cb);
+  spinner.addEventListener('vmWillHide', cb);
   await provider.dispatchChange('viewType', ViewType.Video);
   await provider.dispatchChange('buffering', true);
   await page.waitForChanges();

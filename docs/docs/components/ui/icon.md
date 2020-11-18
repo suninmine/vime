@@ -1,14 +1,12 @@
 ---
-title: vime-icon
+title: vm-icon
 sidebar_label: Icon
 ---
 
-import Tabs from '@theme/Tabs'
-import TabItem from '@theme/TabItem'
+> The implementation was inspired by [Shoelace](https://github.com/shoelace-style/shoelace), thanks Cory!
 
-Renders and displays an SVG icon. The SVG markup can be passed in directly or it can be loaded via
-a URL. It's preferrable to load a sprite via `vime-icons` and reference the icon using the `href`
-property.
+Loads and renders an SVG icon. The SVG can be loaded locally or through a CORS enabled endpoint. If
+you have registered an icon library, you can resolve the icon by name.
 
 <!-- Auto Generated Below -->
 
@@ -29,13 +27,11 @@ values={[
 <TabItem value="html">
 
 ```html
-<!-- Markup -->
-<vime-icon>
-  <rect width="300" height="100" />
-</vime-icon>
+<!-- Src. -->
+<vm-icon src="/icons/my-icon.svg" label="An icon"></vm-icon>
 
-<!-- URL -->
-<vime-icon href="#vime-play"></vime-icon>
+<!-- Icon library. -->
+<vm-icon name="pause" library="material" label="Pause"></vm-icon>
 ```
 
 </TabItem>
@@ -43,20 +39,18 @@ values={[
 
 <TabItem value="react">
 
-```tsx {2,8-10,13}
+```tsx {2,8,11}
 import React from 'react';
-import { VimeIcon } from '@vime/react';
+import { Icon } from '@vime/react';
 
 function Example() {
   return (
     <div>
-      {/* Markup */}
-      <VimeIcon>
-        <rect width="300" height="100" />
-      </VimeIcon>
+      {/* Src. */}
+      <Icon src="/icons/my-icon.svg" label="An icon" />
 
-      {/* URL */}
-      <VimeIcon href="#vime-play" />
+      {/* Icon library. */}
+      <Icon name="play" library="material" label="Play" />
     </div>
   );
 }
@@ -67,25 +61,23 @@ function Example() {
 
 <TabItem value="vue">
 
-```html {4-6,9,14,18} title="example.vue"
+```html {4,7,12,16} title="example.vue"
 <template>
   <div>
-    <!-- Markup -->
-    <VimeIcon>
-      <rect width="300" height="100" />
-    </VimeIcon>
+    <!-- Src. -->
+    <Icon src="/icons/my-icon.svg" label="An icon" />
 
-    <!-- URL -->
-    <VimeIcon href="#vime-play" />
+    <!-- Icon library. -->
+    <Icon name="pause" library="material" label="Pause" />
   </div>
 </template>
 
 <script>
-  import { VimeIcon } from '@vime/vue';
+  import { Icon } from '@vime/vue';
 
   export default {
     components: {
-      VimeIcon,
+      Icon,
     },
   };
 </script>
@@ -96,17 +88,15 @@ function Example() {
 
 <TabItem value="svelte">
 
-```html {2-4,7,10} title="example.svelte"
-<!-- Markup -->
-<VimeIcon>
-  <rect width="300" height="100" />
-</VimeIcon>
+```html {2,5,8} title="example.svelte"
+<!-- Src. -->
+<Icon src="/icons/my-icon.svg" label="An icon" />
 
-<!-- URL -->
-<VimeIcon href="#vime-play" />
+<!-- Icon library. -->
+<Icon name="pause" library="material" label="Pause" />
 
 <script lang="ts">
-  import { VimeIcon } from '@vime/svelte';
+  import { Icon } from '@vime/svelte';
 <script>
 ```
 
@@ -115,18 +105,16 @@ function Example() {
 
 <TabItem value="stencil">
 
-```tsx {6-8,11}
+```tsx {6,9}
 class Example {
   render() {
     return (
       <div>
-        {/* Markup */}
-        <vime-icon>
-          <rect width="300" height="100" />
-        </vime-icon>
+        {/* Src. */}
+        <vm-icon src="/icons/my-icon.svg" label="An icon" />
 
-        {/* URL */}
-        <vime-icon href="#vime-play" />
+        {/* Icon library. */}
+        <vm-icon name="play" library="material" label="Play" />
       </div>
     );
   }
@@ -139,13 +127,11 @@ class Example {
 <TabItem value="angular">
 
 ```html title="example.html"
-<!-- Markup -->
-<vime-icon>
-  <rect width="400" height="200" />
-</vime-icon>
+<!-- Src. -->
+<vm-icon src="/icons/my-icon.svg" label="An icon"></vm-icon>
 
-<!-- URL -->
-<vime-icon href="#vime-play"></vime-icon>
+<!-- Icon library. -->
+<vm-icon name="play" library="material" label="Play"></vm-icon>
 ```
 
 </TabItem>
@@ -155,49 +141,42 @@ class Example {
 
 ## Properties
 
-| Property | Attribute | Description                                    | Type                 | Default     |
-| -------- | --------- | ---------------------------------------------- | -------------------- | ----------- |
-| `href`   | `href`    | The URL to an SVG element or fragment to load. | `string ∣ undefined` | `undefined` |
+| Property  | Attribute | Description                                                                                                   | Type                 | Default     |
+| --------- | --------- | ------------------------------------------------------------------------------------------------------------- | -------------------- | ----------- |
+| `label`   | `label`   | An alternative description to use for accessibility. If omitted, the name or src will be used to generate it. | `string ∣ undefined` | `undefined` |
+| `library` | `library` | The name of a registered icon library.                                                                        | `string ∣ undefined` | `undefined` |
+| `name`    | `name`    | The name of the icon to draw.                                                                                 | `string ∣ undefined` | `undefined` |
+| `src`     | `src`     | The absolute URL of an SVG file to load.                                                                      | `string ∣ undefined` | `undefined` |
 
-## Slots
+## Events
 
-| Slot | Description                                            |
-| ---- | ------------------------------------------------------ |
-|      | Used to pass in SVG markup to be drawn by the browser. |
-
-## CSS Custom Properties
-
-| Name               | Description                                             |
-| ------------------ | ------------------------------------------------------- |
-| `--vm-icon-color`  | The color of the icon.                                  |
-| `--vm-icon-height` | The height of the icon.                                 |
-| `--vm-icon-scale`  | The amount to scale the size of the icon up or down by. |
-| `--vm-icon-width`  | The width of the icon.                                  |
+| Event     | Description                           | Type                                            |
+| --------- | ------------------------------------- | ----------------------------------------------- |
+| `vmError` | Emitted when the icon failed to load. | `CustomEvent<{ status?: number ∣ undefined; }>` |
+| `vmLoad`  | Emitted when the icon has loaded.     | `CustomEvent<void>`                             |
 
 ## Dependencies
 
 ### Used by
 
-- [vime-caption-control](controls/caption-control.md)
-- [vime-fullscreen-control](controls/fullscreen-control.md)
-- [vime-menu-item](settings/menu-item.md)
-- [vime-mute-control](controls/mute-control.md)
-- [vime-pip-control](controls/pip-control.md)
-- [vime-playback-control](controls/playback-control.md)
-- [vime-settings-control](controls/settings-control.md)
+- [vm-fullscreen-control](controls/fullscreen-control.md)
+- [vm-menu-item](settings/menu-item.md)
+- [vm-mute-control](controls/mute-control.md)
+- [vm-pip-control](controls/pip-control.md)
+- [vm-playback-control](controls/playback-control.md)
+- [vm-settings-control](controls/settings-control.md)
 
 ### Graph
 
 ```mermaid
 graph TD;
-  vime-caption-control --> vime-icon
-  vime-fullscreen-control --> vime-icon
-  vime-menu-item --> vime-icon
-  vime-mute-control --> vime-icon
-  vime-pip-control --> vime-icon
-  vime-playback-control --> vime-icon
-  vime-settings-control --> vime-icon
-  style vime-icon fill:#f9f,stroke:#333,stroke-width:4px
+  vm-fullscreen-control --> vm-icon
+  vm-menu-item --> vm-icon
+  vm-mute-control --> vm-icon
+  vm-pip-control --> vm-icon
+  vm-playback-control --> vm-icon
+  vm-settings-control --> vm-icon
+  style vm-icon fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ---

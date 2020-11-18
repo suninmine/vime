@@ -1,5 +1,5 @@
 ---
-title: vime-playback-control
+title: vm-playback-control
 sidebar_label: PlaybackControl
 ---
 
@@ -34,16 +34,16 @@ values={[
 <TabItem value="html">
 
 ```html {7}
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-controls>
+    <vm-controls>
       <!-- ... -->
-      <vime-playback-control></vime-playback-control>
-    </vime-controls>
-  </vime-ui>
-</vime-player>
+      <vm-playback-control></vm-playback-control>
+    </vm-controls>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -53,24 +53,19 @@ values={[
 
 ```tsx {6,16}
 import React from 'react';
-import {
-  VimePlayer,
-  VimeUi,
-  VimeControls,
-  VimePlaybackControl,
-} from '@vime/react';
+import { Player, Ui, Controls, PlaybackControl } from '@vime/react';
 
 function Example() {
   return (
-    <VimePlayer>
+    <Player>
       {/* ... */}
-      <VimeUi>
+      <Ui>
         {/* ... */}
-        <VimeControls>
-          <VimePlaybackControl />
-        </VimeControls>
-      </VimeUi>
-    </VimePlayer>
+        <Controls>
+          <PlaybackControl />
+        </Controls>
+      </Ui>
+    </Player>
   );
 }
 ```
@@ -82,31 +77,26 @@ function Example() {
 
 ```html {7,18,26} title="example.vue"
 <template>
-  <VimePlayer>
+  <Player>
     <!-- ... -->
-    <VimeUi>
+    <Ui>
       <!-- ... -->
-      <VimeControls>
-        <VimePlaybackControl />
-      </VimeControls>
-    </VimeUi>
-  </VimePlayer>
+      <Controls>
+        <PlaybackControl />
+      </Controls>
+    </Ui>
+  </Player>
 </template>
 
 <script>
-  import {
-    VimePlayer,
-    VimeUi,
-    VimeControls,
-    VimePlaybackControl,
-  } from '@vime/vue';
+  import { Player, Ui, Controls, PlaybackControl } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeUi,
-      VimeControls,
-      VimePlaybackControl,
+      Player,
+      Ui,
+      Controls,
+      PlaybackControl,
     },
   };
 </script>
@@ -118,23 +108,18 @@ function Example() {
 <TabItem value="svelte">
 
 ```html {6,16} title="example.svelte"
-<VimePlayer>
+<Player>
   <!-- ... -->
-  <VimeUi>
+  <Ui>
     <!-- ... -->
-    <VimeControls>
-      <VimePlaybackControl />
-    </VimeControls>
-  </VimeUi>
-</VimePlayer>
+    <Controls>
+      <PlaybackControl />
+    </Controls>
+  </Ui>
+</Player>
 
 <script lang="ts">
-  import {
-    VimePlayer,
-    VimeUi,
-    VimeControls,
-    VimePlaybackControl,
-  } from '@vime/svelte';
+  import { Player, Ui, Controls, PlaybackControl } from '@vime/svelte';
 </script>
 ```
 
@@ -147,15 +132,15 @@ function Example() {
 class Example {
   render() {
     return (
-      <vime-player>
+      <vm-player>
         {/* ... */}
-        <vime-ui>
+        <vm-ui>
           {/* ... */}
-          <vime-controls>
-            <vime-playback-control />
-          </vime-controls>
-        </vime-ui>
-      </vime-player>
+          <vm-controls>
+            <vm-playback-control />
+          </vm-controls>
+        </vm-ui>
+      </vm-player>
     );
   }
 }
@@ -167,16 +152,16 @@ class Example {
 <TabItem value="angular">
 
 ```html {7} title="example.html"
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-controls>
+    <vm-controls>
       <!-- ... -->
-      <vime-playback-control></vime-playback-control>
-    </vime-controls>
-  </vime-ui>
-</vime-player>
+      <vm-playback-control></vm-playback-control>
+    </vm-controls>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -186,36 +171,37 @@ class Example {
 
 ## Properties
 
-| Property           | Attribute           | Description                                                                                                                                                   | Type                           | Default         |
-| ------------------ | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ | --------------- |
-| `hideTooltip`      | `hide-tooltip`      | Whether the tooltip should not be displayed.                                                                                                                  | `boolean`                      | `false`         |
-| `keys`             | `keys`              | A slash (`/`) separated string of JS keyboard keys (`KeyboardEvent.key`), that when caught in a `keydown` event, will trigger a `click` event on the control. | `string ∣ undefined`           | `'k'`           |
-| `pauseIcon`        | `pause-icon`        | The URL to an SVG element or fragment to load.                                                                                                                | `string`                       | `'#vime-pause'` |
-| `playIcon`         | `play-icon`         | The URL to an SVG element or fragment to load.                                                                                                                | `string`                       | `'#vime-play'`  |
-| `tooltipDirection` | `tooltip-direction` | The direction in which the tooltip should grow.                                                                                                               | `"left" ∣ "right" ∣ undefined` | `undefined`     |
-| `tooltipPosition`  | `tooltip-position`  | Whether the tooltip is positioned above/below the control.                                                                                                    | `"bottom" ∣ "top"`             | `'top'`         |
+| Property           | Attribute           | Description                                                                                                                                                   | Type                           | Default     |
+| ------------------ | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ | ----------- |
+| `hideTooltip`      | `hide-tooltip`      | Whether the tooltip should not be displayed.                                                                                                                  | `boolean`                      | `false`     |
+| `icons`            | `icons`             | The name of an icon library to use. Defaults to the library defined by the `icons` player property.                                                           | `string ∣ undefined`           | `undefined` |
+| `keys`             | `keys`              | A slash (`/`) separated string of JS keyboard keys (`KeyboardEvent.key`), that when caught in a `keydown` event, will trigger a `click` event on the control. | `string ∣ undefined`           | `'k'`       |
+| `pauseIcon`        | `pause-icon`        | The name of the pause icon to resolve from the icon library.                                                                                                  | `string`                       | `'pause'`   |
+| `playIcon`         | `play-icon`         | The name of the play icon to resolve from the icon library.                                                                                                   | `string`                       | `'play'`    |
+| `tooltipDirection` | `tooltip-direction` | The direction in which the tooltip should grow.                                                                                                               | `"left" ∣ "right" ∣ undefined` | `undefined` |
+| `tooltipPosition`  | `tooltip-position`  | Whether the tooltip is positioned above/below the control.                                                                                                    | `"bottom" ∣ "top"`             | `'top'`     |
 
 ## Dependencies
 
 ### Used by
 
-- [vime-default-controls](default-controls.md)
+- [vm-default-controls](default-controls.md)
 
 ### Depends on
 
-- [vime-control](control.md)
-- [vime-icon](../icon.md)
-- [vime-tooltip](../tooltip.md)
+- [vm-control](control.md)
+- [vm-icon](../icon.md)
+- [vm-tooltip](../tooltip.md)
 
 ### Graph
 
 ```mermaid
 graph TD;
-  vime-playback-control --> vime-control
-  vime-playback-control --> vime-icon
-  vime-playback-control --> vime-tooltip
-  vime-default-controls --> vime-playback-control
-  style vime-playback-control fill:#f9f,stroke:#333,stroke-width:4px
+  vm-playback-control --> vm-control
+  vm-playback-control --> vm-icon
+  vm-playback-control --> vm-tooltip
+  vm-default-controls --> vm-playback-control
+  style vm-playback-control fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ---

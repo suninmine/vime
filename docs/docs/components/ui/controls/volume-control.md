@@ -1,5 +1,5 @@
 ---
-title: vime-volume-control
+title: vm-volume-control
 sidebar_label: VolumeControl
 ---
 
@@ -34,16 +34,16 @@ values={[
 <TabItem value="html">
 
 ```html {7}
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-controls>
+    <vm-controls>
       <!-- ... -->
-      <vime-volume-control></vime-volume-control>
-    </vime-controls>
-  </vime-ui>
-</vime-player>
+      <vm-volume-control></vm-volume-control>
+    </vm-controls>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -53,24 +53,19 @@ values={[
 
 ```tsx {6,16}
 import React from 'react';
-import {
-  VimePlayer,
-  VimeUi,
-  VimeControls,
-  VimeVolumeControl,
-} from '@vime/react';
+import { Player, Ui, Controls, VolumeControl } from '@vime/react';
 
 function Example() {
   return (
-    <VimePlayer>
+    <Player>
       {/* ... */}
-      <VimeUi>
+      <Ui>
         {/* ... */}
-        <VimeControls>
-          <VimeVolumeControl />
-        </VimeControls>
-      </VimeUi>
-    </VimePlayer>
+        <Controls>
+          <VolumeControl />
+        </Controls>
+      </Ui>
+    </Player>
   );
 }
 ```
@@ -82,31 +77,26 @@ function Example() {
 
 ```html {7,18,26} title="example.vue"
 <template>
-  <VimePlayer>
+  <Player>
     <!-- ... -->
-    <VimeUi>
+    <Ui>
       <!-- ... -->
-      <VimeControls>
-        <VimeVolumeControl />
-      </VimeControls>
-    </VimeUi>
-  </VimePlayer>
+      <Controls>
+        <VolumeControl />
+      </Controls>
+    </Ui>
+  </Player>
 </template>
 
 <script>
-  import {
-    VimePlayer,
-    VimeUi,
-    VimeControls,
-    VimeVolumeControl,
-  } from '@vime/vue';
+  import { Player, Ui, Controls, VolumeControl } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeUi,
-      VimeControls,
-      VimeVolumeControl,
+      Player,
+      Ui,
+      Controls,
+      VolumeControl,
     },
   };
 </script>
@@ -118,23 +108,18 @@ function Example() {
 <TabItem value="svelte">
 
 ```html {6,16} title="example.svelte"
-<VimePlayer>
+<Player>
   <!-- ... -->
-  <VimeUi>
+  <Ui>
     <!-- ... -->
-    <VimeControls>
-      <VimeVolumeControl />
-    </VimeControls>
-  </VimeUi>
-</VimePlayer>
+    <Controls>
+      <VolumeControl />
+    </Controls>
+  </Ui>
+</Player>
 
 <script lang="ts">
-  import {
-    VimePlayer,
-    VimeUi,
-    VimeControls,
-    VimeVolumeControl,
-  } from '@vime/svelte';
+  import { Player, Ui, Controls, VolumeControl } from '@vime/svelte';
 </script>
 ```
 
@@ -147,15 +132,15 @@ function Example() {
 class Example {
   render() {
     return (
-      <vime-player>
+      <vm-player>
         {/* ... */}
-        <vime-ui>
+        <vm-ui>
           {/* ... */}
-          <vime-controls>
-            <vime-volume-control />
-          </vime-controls>
-        </vime-ui>
-      </vime-player>
+          <vm-controls>
+            <vm-volume-control />
+          </vm-controls>
+        </vm-ui>
+      </vm-player>
     );
   }
 }
@@ -167,16 +152,16 @@ class Example {
 <TabItem value="angular">
 
 ```html {7} title="example.html"
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-controls>
+    <vm-controls>
       <!-- ... -->
-      <vime-volume-control></vime-volume-control>
-    </vime-controls>
-  </vime-ui>
-</vime-player>
+      <vm-volume-control></vm-volume-control>
+    </vm-controls>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -186,39 +171,40 @@ class Example {
 
 ## Properties
 
-| Property           | Attribute           | Description                                                                                                                          | Type                           | Default               |
-| ------------------ | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------ | --------------------- |
-| `hideTooltip`      | `hide-tooltip`      | Whether the tooltip should be hidden.                                                                                                | `boolean`                      | `false`               |
-| `highVolumeIcon`   | `high-volume-icon`  | The URL to an SVG element or fragment.                                                                                               | `string`                       | `'#vime-volume-high'` |
-| `lowVolumeIcon`    | `low-volume-icon`   | The URL to an SVG element or fragment.                                                                                               | `string`                       | `'#vime-volume-low'`  |
-| `muteKeys`         | `mute-keys`         | A pipe (`/`) separated string of JS keyboard keys, that when caught in a `keydown` event, will toggle the muted state of the player. | `string ∣ undefined`           | `'m'`                 |
-| `mutedIcon`        | `muted-icon`        | The URL to an SVG element or fragment.                                                                                               | `string`                       | `'#vime-volume-mute'` |
-| `noKeyboard`       | `no-keyboard`       | Prevents the volume being changed using the Up/Down arrow keys.                                                                      | `boolean`                      | `false`               |
-| `tooltipDirection` | `tooltip-direction` | The direction in which the tooltip should grow.                                                                                      | `"left" ∣ "right" ∣ undefined` | `undefined`           |
-| `tooltipPosition`  | `tooltip-position`  | Whether the tooltip is positioned above/below the control.                                                                           | `"bottom" ∣ "top"`             | `'top'`               |
+| Property           | Attribute           | Description                                                                                                                          | Type                           | Default         |
+| ------------------ | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------ | --------------- |
+| `hideTooltip`      | `hide-tooltip`      | Whether the tooltip should be hidden.                                                                                                | `boolean`                      | `false`         |
+| `highVolumeIcon`   | `high-volume-icon`  | The name of the high volume icon to resolve from the icon library.                                                                   | `string`                       | `'volume-high'` |
+| `icons`            | `icons`             | The name of an icon library to use. Defaults to the library defined by the `icons` player property.                                  | `string ∣ undefined`           | `undefined`     |
+| `lowVolumeIcon`    | `low-volume-icon`   | The name of the low volume icon to resolve from the icon library.                                                                    | `string`                       | `'volume-low'`  |
+| `muteKeys`         | `mute-keys`         | A pipe (`/`) separated string of JS keyboard keys, that when caught in a `keydown` event, will toggle the muted state of the player. | `string ∣ undefined`           | `'m'`           |
+| `mutedIcon`        | `muted-icon`        | The name of the muted volume icon to resolve from the icon library.                                                                  | `string`                       | `'volume-mute'` |
+| `noKeyboard`       | `no-keyboard`       | Prevents the volume being changed using the Up/Down arrow keys.                                                                      | `boolean`                      | `false`         |
+| `tooltipDirection` | `tooltip-direction` | The direction in which the tooltip should grow.                                                                                      | `"left" ∣ "right" ∣ undefined` | `undefined`     |
+| `tooltipPosition`  | `tooltip-position`  | Whether the tooltip is positioned above/below the control.                                                                           | `"bottom" ∣ "top"`             | `'top'`         |
 
 ## Dependencies
 
 ### Used by
 
-- [vime-default-controls](default-controls.md)
+- [vm-default-controls](default-controls.md)
 
 ### Depends on
 
-- [vime-mute-control](mute-control.md)
-- [vime-slider](../slider.md)
+- [vm-mute-control](mute-control.md)
+- [vm-slider](../slider.md)
 
 ### Graph
 
 ```mermaid
 graph TD;
-  vime-volume-control --> vime-mute-control
-  vime-volume-control --> vime-slider
-  vime-mute-control --> vime-control
-  vime-mute-control --> vime-icon
-  vime-mute-control --> vime-tooltip
-  vime-default-controls --> vime-volume-control
-  style vime-volume-control fill:#f9f,stroke:#333,stroke-width:4px
+  vm-volume-control --> vm-mute-control
+  vm-volume-control --> vm-slider
+  vm-mute-control --> vm-control
+  vm-mute-control --> vm-icon
+  vm-mute-control --> vm-tooltip
+  vm-default-controls --> vm-volume-control
+  style vm-volume-control fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ---

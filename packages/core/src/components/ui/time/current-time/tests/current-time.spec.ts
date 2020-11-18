@@ -3,15 +3,15 @@ import { newUISpecPage } from '../../../ui/tests';
 import { CurrentTime } from '../current-time';
 
 let page: SpecPage;
-let time: HTMLVimeCurrentTimeElement;
+let time: HTMLVmCurrentTimeElement;
 
 beforeEach(async () => {
   ({ page } = await newUISpecPage(
     [CurrentTime],
-    '<vime-current-time />',
+    '<vm-current-time />',
   ));
 
-  time = page.root!.querySelector('vime-current-time')!;
+  time = page.root!.querySelector('vm-current-time')!;
 });
 
 it('should be structurally sound', async () => {

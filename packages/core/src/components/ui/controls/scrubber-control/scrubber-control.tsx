@@ -1,28 +1,30 @@
 import {
-  h, Host, Component, Prop, State, Watch, Element,
+  h, Component, Prop, State, Watch, Element,
 } from '@stencil/core';
-import { withPlayerContext } from '../../../core/player/PlayerContext';
+import { withPlayerContext } from '../../../core/player/withPlayerContext';
 import { PlayerProps } from '../../../core/player/PlayerProps';
 import { formatTime } from '../../../../utils/formatters';
 import { createDispatcher, Dispatcher } from '../../../core/player/PlayerDispatcher';
-import { Disposal } from '../../../core/player/Disposal';
+import { Disposal } from '../../../../utils/Disposal';
 import { listen } from '../../../../utils/dom';
-import { findRootPlayer } from '../../../core/player/utils';
+import { findPlayer } from '../../../core/player/findPlayer';
+import { withComponentRegistry } from '../../../core/player/withComponentRegistry';
 
 @Component({
-  tag: 'vime-scrubber-control',
-  styleUrl: 'scrubber-control.scss',
+  tag: 'vm-scrubber-control',
+  styleUrl: 'scrubber-control.css',
+  shadow: true,
 })
 export class ScrubberControl {
-  private slider!: HTMLVimeSliderElement;
+  private slider!: HTMLVmSliderElement;
 
-  private tooltip!: HTMLVimeTooltipElement;
+  private tooltip!: HTMLVmTooltipElement;
 
   private dispatch!: Dispatcher;
 
   private keyboardDisposal = new Disposal();
 
-  @Element() el!: HTMLVimeScrubberControlElement;
+  @Element() el!: HTMLVmScrubberControlElement;
 
   @State() timestamp = '';
 
@@ -55,11 +57,11 @@ export class ScrubberControl {
   @Prop() noKeyboard = false;
 
   @Watch('noKeyboard')
-  onNoKeyboardChange() {
+  async onNoKeyboardChange() {
     this.keyboardDisposal.empty();
     if (this.noKeyboard) return;
 
-    const player = findRootPlayer(this);
+    const player = await findPlayer(this);
 
     const onKeyDown = (event: KeyboardEvent) => {
       if ((event.key !== 'ArrowLeft') && (event.key !== 'ArrowRight')) return;
@@ -96,6 +98,7 @@ export class ScrubberControl {
   @Prop() i18n: PlayerProps['i18n'] = {};
 
   constructor() {
+    withComponentRegistry(this);
     withPlayerContext(this, [
       'i18n',
       'currentTime',
@@ -116,7 +119,7 @@ export class ScrubberControl {
   }
 
   private setTooltipPosition(value: number) {
-    const tooltipRect = this.tooltip.getBoundingClientRect();
+    const tooltipRect = this.tooltip.shadowRoot!.querySelector('.tooltip')!.getBoundingClientRect();
     const bounds = this.slider.getBoundingClientRect();
     const thumbWidth = parseFloat(
       window.getComputedStyle(this.slider)
@@ -125,7 +128,7 @@ export class ScrubberControl {
     const leftLimit = (tooltipRect.width / 2) - (thumbWidth / 2);
     const rightLimit = bounds.width - (tooltipRect.width / 2) - (thumbWidth / 2);
     const xPos = Math.max(leftLimit, Math.min(value, rightLimit));
-    this.tooltip.style.left = `${xPos}px`;
+    (this.tooltip as any).style = `--vm-tooltip-left: ${xPos}px`;
   }
 
   private onSeek(event: CustomEvent<number>) {
@@ -153,7 +156,7 @@ export class ScrubberControl {
   }
 
   private getSliderInput() {
-    return this.slider.querySelector('input')!;
+    return this.slider.shadowRoot!.querySelector('input')!;
   }
 
   render() {
@@ -162,20 +165,21 @@ export class ScrubberControl {
       .replace(/{duration}/, formatTime(this.endTime));
 
     return (
-      <Host
+      <div
+        class="scrubber"
         onMouseEnter={this.onSeeking.bind(this)}
         onMouseLeave={this.onSeeking.bind(this)}
         onMouseMove={this.onSeeking.bind(this)}
         onTouchMove={() => { this.getSliderInput().focus(); }}
         onTouchEnd={() => { this.getSliderInput().blur(); }}
       >
-        <vime-slider
+        <vm-slider
           step={0.01}
           max={this.endTime}
           value={this.currentTime}
           label={this.i18n.scrubber}
           valueText={sliderValueText}
-          onVValueChange={this.onSeek.bind(this)}
+          onVmValueChange={this.onSeek.bind(this)}
           ref={(el: any) => { this.slider = el; }}
         />
 
@@ -196,13 +200,13 @@ export class ScrubberControl {
           % buffered
         </progress>
 
-        <vime-tooltip
+        <vm-tooltip
           hidden={this.hideTooltip}
           ref={(el: any) => { this.tooltip = el; }}
         >
           {this.timestamp}
-        </vime-tooltip>
-      </Host>
+        </vm-tooltip>
+      </div>
     );
   }
 }

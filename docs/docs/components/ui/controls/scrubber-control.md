@@ -1,5 +1,5 @@
 ---
-title: vime-scrubber-control
+title: vm-scrubber-control
 sidebar_label: ScrubberControl
 ---
 
@@ -38,16 +38,16 @@ values={[
 <TabItem value="html">
 
 ```html {7}
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-controls>
+    <vm-controls>
       <!-- ... -->
-      <vime-scrubber-control></vime-scrubber-control>
-    </vime-controls>
-  </vime-ui>
-</vime-player>
+      <vm-scrubber-control></vm-scrubber-control>
+    </vm-controls>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -57,24 +57,19 @@ values={[
 
 ```tsx {6,16}
 import React from 'react';
-import {
-  VimePlayer,
-  VimeUi,
-  VimeControls,
-  VimeScrubberControl,
-} from '@vime/react';
+import { Player, Ui, Controls, ScrubberControl } from '@vime/react';
 
 function Example() {
   return (
-    <VimePlayer>
+    <Player>
       {/* ... */}
-      <VimeUi>
+      <Ui>
         {/* ... */}
-        <VimeControls>
-          <VimeScrubberControl />
-        </VimeControls>
-      </VimeUi>
-    </VimePlayer>
+        <Controls>
+          <ScrubberControl />
+        </Controls>
+      </Ui>
+    </Player>
   );
 }
 ```
@@ -86,31 +81,26 @@ function Example() {
 
 ```html {7,18,26} title="example.vue"
 <template>
-  <VimePlayer>
+  <Player>
     <!-- ... -->
-    <VimeUi>
+    <Ui>
       <!-- ... -->
-      <VimeControls>
-        <VimeScrubberControl />
-      </VimeControls>
-    </VimeUi>
-  </VimePlayer>
+      <Controls>
+        <ScrubberControl />
+      </Controls>
+    </Ui>
+  </Player>
 </template>
 
 <script>
-  import {
-    VimePlayer,
-    VimeUi,
-    VimeControls,
-    VimeScrubberControl,
-  } from '@vime/vue';
+  import { Player, Ui, Controls, ScrubberControl } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeUi,
-      VimeControls,
-      VimeScrubberControl,
+      Player,
+      Ui,
+      Controls,
+      ScrubberControl,
     },
   };
 </script>
@@ -122,23 +112,18 @@ function Example() {
 <TabItem value="svelte">
 
 ```html {6,16} title="example.svelte"
-<VimePlayer>
+<Player>
   <!-- ... -->
-  <VimeUi>
+  <Ui>
     <!-- ... -->
-    <VimeControls>
-      <VimeScrubberControl />
-    </VimeControls>
-  </VimeUi>
-</VimePlayer>
+    <Controls>
+      <ScrubberControl />
+    </Controls>
+  </Ui>
+</Player>
 
 <script lang="ts">
-  import {
-    VimePlayer,
-    VimeUi,
-    VimeControls,
-    VimeScrubberControl,
-  } from '@vime/svelte';
+  import { Player, Ui, Controls, ScrubberControl } from '@vime/svelte';
 </script>
 ```
 
@@ -151,15 +136,15 @@ function Example() {
 class Example {
   render() {
     return (
-      <vime-player>
+      <vm-player>
         {/* ... */}
-        <vime-ui>
+        <vm-ui>
           {/* ... */}
-          <vime-controls>
-            <vime-scrubber-control />
-          </vime-controls>
-        </vime-ui>
-      </vime-player>
+          <vm-controls>
+            <vm-scrubber-control />
+          </vm-controls>
+        </vm-ui>
+      </vm-player>
     );
   }
 }
@@ -171,16 +156,16 @@ class Example {
 <TabItem value="angular">
 
 ```html {7} title="example.html"
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-controls>
+    <vm-controls>
       <!-- ... -->
-      <vime-scrubber-control></vime-scrubber-control>
-    </vime-controls>
-  </vime-ui>
-</vime-player>
+      <vm-scrubber-control></vm-scrubber-control>
+    </vm-controls>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -203,26 +188,27 @@ class Example {
 | `--vm-scrubber-buffered-bg`          | The background color of the section that indicates how much of the media has been buffered. |
 | `--vm-scrubber-loading-stripe-color` | The color of each candystripe displayed when media is buffering.                            |
 | `--vm-scrubber-loading-stripe-size`  | The size of each candystripe displayed when media is buffering.                             |
+| `--vm-scrubber-tooltip-spacing`      | The space between the tooltip and the scrubber.                                             |
 
 ## Dependencies
 
 ### Used by
 
-- [vime-default-controls](default-controls.md)
+- [vm-default-controls](default-controls.md)
 
 ### Depends on
 
-- [vime-slider](../slider.md)
-- [vime-tooltip](../tooltip.md)
+- [vm-slider](../slider.md)
+- [vm-tooltip](../tooltip.md)
 
 ### Graph
 
 ```mermaid
 graph TD;
-  vime-scrubber-control --> vime-slider
-  vime-scrubber-control --> vime-tooltip
-  vime-default-controls --> vime-scrubber-control
-  style vime-scrubber-control fill:#f9f,stroke:#333,stroke-width:4px
+  vm-scrubber-control --> vm-slider
+  vm-scrubber-control --> vm-tooltip
+  vm-default-controls --> vm-scrubber-control
+  style vm-scrubber-control fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ---

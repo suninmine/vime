@@ -1,5 +1,5 @@
 ---
-title: vime-time-progress
+title: vm-time-progress
 sidebar_label: TimeProgress
 ---
 
@@ -34,7 +34,7 @@ values={[
 <TabItem value="html">
 
 ```html
-<vime-time-progress separator="/" />
+<vm-time-progress separator="/" />
 ```
 
 </TabItem>
@@ -44,10 +44,10 @@ values={[
 
 ```tsx {2,5}
 import React from 'react';
-import { VimeTimeProgress } from '@vime/react';
+import { TimeProgress } from '@vime/react';
 
 function Example() {
-  return <VimeTimeProgress separator="/" />;
+  return <TimeProgress separator="/" />;
 }
 ```
 
@@ -58,15 +58,15 @@ function Example() {
 
 ```html {2,6,10} title="example.vue"
 <template>
-  <VimeTimeProgress separator="/" />
+  <TimeProgress separator="/" />
 </template>
 
 <script>
-  import { VimeTimeProgress } from '@vime/vue';
+  import { TimeProgress } from '@vime/vue';
 
   export default {
     components: {
-      VimeTimeProgress,
+      TimeProgress,
     },
   };
 </script>
@@ -78,10 +78,10 @@ function Example() {
 <TabItem value="svelte">
 
 ```html {1,4} title="example.svelte"
-<VimeTimeProgress separator="/" />
+<TimeProgress separator="/" />
 
 <script lang="ts">
-  import { VimeTimeProgress } from '@vime/svelte';
+  import { TimeProgress } from '@vime/svelte';
 </script>
 ```
 
@@ -93,7 +93,7 @@ function Example() {
 ```tsx {3}
 class Example {
   render() {
-    return <vime-time-progress separator="/" />;
+    return <vm-time-progress separator="/" />;
   }
 }
 ```
@@ -104,7 +104,7 @@ class Example {
 <TabItem value="angular">
 
 ```html title="example.html"
-<vime-time-progress separator="/" />
+<vm-time-progress separator="/" />
 ```
 
 </TabItem>
@@ -129,23 +129,23 @@ class Example {
 
 ### Used by
 
-- [vime-default-controls](../controls/default-controls.md)
+- [vm-default-controls](../controls/default-controls.md)
 
 ### Depends on
 
-- [vime-current-time](current-time.md)
-- [vime-end-time](end-time.md)
+- [vm-current-time](current-time.md)
+- [vm-end-time](end-time.md)
 
 ### Graph
 
 ```mermaid
 graph TD;
-  vime-time-progress --> vime-current-time
-  vime-time-progress --> vime-end-time
-  vime-current-time --> vime-time
-  vime-end-time --> vime-time
-  vime-default-controls --> vime-time-progress
-  style vime-time-progress fill:#f9f,stroke:#333,stroke-width:4px
+  vm-time-progress --> vm-current-time
+  vm-time-progress --> vm-end-time
+  vm-current-time --> vm-time
+  vm-end-time --> vm-time
+  vm-default-controls --> vm-time-progress
+  style vm-time-progress fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ---

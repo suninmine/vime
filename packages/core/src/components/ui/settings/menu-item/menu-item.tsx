@@ -2,18 +2,20 @@
 /* eslint-disable jsx-a11y/role-supports-aria-props */
 
 import {
-  h, Host, Component, Prop, State, Element,
+  h, Component, Prop, State, Element,
 } from '@stencil/core';
 import { isUndefined, isNull } from '../../../../utils/unit';
 import { PlayerProps } from '../../../core/player/PlayerProps';
-import { withPlayerContext } from '../../../core/player/PlayerContext';
+import { withComponentRegistry } from '../../../core/player/withComponentRegistry';
+import { withPlayerContext } from '../../../core/player/withPlayerContext';
 
 @Component({
-  tag: 'vime-menu-item',
-  styleUrl: 'menu-item.scss',
+  tag: 'vm-menu-item',
+  styleUrl: 'menu-item.css',
+  shadow: true,
 })
 export class MenuItem {
-  @Element() el!: HTMLVimeMenuItemElement;
+  @Element() el!: HTMLVmMenuItemElement;
 
   @State() showTapHighlight = false;
 
@@ -65,9 +67,15 @@ export class MenuItem {
   @Prop() badge?: string;
 
   /**
-   * The URL to an SVG element or fragment to load.
+   * The name of the checkmark icon to resolve from the icon library.
    */
-  @Prop() checkedIcon?: string = '#vime-checkmark';
+  @Prop() checkIcon?: string = 'check';
+
+  /**
+   * The name of an icon library to use. Defaults to the library defined by the `icons` player
+   * property.
+   */
+  @Prop() icons?: string;
 
   /**
    * @internal
@@ -75,12 +83,14 @@ export class MenuItem {
   @Prop() isTouch: PlayerProps['isTouch'] = false;
 
   constructor() {
+    withComponentRegistry(this);
     withPlayerContext(this, ['isTouch']);
   }
 
   private onClick() {
+    console.log('click');
     if (isUndefined(this.menu)) return;
-    const submenu = document.querySelector(`#${this.menu}`) as HTMLVimeMenuElement;
+    const submenu = document.querySelector(`#${this.menu}`) as HTMLVmMenuElement;
     if (!isNull(submenu)) submenu!.active = !this.expanded;
   }
 
@@ -98,7 +108,7 @@ export class MenuItem {
     const isMenuDefined = !isUndefined(this.menu);
     const hasExpanded = this.expanded ? 'true' : 'false';
     const isChecked = this.checked ? 'true' : 'false';
-    const showCheckedIcon = isCheckedDefined && !isUndefined(this.checkedIcon);
+    const showCheckedIcon = isCheckedDefined && !isUndefined(this.checkIcon);
     const showLeftNavArrow = isMenuDefined && this.expanded;
     const showRightNavArrow = isMenuDefined && !this.expanded;
     const showHint = !isUndefined(this.hint)
@@ -108,8 +118,9 @@ export class MenuItem {
     const hasSpacer = showHint || showBadge || showRightNavArrow;
 
     return (
-      <Host
+      <div
         class={{
+          menuItem: true,
           notTouch: !this.isTouch,
           tapHighlight: this.showTapHighlight,
           showDivider: isMenuDefined && (this.expanded ?? false),
@@ -127,14 +138,14 @@ export class MenuItem {
         onTouchStart={this.onTouchStart.bind(this)}
         onMouseLeave={this.onMouseLeave.bind(this)}
       >
-        {showCheckedIcon && <vime-icon href={this.checkedIcon!} />}
+        {showCheckedIcon && <vm-icon name={this.checkIcon!} library={this.icons} />}
         {showLeftNavArrow && <span class="arrow left" />}
         {this.label}
         {hasSpacer && <span class="spacer" />}
         {showHint && <span class="hint">{this.hint}</span>}
         {showBadge && <span class="badge">{this.badge}</span>}
         {showRightNavArrow && <span class="arrow right" />}
-      </Host>
+      </div>
     );
   }
 }

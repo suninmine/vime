@@ -14,7 +14,7 @@ export abstract class VimeComponent {
 
   private playerCache = new Map<PlayerProp, any>();
 
-  protected player!: HTMLVimePlayerElement;
+  protected player!: HTMLVmPlayerElement;
 
   protected abstract ref: ElementRef;
 
