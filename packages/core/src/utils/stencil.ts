@@ -22,20 +22,18 @@ export function createStencilHook(
   onConnect: () => void,
   onDisconnect: () => void,
 ) {
-  let connected = false;
+  let hasLoaded = false;
 
   wrapStencilHook(component, 'componentWillLoad', () => {
-    if (!connected) onConnect();
-    connected = true;
+    onConnect();
+    hasLoaded = true;
   });
 
   wrapStencilHook(component, 'connectedCallback', () => {
-    if (!connected) onConnect();
-    connected = true;
+    if (hasLoaded) onConnect();
   });
 
   wrapStencilHook(component, 'disconnectedCallback', () => {
     onDisconnect();
-    connected = false;
   });
 }

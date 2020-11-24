@@ -11,7 +11,7 @@ import { withComponentRegistry } from '../../../core/player/withComponentRegistr
   shadow: true,
 })
 export class MenuRadioGroup {
-  @Element() el!: HTMLVmMenuRadioGroupElement;
+  @Element() host!: HTMLVmMenuRadioGroupElement;
 
   /**
    * The current value selected for this group.
@@ -20,7 +20,7 @@ export class MenuRadioGroup {
 
   @Watch('value')
   onValueChange() {
-    this.findRadios().forEach((radio) => {
+    this.findRadios()?.forEach((radio) => {
       radio.checked = (radio.value === this.value);
     });
   }
@@ -38,6 +38,10 @@ export class MenuRadioGroup {
     this.onValueChange();
   }
 
+  componentDidLoad() {
+    this.onValueChange();
+  }
+
   @Listen('vmCheck')
   onSelectionChange(event: Event) {
     const radio = event.target as HTMLVmMenuRadioElement;
@@ -45,7 +49,10 @@ export class MenuRadioGroup {
   }
 
   private findRadios() {
-    return this.el.querySelectorAll('vm-menu-radio');
+    return this.host
+      .shadowRoot!
+      .querySelector('slot')
+      ?.assignedElements() as HTMLVmMenuRadioElement[];
   }
 
   render() {

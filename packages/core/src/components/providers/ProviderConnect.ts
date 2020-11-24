@@ -51,11 +51,11 @@ export function withProviderHost(connector: ProviderHost) {
     });
   }
 
-  function onConnect(e: CustomEvent<ProviderConnectEventDetail>) {
-    e.stopImmediatePropagation();
+  function onConnect(event: CustomEvent<ProviderConnectEventDetail>) {
+    event.stopImmediatePropagation();
     initCache();
 
-    const host = getElement(e.detail) as AdapterHost;
+    const host = getElement(event.detail) as AdapterHost;
     if (connector.provider === host) return;
 
     const name = host
@@ -72,9 +72,9 @@ export function withProviderHost(connector: ProviderHost) {
     });
   }
 
-  function onChange(e: CustomEvent<StateChange<ProviderWritableProps>>) {
-    e.stopImmediatePropagation();
-    const { by, prop, value } = e.detail;
+  function onChange(event: CustomEvent<StateChange<ProviderWritableProps>>) {
+    event.stopImmediatePropagation();
+    const { by, prop, value } = event.detail;
 
     if (!isProviderWritableProp(prop)) {
       connector.logger?.warn(`${by.nodeName} tried to change \`${prop}\` but it is readonly.`);

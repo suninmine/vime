@@ -179,8 +179,8 @@ export class VolumeControl {
           tooltipPosition={this.tooltipPosition}
           tooltipDirection={this.tooltipDirection}
           hideTooltip={this.hideTooltip}
-          onFocus={this.onShowSlider.bind(this)}
-          onBlur={this.onHideSlider.bind(this)}
+          onVmFocus={this.onShowSlider.bind(this)}
+          onVmBlur={this.onHideSlider.bind(this)}
         />
         <vm-slider
           class={{
@@ -192,8 +192,8 @@ export class VolumeControl {
           value={this.currentVolume}
           label={this.i18n.volume}
           onKeyDown={this.onKeyDown.bind(this)}
-          onFocus={this.onShowSlider.bind(this)}
-          onBlur={this.onHideSlider.bind(this)}
+          onVmFocus={this.onShowSlider.bind(this)}
+          onVmBlur={this.onHideSlider.bind(this)}
           onVmValueChange={this.onVolumeChange.bind(this)}
         />
       </div>

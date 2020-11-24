@@ -24,7 +24,7 @@ export class ScrubberControl {
 
   private keyboardDisposal = new Disposal();
 
-  @Element() el!: HTMLVmScrubberControlElement;
+  @Element() host!: HTMLVmScrubberControlElement;
 
   @State() timestamp = '';
 
@@ -144,7 +144,7 @@ export class ScrubberControl {
       return;
     }
 
-    const rect = this.el.getBoundingClientRect();
+    const rect = this.host.getBoundingClientRect();
     const percent = Math.max(0, Math.min(100, (100 / rect.width) * (event.pageX - rect.left)));
     this.timestamp = formatTime((this.duration / 100) * percent, this.alwaysShowHours);
     this.setTooltipPosition((percent / 100) * rect.width);

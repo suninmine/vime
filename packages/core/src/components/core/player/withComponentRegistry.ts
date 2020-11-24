@@ -24,6 +24,8 @@ export type ComponentRegistrant<T extends HTMLElement = HTMLElement> = T & {
   [REGISTRATION_KEY]: symbol
 };
 
+export type ComponentRegistrationEvent = CustomEvent<ComponentRegistrant>;
+
 const getRegistrant = (ref: any): ComponentRegistrant => (
   isInstanceOf(ref, HTMLElement) ? ref : getElement(ref)
 );
@@ -41,7 +43,9 @@ export function withComponentRegistry(ref: any, name?: string) {
   registrant[COMPONENT_NAME_KEY] = name ?? registrant.nodeName.toLowerCase();
   registrant[REGISTRATION_KEY] = registryId;
 
-  const buildEvent = (eventName: string) => new CustomEvent<ComponentRegistrant>(eventName, {
+  const buildEvent = (
+    eventName: string,
+  ): ComponentRegistrationEvent => new CustomEvent(eventName, {
     bubbles: true,
     composed: true,
     detail: registrant,
@@ -65,7 +69,7 @@ export function withComponentRegistrar(player: MediaPlayer) {
   // TODO properly type this later.
   (el as any)[REGISTRY_KEY] = registry;
 
-  function onRegister(e: CustomEvent<ComponentRegistrant>) {
+  function onRegister(e: ComponentRegistrationEvent) {
     const registrant = e.detail;
     registrant[PLAYER_KEY] = el;
     registrant[REGISTRY_KEY] = registry;
@@ -73,7 +77,7 @@ export function withComponentRegistrar(player: MediaPlayer) {
     el.dispatchEvent(new CustomEvent(COMPONENT_REGISTERED_EVENT, { detail: registrant }));
   }
 
-  function onDeregister(e: CustomEvent<ComponentRegistrant>) {
+  function onDeregister(e: ComponentRegistrationEvent) {
     const registrant = e.detail;
     delete registrant[PLAYER_KEY];
     delete registrant[REGISTRY_KEY];
@@ -152,7 +156,7 @@ export async function watchComponentRegistry<T extends keyof HTMLElementTagNameM
   const disposal = new Disposal();
   const registry = getRegistrant(ref)[REGISTRY_KEY];
 
-  function listener(e: CustomEvent<ComponentRegistrant>) {
+  function listener(e: ComponentRegistrationEvent) {
     if (e.detail[COMPONENT_NAME_KEY] === name) onChange?.(getComponentFromRegistry(player, name));
   }
 

@@ -46,7 +46,7 @@ export class Player implements MediaPlayer {
 
   private disposal = new Disposal();
 
-  @Element() el!: HTMLVmPlayerElement;
+  @Element() host!: HTMLVmPlayerElement;
 
   /**
    * ------------------------------------------------------
@@ -603,7 +603,7 @@ export class Player implements MediaPlayer {
     this.onDebugChange();
     this.onTranslationsChange();
     this.onLanguageChange(this.language, initialState.language);
-    this.fullscreen = new Fullscreen(this.el,
+    this.fullscreen = new Fullscreen(this.host,
       (isActive) => {
         this.isFullscreenActive = isActive;
         this.rotateDevice();
@@ -660,7 +660,7 @@ export class Player implements MediaPlayer {
   }
 
   private genId() {
-    const id = this.el?.id;
+    const id = this.host?.id;
     if (isString(id) && id.length > 0) return id;
     idCount += 1;
     return `vm-player-${idCount}`;

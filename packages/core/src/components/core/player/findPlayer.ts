@@ -1,5 +1,5 @@
 import { getElement } from '@stencil/core';
-import { listen } from '../../../utils/dom';
+import { fireEventAndRetry, listen } from '../../../utils/dom';
 import { deferredPromise } from '../../../utils/promise';
 import { createStencilHook } from '../../../utils/stencil';
 import { isInstanceOf } from '../../../utils/unit';
@@ -15,6 +15,7 @@ export function withFindPlayer(player: MediaPlayer) {
   let off: () => void;
   createStencilHook(player, () => {
     off = listen(el, FIND_PLAYER_EVENT, (event: CustomEvent<FoundPlayerCallback>) => {
+      event.stopPropagation();
       event.detail(el);
     });
   }, () => {
@@ -28,45 +29,27 @@ export function withFindPlayer(player: MediaPlayer) {
  * gives up and fails.
  *
  * @param ref - A HTMLElement that is within the player's subtree.
- * @param duration - The length of the timeout before trying again.
+ * @param interval - The length of the timeout before trying again in milliseconds.
  * @param maxRetries - The number of times to retry firing the event.
  */
-export const findPlayer = (ref: any, duration = 300, maxRetries = 10) => {
+export const findPlayer = (ref: any, interval = 300, maxRetries = 10) => {
   const el = (isInstanceOf(ref, HTMLElement) ? ref : getElement(ref)) as HTMLElement;
   const search = deferredPromise<HTMLVmPlayerElement>();
 
-  let timeout: any;
-  let attempt = 0;
-  let found = false;
+  let stopFiring: () => void;
 
-  function dispatch() {
-    el.dispatchEvent(new CustomEvent<FoundPlayerCallback>(FIND_PLAYER_EVENT, {
-      bubbles: true,
-      composed: true,
-      detail: (player) => {
-        window.clearTimeout(timeout);
-        search.resolve(player);
-        found = true;
-      },
-    }));
-  }
+  const event = new CustomEvent<FoundPlayerCallback>(FIND_PLAYER_EVENT, {
+    bubbles: true,
+    composed: true,
+    detail: (player) => {
+      search.resolve(player);
+      stopFiring();
+    },
+  });
 
-  function retry() {
-    if (found) return;
-
-    timeout = setTimeout(() => {
-      if (attempt === maxRetries) {
-        search.reject(`Could not find player for ${el.nodeName}`);
-        return;
-      }
-
-      dispatch();
-      attempt += 1;
-      retry();
-    }, duration);
-  }
-
-  retry();
+  stopFiring = fireEventAndRetry(el, event, () => {
+    search.reject(`Could not find player for ${el.nodeName}`);
+  }, interval, maxRetries);
 
   return search.promise;
 };

@@ -178,6 +178,7 @@ vm-player {
   --vm-menu-bg: var(--vm-color-dark);
   --vm-menu-font-size: 14px;
   --vm-menu-font-weight: 400;
+  --vm-menu-transition: transform 0.25s ease-out;
   
   /*******************************
    * Menu Item
@@ -198,8 +199,7 @@ vm-player {
   
   --vm-menu-item-arrow-color: var(--vm-menu-color);
 
-  --vm-menu-item-check-icon-width: 10px;
-  --vm-menu-item-check-icon-height: 10px;
+  --vm-menu-item-check-icon-size: 16px;
   
   --vm-menu-item-divider-color: var(--vm-color-white-100);
 
@@ -209,7 +209,7 @@ vm-player {
 
   --vm-settings-width: 275px;
   --vm-settings-padding: 8px;
-  --vm-settings-max-height: 65%;
+  --vm-settings-max-height: 75%;
   --vm-settings-border-radius: 2px;
   --vm-settings-shadow: 0 0 8px 2px var(--vm-color-gray-100);
 
@@ -230,11 +230,12 @@ vm-player[touch] {
 }
 
 vm-player[mobile] {
+  --vm-settings-width: 100%;
   --vm-menu-control-padding: 12px calc(var(--vm-control-padding) * 2); 
 }
 
 vm-player[audio] {
   --vm-controls-bg: var(--vm-color-dark);
-  --vm-settings-max-height: 275px;
+  --vm-settings-max-height: 200px;
   --vm-tooltip-spacing: 10px;
 }

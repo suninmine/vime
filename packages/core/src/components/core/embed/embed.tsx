@@ -31,7 +31,7 @@ export class Embed implements ComponentInterface {
 
   private lazyLoader!: LazyLoader;
 
-  @Element() el!: HTMLVmEmbedElement;
+  @Element() host!: HTMLVmEmbedElement;
 
   @State() srcWithParams = '';
 
@@ -117,7 +117,7 @@ export class Embed implements ComponentInterface {
   }
 
   connectedCallback() {
-    this.lazyLoader = new LazyLoader(this.el!, ['data-src'], (el) => {
+    this.lazyLoader = new LazyLoader(this.host!, ['data-src'], (el) => {
       const src = el.getAttribute('data-src');
       el.removeAttribute('src');
       if (!isNull(src)) el.setAttribute('src', src);

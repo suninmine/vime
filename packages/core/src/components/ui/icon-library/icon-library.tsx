@@ -16,7 +16,7 @@ import { isUndefined } from '../../../utils/unit';
   shadow: true,
 })
 export class IconLibrary {
-  @Element() el!: HTMLVmIconLibraryElement;
+  @Element() host!: HTMLVmIconLibraryElement;
 
   /**
    * The name of the icon library to register. Vime provides some default libraries out of the box

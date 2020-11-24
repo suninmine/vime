@@ -1,5 +1,5 @@
 /**
-  * @prop --vm-settings-width: The width of the settings menu.
+  * @prop --vm-settings-width: The width of the settings menu on desktop.
   * @prop --vm-settings-padding: The padding inside the settings menu.
   * @prop --vm-settings-shadow: The shadow cast around the settings menu frame.
   * @prop --vm-settings-border-radius: The border radius of the settings menu.
@@ -28,9 +28,9 @@
   background-color: var(--vm-menu-bg);
   max-height: var(--vm-settings-max-height);
   border-radius: var(--vm-settings-border-radius);
-  width: var(--vm-settings-width);
   padding: var(--vm-settings-padding);
   box-shadow: var(--vm-settings-shadow);
+  box-sizing: border-box;
   scrollbar-width: thin;
   scroll-behavior: smooth;
   scrollbar-color: var(--vm-settings-scroll-thumb-color) var(--vm-settings-scroll-track-color);
@@ -38,6 +38,13 @@
   transition: var(--vm-settings-transition);
 }
 
+.container {
+  display: block;
+  width: var(--vm-settings-width);
+  height: 100%;
+  position: relative;
+  transition: width 0.25s ease-in, height 0.25s ease-in;
+}
 
 .settings.hydrated {
   visibility: hidden !important;
@@ -55,10 +62,6 @@
   border-radius: var(--vm-settings-scroll-width);
   background-color: var(--vm-settings-scroll-thumb-color);
   border: 2px solid var(--vm-menu-bg);
-}
-
-vm-menu[aria-hidden='true'] {
-  display: flex !important;
 }
 
 .settings.active {

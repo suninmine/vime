@@ -1,5 +1,5 @@
 import {
-  h, Component, Prop, Element, Watch, State,
+  h, Component, Prop, Element, Watch, State, Method,
 } from '@stencil/core';
 import { withPlayerContext } from '../../../core/player/withPlayerContext';
 import { PlayerProps } from '../../../core/player/PlayerProps';
@@ -17,14 +17,16 @@ let idCount = 0;
 export class SettingsControl {
   private id!: string;
 
-  @Element() el!: HTMLVmSettingsControlElement;
+  private control?: HTMLVmControlElement;
+
+  @Element() host!: HTMLVmSettingsControlElement;
 
   @State() vmSettings?: HTMLVmSettingsElement;
 
   @Watch('vmSettings')
   onComponentsChange() {
     if (!isUndefined(this.vmSettings)) {
-      this.vmSettings.setController(this.id, this.el);
+      this.vmSettings.setController(this.host);
     }
   }
 
@@ -75,6 +77,22 @@ export class SettingsControl {
     watchComponentRegistry(this, 'vm-settings', ((regs) => { [this.vmSettings] = regs; }));
   }
 
+  /**
+   * Focuses the control.
+   */
+  @Method()
+  async focusControl() {
+    this.control?.focusControl();
+  }
+
+  /**
+   * Removes focus from the control.
+   */
+  @Method()
+  async blurControl() {
+    this.control?.blurControl();
+  }
+
   render() {
     const hasSettings = !isUndefined(this.menu);
 
@@ -92,6 +110,7 @@ export class SettingsControl {
           hidden={!hasSettings}
           expanded={this.expanded}
           label={this.i18n.settings}
+          ref={((control) => { this.control = control; })}
         >
           <vm-icon
             name={this.icon}

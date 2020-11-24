@@ -6,8 +6,7 @@
   * @prop --vm-menu-item-badge-bg: The background color of the badge.
   * @prop --vm-menu-item-badge-font-size: The font size of the the badge text. 
   * @prop --vm-menu-item-arrow-color: The color of the left/right arrow on a navigational menu item.
-  * @prop --vm-menu-item-check-icon-width: The width of the checked icon.
-  * @prop --vm-menu-item-check-icon-height: The height of the checked icon.
+  * @prop --vm-menu-item-check-icon-size: The width of the checked icon.
   * @prop --vm-menu-item-padding: The padding within each menu item.
   * @prop --vm-menu-item-focus-color: The color of a menu item's text when it is being focused or hovered on.
   * @prop --vm-menu-item-focus-bg: The background color of a menu item when it is being focused or hovered on.
@@ -30,6 +29,7 @@
   font-weight: var(--vm-menu-font-weight);
   padding: var(--vm-menu-item-padding);
   touch-action: manipulation;
+  box-sizing: border-box;
 }
 
 .menuItem:focus {
@@ -59,7 +59,7 @@
   display: none;
 }
 
-.menuItem[aria-checked='true'] svg {
+.menuItem[aria-checked='true'] vm-icon {
   opacity: 1;
   visibility: visible;
 }
@@ -68,11 +68,10 @@ vm-icon {
   display: inline-block;
 }
 
-svg {
+vm-icon {
   fill: currentColor;
   pointer-events: none;
-  width: var(--vm-menu-item-check-icon-width, 10px) !important;
-  height: var(--vm-menu-item-check-icon-height, 10px) !important;
+  font-size: var(--vm-menu-item-check-icon-size);
   margin-right: 10px;
   opacity: 0;
   visibility: hidden;

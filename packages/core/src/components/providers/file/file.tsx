@@ -55,7 +55,7 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
 
   private mediaQueryDisposal = new Disposal();
 
-  @Element() el!: HTMLVmFileElement;
+  @Element() host!: HTMLVmFileElement;
 
   @State() vmPoster?: HTMLVmPosterElement;
 
@@ -240,7 +240,7 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   }
 
   private initLazyLoader() {
-    this.lazyLoader = new LazyLoader(this.el, ['data-src', 'data-poster'], () => {
+    this.lazyLoader = new LazyLoader(this.host, ['data-src', 'data-poster'], () => {
       if (isNullOrUndefined(this.mediaEl)) return;
 
       const poster = this.mediaEl.getAttribute('data-poster');

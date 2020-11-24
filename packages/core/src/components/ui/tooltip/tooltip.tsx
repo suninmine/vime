@@ -21,7 +21,7 @@ export class Tooltip {
   // Avoid tooltips flashing when player initializing.
   private hasLoaded = false;
 
-  @Element() el!: HTMLVmTooltipElement;
+  @Element() host!: HTMLVmTooltipElement;
 
   /**
    * Whether the tooltip is displayed or not.
@@ -65,7 +65,7 @@ export class Tooltip {
 
   private getId() {
     // eslint-disable-next-line prefer-destructuring
-    const id = this.el.id;
+    const id = this.host.id;
     if (isString(id) && id.length > 0) return id;
     tooltipIdCount += 1;
     return `vm-tooltip-${tooltipIdCount}`;

@@ -2,9 +2,9 @@
 /* eslint-disable jsx-a11y/role-supports-aria-props */
 
 import {
-  h, Component, Prop, State, Element,
+  h, Component, Prop, State, Element, Method, Event, EventEmitter,
 } from '@stencil/core';
-import { isUndefined, isNull } from '../../../../utils/unit';
+import { isUndefined, isNullOrUndefined } from '../../../../utils/unit';
 import { PlayerProps } from '../../../core/player/PlayerProps';
 import { withComponentRegistry } from '../../../core/player/withComponentRegistry';
 import { withPlayerContext } from '../../../core/player/withPlayerContext';
@@ -15,7 +15,9 @@ import { withPlayerContext } from '../../../core/player/withPlayerContext';
   shadow: true,
 })
 export class MenuItem {
-  @Element() el!: HTMLVmMenuItemElement;
+  private menuItem?: HTMLDivElement;
+
+  @Element() host!: HTMLVmMenuItemElement;
 
   @State() showTapHighlight = false;
 
@@ -35,10 +37,9 @@ export class MenuItem {
   @Prop() label!: string;
 
   /**
-   * If the item has a popup menu, then this should be the `id` of said menu. Sets the
-   * `aria-controls` property.
+   * If the item has a popup menu, then this should be a reference to it.
    */
-  @Prop() menu?: string;
+  @Prop() menu?: HTMLVmMenuElement;
 
   /**
    * If the item has a popup menu, this indicates whether the menu is open or not. Sets the
@@ -82,16 +83,47 @@ export class MenuItem {
    */
   @Prop() isTouch: PlayerProps['isTouch'] = false;
 
+  /**
+   * Emitted when the item is focused.
+   */
+  @Event() vmFocus!: EventEmitter<void>;
+
+  /**
+   * Emitted when the item loses focus.
+   */
+  @Event() vmBlur!: EventEmitter<void>;
+
   constructor() {
     withComponentRegistry(this);
     withPlayerContext(this, ['isTouch']);
   }
 
+  /**
+   * Focuses the menu item.
+   */
+  @Method()
+  async focusItem() {
+    this.menuItem?.focus();
+  }
+
+  /**
+   * Removes focus from the menu item.
+   */
+  @Method()
+  async blurItem() {
+    this.menuItem?.blur();
+  }
+
   private onClick() {
-    console.log('click');
-    if (isUndefined(this.menu)) return;
-    const submenu = document.querySelector(`#${this.menu}`) as HTMLVmMenuElement;
-    if (!isNull(submenu)) submenu!.active = !this.expanded;
+    if (!isNullOrUndefined(this.menu)) this.menu.active = !this.expanded;
+  }
+
+  private onFocus() {
+    this.vmFocus.emit();
+  }
+
+  private onBlur() {
+    this.vmBlur.emit();
   }
 
   private onTouchStart() {
@@ -100,7 +132,7 @@ export class MenuItem {
   }
 
   private onMouseLeave() {
-    this.el.blur();
+    this.host.blur();
   }
 
   render() {
@@ -131,12 +163,15 @@ export class MenuItem {
         aria-label={this.label}
         aria-hidden={this.hidden ? 'true' : 'false'}
         aria-haspopup={isMenuDefined ? 'true' : undefined}
-        aria-controls={this.menu}
+        aria-controls={this.menu?.id}
         aria-expanded={isMenuDefined ? hasExpanded : undefined}
         aria-checked={isCheckedDefined ? isChecked : undefined}
         onClick={this.onClick.bind(this)}
+        onFocus={this.onFocus.bind(this)}
+        onBlur={this.onBlur.bind(this)}
         onTouchStart={this.onTouchStart.bind(this)}
         onMouseLeave={this.onMouseLeave.bind(this)}
+        ref={((el) => { this.menuItem = el; })}
       >
         {showCheckedIcon && <vm-icon name={this.checkIcon!} library={this.icons} />}
         {showLeftNavArrow && <span class="arrow left" />}

@@ -1,4 +1,6 @@
-import { h, Component, Prop } from '@stencil/core';
+import {
+  h, Component, Prop, State, Watch,
+} from '@stencil/core';
 import { withPlayerContext } from '../../../core/player/withPlayerContext';
 import { PlayerProps } from '../../../core/player/PlayerProps';
 import { Disposal } from '../../../../utils/Disposal';
@@ -20,13 +22,9 @@ export class DefaultSettings {
 
   private dispatch!: Dispatcher;
 
-  private player?: HTMLVmPlayerElement;
+  @State() canSetPlaybackRate = false;
 
-  private rateSubmenu: any;
-
-  private qualitySubmenu: any;
-
-  private captionsSubmenu: any;
+  @State() canSetPlaybackQuality = false;
 
   /**
    * Pins the settings to the defined position inside the video player. This has no effect when
@@ -45,6 +43,13 @@ export class DefaultSettings {
    * @internal
    */
   @Prop() playbackReady: PlayerProps['playbackReady'] = false;
+
+  @Watch('playbackReady')
+  async onPlaybackReady() {
+    const player = await findPlayer(this);
+    this.canSetPlaybackQuality = await player.canSetPlaybackQuality();
+    this.canSetPlaybackRate = await player.canSetPlaybackRate();
+  }
 
   /**
    * @internal
@@ -78,22 +83,11 @@ export class DefaultSettings {
     ]);
   }
 
-  async connectedCallback() {
-    this.player = await findPlayer(this);
+  connectedCallback() {
     this.dispatch = createDispatcher(this);
   }
 
-  componentWillRender() {
-    if (!this.playbackReady) return undefined;
-
-    return Promise.all([
-      this.buildPlaybackRateSubmenu(),
-      this.buildPlaybackQualitySubmenu(),
-    ]);
-  }
-
   disconnectedCallback() {
-    this.player = undefined;
     this.textTracksDisposal.empty();
   }
 
@@ -102,14 +96,11 @@ export class DefaultSettings {
     this.dispatch('playbackRate', parseFloat(radio.value));
   }
 
-  private async buildPlaybackRateSubmenu() {
-    const canSetPlaybackRate = await this.player?.canSetPlaybackRate();
-
-    if (this.playbackRates.length === 1 || !canSetPlaybackRate) {
-      this.rateSubmenu = (
+  private buildPlaybackRateSubmenu() {
+    if (this.playbackRates.length === 1 || !this.canSetPlaybackRate) {
+      return (
         <vm-menu-item label={this.i18n.playbackRate} hint={this.i18n.normal} />
       );
-      return;
     }
 
     const formatRate = (rate: number) => ((rate === 1) ? this.i18n.normal : `${rate}`);
@@ -121,7 +112,7 @@ export class DefaultSettings {
       />
     ));
 
-    this.rateSubmenu = (
+    return (
       <vm-submenu label={this.i18n.playbackRate} hint={formatRate(this.playbackRate)}>
         <vm-menu-radio-group
           value={`${this.playbackRate}`}
@@ -138,17 +129,14 @@ export class DefaultSettings {
     this.dispatch('playbackQuality', radio.value);
   }
 
-  private async buildPlaybackQualitySubmenu() {
-    const canSetPlaybackQuality = await this.player?.canSetPlaybackQuality();
-
-    if (this.playbackQualities.length === 0 || !canSetPlaybackQuality) {
-      this.qualitySubmenu = (
+  private buildPlaybackQualitySubmenu() {
+    if (this.playbackQualities.length === 0 || !this.canSetPlaybackQuality) {
+      return (
         <vm-menu-item
           label={this.i18n.playbackQuality}
           hint={this.playbackQuality ?? this.i18n.auto}
         />
       );
-      return;
     }
 
     // @TODO this doesn't account for audio qualities yet.
@@ -167,7 +155,7 @@ export class DefaultSettings {
       />
     ));
 
-    this.qualitySubmenu = (
+    return (
       <vm-submenu label={this.i18n.playbackQuality} hint={this.playbackQuality}>
         <vm-menu-radio-group
           value={this.playbackQuality}
@@ -182,9 +170,8 @@ export class DefaultSettings {
   render() {
     return (
       <vm-settings pin={this.pin}>
-        {this.rateSubmenu}
-        {this.qualitySubmenu}
-        {this.captionsSubmenu}
+        {this.buildPlaybackRateSubmenu()}
+        {this.buildPlaybackQualitySubmenu()}
         <slot />
       </vm-settings>
     );

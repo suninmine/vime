@@ -1,6 +1,6 @@
 import {
   h, Component, Prop, State, Element,
-  Event, EventEmitter, Watch,
+  Event, EventEmitter, Watch, Method,
 } from '@stencil/core';
 import { PlayerProps } from '../../../core/player/PlayerProps';
 import { isNull, isUndefined } from '../../../../utils/unit';
@@ -24,7 +24,7 @@ export class Control implements KeyboardControl {
 
   private keyboardDisposal = new Disposal();
 
-  @Element() el!: HTMLVmControlElement;
+  @Element() host!: HTMLVmControlElement;
 
   @State() describedBy?: string;
 
@@ -91,6 +91,16 @@ export class Control implements KeyboardControl {
    */
   @Event() vmInteractionChange!: EventEmitter<boolean>;
 
+  /**
+   * Emitted when the control receives focus.
+   */
+  @Event() vmFocus!: EventEmitter<void>;
+
+  /**
+   * Emitted when the control loses focus.
+   */
+  @Event() vmBlur!: EventEmitter<void>;
+
   constructor() {
     withComponentRegistry(this);
     withPlayerContext(this, ['isTouch']);
@@ -109,13 +119,29 @@ export class Control implements KeyboardControl {
     this.keyboardDisposal.empty();
   }
 
+  /**
+   * Focuses the control.
+   */
+  @Method()
+  async focusControl() {
+    this.button?.focus();
+  }
+
+  /**
+   * Removes focus from the control.
+   */
+  @Method()
+  async blurControl() {
+    this.button?.blur();
+  }
+
   private onTouchStart() {
     this.showTapHighlight = true;
     setTimeout(() => { this.showTapHighlight = false; }, 100);
   }
 
   private findTooltip() {
-    const tooltip = this.el.querySelector('vm-tooltip');
+    const tooltip = this.host.querySelector('vm-tooltip');
     if (!isNull(tooltip)) this.describedBy = tooltip!.id;
     return tooltip;
   }
@@ -134,12 +160,12 @@ export class Control implements KeyboardControl {
   }
 
   private onFocus() {
-    this.el.dispatchEvent(new window.Event('focus', { bubbles: true }));
+    this.vmFocus.emit();
     this.onShowTooltip();
   }
 
   private onBlur() {
-    this.el.dispatchEvent(new window.Event('blur', { bubbles: true }));
+    this.vmBlur.emit();
     this.onHideTooltip();
   }
 

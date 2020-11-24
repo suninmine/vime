@@ -61,9 +61,9 @@ export function withPlayerScheduler(player: MediaPlayer): SafeAdapterCall {
     });
   }
 
-  function onStateChange(e: CustomEvent<StateChange>) {
-    e.stopImmediatePropagation();
-    const { by, prop, value } = e.detail;
+  function onStateChange(event: CustomEvent<StateChange>) {
+    event.stopImmediatePropagation();
+    const { by, prop, value } = event.detail;
 
     if (!isWritableProp(prop)) {
       player.logger?.warn(`${by.nodeName} tried to change \`${prop}\` but it is readonly.`);

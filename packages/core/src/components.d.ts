@@ -92,9 +92,17 @@ export namespace Components {
     }
     interface VmControl {
         /**
+          * Removes focus from the control.
+         */
+        "blurControl": () => Promise<void>;
+        /**
           * If the control has a popup menu, this indicates whether the menu is open or not. Sets the `aria-expanded` property.
          */
         "expanded"?: boolean;
+        /**
+          * Focuses the control.
+         */
+        "focusControl": () => Promise<void>;
         /**
           * Whether the control should be displayed or not.
          */
@@ -621,31 +629,47 @@ export namespace Components {
          */
         "active": boolean;
         /**
-          * The `id` attribute value of the control responsible for opening/closing this menu.
+          * Removes focus from the menu.
          */
-        "controller": string;
+        "blurMenu": () => Promise<void>;
         /**
-          * This should be called directly before opening the menu to set the keyboard focus on it. This is a one-time operation and needs to be called everytime prior to opening the menu.
+          * Calculates the height of the settings menu based on its children.
          */
-        "focusOnOpen": () => Promise<void>;
+        "calculateHeight": () => Promise<number>;
         /**
-          * Returns the controller responsible for opening/closing this menu.
+          * Reference to the controller DOM element that is responsible for opening/closing this menu.
          */
-        "getController": () => Promise<HTMLElement>;
+        "controller"?: HTMLElement;
+        /**
+          * Focuses the menu.
+         */
+        "focusMenu": () => Promise<void>;
         /**
           * Returns the currently focused menu item.
          */
-        "getFocusedMenuItem": () => Promise<HTMLVmMenuItemElement>;
+        "getActiveMenuItem": () => Promise<HTMLVmMenuItemElement | undefined>;
         /**
           * The `id` attribute of the menu.
          */
         "identifier": string;
+        /**
+          * Sets the currently focused menu item.
+         */
+        "setActiveMenuItem": (item?: HTMLVmMenuItemElement | undefined) => Promise<void>;
+        /**
+          * The direction the menu should slide in from.
+         */
+        "slideInDirection"?: 'left' | 'right';
     }
     interface VmMenuItem {
         /**
           * This can provide additional context about the value of a menu item. For example, if the item is a radio button for a set of video qualities, the badge could describe whether the quality is UHD, HD etc.
          */
         "badge"?: string;
+        /**
+          * Removes focus from the menu item.
+         */
+        "blurItem": () => Promise<void>;
         /**
           * The name of the checkmark icon to resolve from the icon library.
          */
@@ -658,6 +682,10 @@ export namespace Components {
           * If the item has a popup menu, this indicates whether the menu is open or not. Sets the `aria-expanded` property.
          */
         "expanded"?: boolean;
+        /**
+          * Focuses the menu item.
+         */
+        "focusItem": () => Promise<void>;
         /**
           * Whether the item is displayed or not.
          */
@@ -680,9 +708,9 @@ export namespace Components {
          */
         "label": string;
         /**
-          * If the item has a popup menu, then this should be the `id` of said menu. Sets the `aria-controls` property.
+          * If the item has a popup menu, then this should be a reference to it.
          */
-        "menu"?: string;
+        "menu"?: HTMLVmMenuElement;
     }
     interface VmMenuRadio {
         /**
@@ -1216,15 +1244,23 @@ export namespace Components {
          */
         "pin": 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight';
         /**
-          * Sets the controller responsible for opening/closing this settings.
+          * Sets the controller responsible for opening/closing this settings menu.
          */
-        "setController": (id: string, controller: SettingsController) => Promise<void>;
+        "setController": (controller: SettingsController) => Promise<void>;
     }
     interface VmSettingsControl {
+        /**
+          * Removes focus from the control.
+         */
+        "blurControl": () => Promise<void>;
         /**
           * Whether the settings menu this control manages is open.
          */
         "expanded": boolean;
+        /**
+          * Focuses the control.
+         */
+        "focusControl": () => Promise<void>;
         "i18n": PlayerProps['i18n'];
         /**
           * The name of the settings icon to resolve from the icon library.
@@ -1291,9 +1327,13 @@ export namespace Components {
          */
         "active": boolean;
         /**
-          * Whether the submenu should be displayed or not.
+          * Returns the controller (`vm-menu-item`) for this submenu.
          */
-        "hidden": boolean;
+        "getController": () => Promise<HTMLVmMenuItemElement | undefined>;
+        /**
+          * Returns the menu (`vm-menu`) for this submenu.
+         */
+        "getMenu": () => Promise<HTMLVmMenuElement | undefined>;
         /**
           * This can provide additional context about the current state of the submenu. For example, the hint could be the currently selected option if the submenu contains a radio group.
          */
@@ -1302,6 +1342,10 @@ export namespace Components {
           * The title of the submenu.
          */
         "label": string;
+        /**
+          * The direction the submenu should slide in from.
+         */
+        "slideInDirection"?: 'left' | 'right';
     }
     interface VmTime {
         /**
@@ -1950,6 +1994,14 @@ declare namespace LocalJSX {
          */
         "menu"?: string;
         /**
+          * Emitted when the control loses focus.
+         */
+        "onVmBlur"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the control receives focus.
+         */
+        "onVmFocus"?: (event: CustomEvent<void>) => void;
+        /**
           * Emitted when the user is interacting with the control by focusing, touching or hovering on it.
          */
         "onVmInteractionChange"?: (event: CustomEvent<boolean>) => void;
@@ -2485,29 +2537,45 @@ declare namespace LocalJSX {
          */
         "active"?: boolean;
         /**
-          * The `id` attribute value of the control responsible for opening/closing this menu.
+          * Reference to the controller DOM element that is responsible for opening/closing this menu.
          */
-        "controller": string;
+        "controller"?: HTMLElement;
         /**
           * The `id` attribute of the menu.
          */
         "identifier": string;
         /**
-          * Emitted when the menu has closed/is not active.
-         */
-        "onVmClose"?: (event: CustomEvent<void>) => void;
-        /**
           * Emitted when the currently focused menu item changes.
          */
-        "onVmFocusMenuItemChange"?: (event: CustomEvent<HTMLVmMenuItemElement | undefined>) => void;
+        "onVmActiveMenuItemChange"?: (event: CustomEvent<HTMLVmMenuItemElement | undefined>) => void;
         /**
-          * Emitted when the menu items present changes.
+          * Emitted when the active submenu changes.
          */
-        "onVmMenuItemsChange"?: (event: CustomEvent<NodeListOf<HTMLVmMenuItemElement> | undefined>) => void;
+        "onVmActiveSubmenuChange"?: (event: CustomEvent<HTMLVmSubmenuElement | undefined>) => void;
+        /**
+          * Emitted when the menu loses focus.
+         */
+        "onVmBlur"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the menu has closed/is not active.
+         */
+        "onVmClose"?: (event: CustomEvent<HTMLVmMenuElement>) => void;
+        /**
+          * Emitted when the menu is focused.
+         */
+        "onVmFocus"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the height of the menu changes.
+         */
+        "onVmMenuHeightChange"?: (event: CustomEvent<number>) => void;
         /**
           * Emitted when the menu is open/active.
          */
-        "onVmOpen"?: (event: CustomEvent<void>) => void;
+        "onVmOpen"?: (event: CustomEvent<HTMLVmMenuElement>) => void;
+        /**
+          * The direction the menu should slide in from.
+         */
+        "slideInDirection"?: 'left' | 'right';
     }
     interface VmMenuItem {
         /**
@@ -2548,9 +2616,17 @@ declare namespace LocalJSX {
          */
         "label": string;
         /**
-          * If the item has a popup menu, then this should be the `id` of said menu. Sets the `aria-controls` property.
+          * If the item has a popup menu, then this should be a reference to it.
          */
-        "menu"?: string;
+        "menu"?: HTMLVmMenuElement;
+        /**
+          * Emitted when the item loses focus.
+         */
+        "onVmBlur"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the item is focused.
+         */
+        "onVmFocus"?: (event: CustomEvent<void>) => void;
     }
     interface VmMenuRadio {
         /**
@@ -2620,6 +2696,14 @@ declare namespace LocalJSX {
           * The name of the muted volume icon to resolve from the icon library.
          */
         "mutedIcon"?: string;
+        /**
+          * Emitted when the control loses focus.
+         */
+        "onVmBlur"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the control receives focus.
+         */
+        "onVmFocus"?: (event: CustomEvent<void>) => void;
         /**
           * The direction in which the tooltip should grow.
          */
@@ -3256,6 +3340,14 @@ declare namespace LocalJSX {
          */
         "min"?: number;
         /**
+          * Emitted when the slider loses focus.
+         */
+        "onVmBlur"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the slider receives focus.
+         */
+        "onVmFocus"?: (event: CustomEvent<void>) => void;
+        /**
           * Emitted when the value of the underlying `input` field changes.
          */
         "onVmValueChange"?: (event: CustomEvent<number>) => void;
@@ -3291,10 +3383,6 @@ declare namespace LocalJSX {
          */
         "active"?: boolean;
         /**
-          * Whether the submenu should be displayed or not.
-         */
-        "hidden"?: boolean;
-        /**
           * This can provide additional context about the current state of the submenu. For example, the hint could be the currently selected option if the submenu contains a radio group.
          */
         "hint"?: string;
@@ -3302,6 +3390,18 @@ declare namespace LocalJSX {
           * The title of the submenu.
          */
         "label": string;
+        /**
+          * Emitted when the submenu has closed/is not active.
+         */
+        "onVmCloseSubmenu"?: (event: CustomEvent<HTMLVmSubmenuElement>) => void;
+        /**
+          * Emitted when the submenu is open/active.
+         */
+        "onVmOpenSubmenu"?: (event: CustomEvent<HTMLVmSubmenuElement>) => void;
+        /**
+          * The direction the submenu should slide in from.
+         */
+        "slideInDirection"?: 'left' | 'right';
     }
     interface VmTime {
         /**

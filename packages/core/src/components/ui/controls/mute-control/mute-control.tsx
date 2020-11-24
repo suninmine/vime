@@ -1,4 +1,6 @@
-import { h, Component, Prop } from '@stencil/core';
+import {
+  h, Component, Prop, Event, EventEmitter,
+} from '@stencil/core';
 import { PlayerProps } from '../../../core/player/PlayerProps';
 import { withPlayerContext } from '../../../core/player/withPlayerContext';
 import { Dispatcher, createDispatcher } from '../../../core/player/PlayerDispatcher';
@@ -69,6 +71,16 @@ export class MuteControl implements KeyboardControl {
    * @internal
    */
   @Prop() i18n: PlayerProps['i18n'] = {};
+
+  /**
+   * Emitted when the control receives focus.
+   */
+  @Event() vmFocus!: EventEmitter<void>;
+
+  /**
+   * Emitted when the control loses focus.
+   */
+  @Event() vmBlur!: EventEmitter<void>;
 
   constructor() {
     withComponentRegistry(this);

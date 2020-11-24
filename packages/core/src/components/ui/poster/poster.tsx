@@ -15,7 +15,7 @@ import { withComponentRegistry } from '../../core/player/withComponentRegistry';
 export class Poster {
   private lazyLoader!: LazyLoader;
 
-  @Element() el!: HTMLVmPosterElement;
+  @Element() host!: HTMLVmPosterElement;
 
   @State() isHidden = true;
 
@@ -85,7 +85,7 @@ export class Poster {
   }
 
   connectedCallback() {
-    this.lazyLoader = new LazyLoader(this.el, ['data-src'], (el) => {
+    this.lazyLoader = new LazyLoader(this.host, ['data-src'], (el) => {
       const src = el.getAttribute('data-src');
       el.removeAttribute('src');
       if (!isNull(src)) el.setAttribute('src', src);

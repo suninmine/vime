@@ -9,7 +9,7 @@ import { withComponentRegistry } from '../../../core/player/withComponentRegistr
   shadow: true,
 })
 export class ControlNewLine {
-  @Element() el!: HTMLVmControlGroupElement;
+  @Element() host!: HTMLVmControlGroupElement;
 
   /**
    * Determines where to add spacing/margin. The amount of spacing is determined by the CSS variable

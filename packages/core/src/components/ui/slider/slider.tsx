@@ -9,7 +9,7 @@ import { withComponentRegistry } from '../../core/player/withComponentRegistry';
   shadow: true,
 })
 export class Slider {
-  @Element() el!: HTMLVmSliderElement;
+  @Element() host!: HTMLVmSliderElement;
 
   /**
    * A number that specifies the granularity that the value must adhere to.
@@ -46,6 +46,16 @@ export class Slider {
    */
   @Event() vmValueChange!: EventEmitter<number>;
 
+  /**
+   * Emitted when the slider receives focus.
+   */
+  @Event() vmFocus!: EventEmitter<void>;
+
+  /**
+   * Emitted when the slider loses focus.
+   */
+  @Event() vmBlur!: EventEmitter<void>;
+
   constructor() {
     withComponentRegistry(this);
   }
@@ -72,7 +82,7 @@ export class Slider {
     const clientRect = input.getBoundingClientRect();
 
     const sliderThumbWidth = parseFloat(
-      window.getComputedStyle(this.el).getPropertyValue('--vm-slider-thumb-width'),
+      window.getComputedStyle(this.host).getPropertyValue('--vm-slider-thumb-width'),
     );
 
     const thumbWidth = ((100 / clientRect.width) * (sliderThumbWidth / 2)) / 100;
@@ -141,8 +151,8 @@ export class Slider {
           aria-valuetext={this.valueText ?? this.getPercentage()}
           aria-orientation="horizontal"
           onInput={this.onValueChange.bind(this)}
-          onFocus={() => { this.el.dispatchEvent(new window.Event('focus', { bubbles: true, composed: true })); }}
-          onBlur={() => { this.el.dispatchEvent(new window.Event('blur', { bubbles: true, composed: true })); }}
+          onFocus={() => { this.vmFocus.emit(); }}
+          onBlur={() => { this.vmBlur.emit(); }}
           onTouchStart={this.onTouch.bind(this)}
           onTouchMove={this.onTouch.bind(this)}
           onTouchEnd={this.onTouch.bind(this)}
