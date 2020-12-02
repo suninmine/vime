@@ -1,8 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`should be structurally sound 1`] = `
-<vm-volume-control>
-  <vm-mute-control highvolumeicon="#vime-volume-high" keys="m" lowvolumeicon="#vime-volume-low" mutedicon="#vime-volume-mute" tooltipposition="top"></vm-mute-control>
-  <vm-slider label="Volume" max="100" step="5" value="50"></vm-slider>
-</vm-volume-control>
-`;

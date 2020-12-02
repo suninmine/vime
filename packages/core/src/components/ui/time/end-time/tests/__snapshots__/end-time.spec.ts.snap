@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`should be structurally sound 1`] = `
-<vm-end-time>
-  <vm-time label="Duration" seconds="120"></vm-time>
-</vm-end-time>
-`;
