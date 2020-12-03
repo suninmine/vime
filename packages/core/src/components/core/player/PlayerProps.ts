@@ -14,6 +14,7 @@ export const initialState: { [P in keyof PlayerProps]: PlayerProps[P] } = {
   mediaTitle: undefined,
   currentSrc: undefined,
   currentPoster: undefined,
+  textTracks: [],
   icons: 'vime',
   currentTime: 0,
   autoplay: false,
@@ -115,6 +116,7 @@ const resetableProps = new Set<PlayerProp>([
   'playing',
   'buffering',
   'playbackReady',
+  'textTracks',
   'mediaTitle',
   'currentSrc',
   'currentPoster',
@@ -414,6 +416,11 @@ export interface PlayerProps {
    * Depending on the provider, changing this prop may cause the player to completely reset.
    */
   playsinline: boolean
+
+  /**
+   * `@readonly` The text tracks associated with the current media.
+   */
+  textTracks: TextTrack[]
 
   /**
    * The current language of the player. This can be any code defined via the `extendLanguage`

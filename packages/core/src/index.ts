@@ -16,5 +16,5 @@ export { Provider } from './components/providers/Provider';
 export { AdapterHost, MediaProviderAdapter } from './components/providers/MediaProvider';
 export {
   PLAYER_KEY, REGISTRY_KEY, REGISTRATION_KEY, COMPONENT_NAME_KEY, withComponentRegistry,
-  isComponentRegistered, watchComponentRegistry, getPlayer, getComponentFromRegistry,
+  isComponentRegistered, watchComponentRegistry, getPlayerFromRegistry, getComponentFromRegistry,
 } from './components/core/player/withComponentRegistry';

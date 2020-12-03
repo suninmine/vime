@@ -60,6 +60,7 @@ progress {
   left: 0;
   top: 50%;
   padding: 0;
+  color: var(--vm-scrubber-buffered-bg);
   height: var(--vm-slider-track-height);
 }
 

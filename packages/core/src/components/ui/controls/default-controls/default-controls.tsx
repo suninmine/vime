@@ -87,27 +87,6 @@ export class DefaultControls {
   }
 
   private buildMobileVideoControls() {
-    const lowerControls = (
-      <vm-controls
-        pin="bottomLeft"
-        fullWidth
-        activeDuration={this.activeDuration}
-        waitForPlaybackStart={this.waitForPlaybackStart}
-        hideWhenPaused={this.hideWhenPaused}
-      >
-        <vm-control-group>
-          <vm-current-time />
-          <vm-control-spacer />
-          <vm-end-time />
-          <vm-fullscreen-control />
-        </vm-control-group>
-
-        <vm-control-group space="top">
-          <vm-scrubber-control />
-        </vm-control-group>
-      </vm-controls>
-    );
-
     return (
       <Fragment>
         <vm-scrim gradient="up" />
@@ -136,30 +115,48 @@ export class DefaultControls {
           <vm-playback-control style={{ '--vm-control-scale': '1.3' }} />
         </vm-controls>
 
-        {!this.isLive && lowerControls}
+        {!this.isLive && (
+          <vm-controls
+            pin="bottomLeft"
+            fullWidth
+            activeDuration={this.activeDuration}
+            waitForPlaybackStart={this.waitForPlaybackStart}
+            hideWhenPaused={this.hideWhenPaused}
+          >
+            <vm-control-group>
+              <vm-current-time />
+              <vm-control-spacer />
+              <vm-end-time />
+              <vm-fullscreen-control />
+            </vm-control-group>
+
+            <vm-control-group space="top">
+              <vm-scrubber-control />
+            </vm-control-group>
+          </vm-controls>
+        )}
       </Fragment>
     );
   }
 
   private buildDesktopVideoControls() {
-    const scrubberControlGroup = (
-      <vm-control-group>
-        <vm-scrubber-control />
-      </vm-control-group>
-    );
-
     return (
       <Fragment>
         {(this.theme !== 'light') && <vm-scrim gradient="up" />}
 
         <vm-controls
+          fullWidth
+          pin="bottomRight"
           activeDuration={this.activeDuration}
           waitForPlaybackStart={this.waitForPlaybackStart}
           hideWhenPaused={this.hideWhenPaused}
           hideOnMouseLeave={this.hideOnMouseLeave}
-          fullWidth
         >
-          {!this.isLive && scrubberControlGroup}
+          {!this.isLive && (
+            <vm-control-group>
+              <vm-scrubber-control />
+            </vm-control-group>
+          )}
 
           <vm-control-group space={this.isLive ? 'none' : 'top'}>
             <vm-playback-control tooltipDirection="right" />
@@ -181,6 +178,6 @@ export class DefaultControls {
     if (this.isAudioView) return this.buildAudioControls();
     if (this.isVideoView && this.isMobile) return this.buildMobileVideoControls();
     if (this.isVideoView) return this.buildDesktopVideoControls();
-    return undefined;
+    return null;
   }
 }

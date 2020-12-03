@@ -1,16 +1,16 @@
 import {
-  h, Component, Prop, State, Watch,
+  h, Component, Prop, State, Watch, Host,
 } from '@stencil/core';
 import { PlayerProps } from '../../../core/player/PlayerProps';
 import { TooltipDirection, TooltipPosition } from '../../tooltip/types';
 import { KeyboardControl } from '../control/KeyboardControl';
 import { isUndefined } from '../../../../utils/unit';
-import { findPlayer } from '../../../core/player/findPlayer';
 import { withPlayerContext } from '../../../core/player/withPlayerContext';
-import { withComponentRegistry } from '../../../core/player/withComponentRegistry';
+import { getPlayerFromRegistry, withComponentRegistry } from '../../../core/player/withComponentRegistry';
 
 @Component({
   tag: 'vm-fullscreen-control',
+  styleUrl: 'fullscreen-control.css',
   shadow: true,
 })
 export class FullscreenControl implements KeyboardControl {
@@ -69,8 +69,8 @@ export class FullscreenControl implements KeyboardControl {
 
   @Watch('playbackReady')
   async onPlaybackReadyChange() {
-    const player = await findPlayer(this);
-    this.canSetFullscreen = await player.canSetFullscreen();
+    const player = getPlayerFromRegistry(this);
+    this.canSetFullscreen = await player?.canSetFullscreen() ?? false;
   }
 
   constructor() {
@@ -82,9 +82,13 @@ export class FullscreenControl implements KeyboardControl {
     ]);
   }
 
-  private async onClick() {
-    const player = await findPlayer(this);
-    !this.isFullscreenActive ? player.enterFullscreen() : player.exitFullscreen();
+  componentDidLoad() {
+    this.onPlaybackReadyChange();
+  }
+
+  private onClick() {
+    const player = getPlayerFromRegistry(this);
+    !this.isFullscreenActive ? player?.enterFullscreen() : player?.exitFullscreen();
   }
 
   render() {
@@ -92,26 +96,28 @@ export class FullscreenControl implements KeyboardControl {
     const tooltipWithHint = !isUndefined(this.keys) ? `${tooltip} (${this.keys})` : tooltip;
 
     return (
-      <vm-control
-        label={this.i18n.fullscreen}
-        keys={this.keys}
-        pressed={this.isFullscreenActive}
-        hidden={!this.canSetFullscreen}
-        onClick={this.onClick.bind(this)}
-      >
-        <vm-icon
-          name={this.isFullscreenActive ? this.exitIcon : this.enterIcon}
-          library={this.icons}
-        />
-
-        <vm-tooltip
-          hidden={this.hideTooltip}
-          position={this.tooltipPosition}
-          direction={this.tooltipDirection}
+      <Host hidden={!this.canSetFullscreen}>
+        <vm-control
+          label={this.i18n.fullscreen}
+          keys={this.keys}
+          pressed={this.isFullscreenActive}
+          hidden={!this.canSetFullscreen}
+          onClick={this.onClick.bind(this)}
         >
-          {tooltipWithHint}
-        </vm-tooltip>
-      </vm-control>
+          <vm-icon
+            name={this.isFullscreenActive ? this.exitIcon : this.enterIcon}
+            library={this.icons}
+          />
+
+          <vm-tooltip
+            hidden={this.hideTooltip}
+            position={this.tooltipPosition}
+            direction={this.tooltipDirection}
+          >
+            {tooltipWithHint}
+          </vm-tooltip>
+        </vm-control>
+      </Host>
     );
   }
 }

@@ -1,16 +1,16 @@
 import {
-  h, Component, Prop, Watch, State,
+  h, Component, Prop, Watch, State, Host,
 } from '@stencil/core';
 import { PlayerProps } from '../../../core/player/PlayerProps';
 import { TooltipDirection, TooltipPosition } from '../../tooltip/types';
 import { KeyboardControl } from '../control/KeyboardControl';
 import { isUndefined } from '../../../../utils/unit';
-import { findPlayer } from '../../../core/player/findPlayer';
 import { withPlayerContext } from '../../../core/player/withPlayerContext';
-import { withComponentRegistry } from '../../../core/player/withComponentRegistry';
+import { getPlayerFromRegistry, withComponentRegistry } from '../../../core/player/withComponentRegistry';
 
 @Component({
   tag: 'vm-pip-control',
+  styleUrl: 'pip-control.css',
   shadow: true,
 })
 export class PiPControl implements KeyboardControl {
@@ -69,8 +69,8 @@ export class PiPControl implements KeyboardControl {
 
   @Watch('playbackReady')
   async onPlaybackReadyChange() {
-    const player = await findPlayer(this);
-    this.canSetPiP = await player.canSetPiP();
+    const player = getPlayerFromRegistry(this);
+    this.canSetPiP = await player?.canSetPiP() ?? false;
   }
 
   constructor() {
@@ -78,9 +78,13 @@ export class PiPControl implements KeyboardControl {
     withPlayerContext(this, ['isPiPActive', 'playbackReady', 'i18n']);
   }
 
-  private async onClick() {
-    const player = await findPlayer(this);
-    !this.isPiPActive ? player.enterPiP() : player.exitPiP();
+  componentDidLoad() {
+    this.onPlaybackReadyChange();
+  }
+
+  private onClick() {
+    const player = getPlayerFromRegistry(this);
+    !this.isPiPActive ? player?.enterPiP() : player?.exitPiP();
   }
 
   render() {
@@ -88,26 +92,28 @@ export class PiPControl implements KeyboardControl {
     const tooltipWithHint = !isUndefined(this.keys) ? `${tooltip} (${this.keys})` : tooltip;
 
     return (
-      <vm-control
-        label={this.i18n.pip}
-        keys={this.keys}
-        pressed={this.isPiPActive}
-        hidden={!this.canSetPiP}
-        onClick={this.onClick.bind(this)}
-      >
-        <vm-icon
-          name={this.isPiPActive ? this.exitIcon : this.enterIcon}
-          library={this.icons}
-        />
-
-        <vm-tooltip
-          hidden={this.hideTooltip}
-          position={this.tooltipPosition}
-          direction={this.tooltipDirection}
+      <Host hidden={!this.canSetPiP}>
+        <vm-control
+          label={this.i18n.pip}
+          keys={this.keys}
+          pressed={this.isPiPActive}
+          hidden={!this.canSetPiP}
+          onClick={this.onClick.bind(this)}
         >
-          {tooltipWithHint}
-        </vm-tooltip>
-      </vm-control>
+          <vm-icon
+            name={this.isPiPActive ? this.exitIcon : this.enterIcon}
+            library={this.icons}
+          />
+
+          <vm-tooltip
+            hidden={this.hideTooltip}
+            position={this.tooltipPosition}
+            direction={this.tooltipDirection}
+          >
+            {tooltipWithHint}
+          </vm-tooltip>
+        </vm-control>
+      </Host>
     );
   }
 }

@@ -118,9 +118,9 @@ export type ComponentRegistrationChangeCallback<T extends HTMLElement = HTMLElem
  *
  * @param ref - A Stencil component instance or HTMLElement.
  */
-export function getPlayer(ref: any) {
+export function getPlayerFromRegistry(ref: any) {
   const registrant = getRegistrant(ref);
-  return registrant[PLAYER_KEY]!;
+  return registrant[PLAYER_KEY];
 }
 
 /**

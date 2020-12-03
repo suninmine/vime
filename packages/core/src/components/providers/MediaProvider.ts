@@ -1,8 +1,9 @@
 import { EventEmitter } from '@stencil/core';
 import { HTMLStencilElement } from '@stencil/core/internal';
 import { PlayerProps } from '../core/player/PlayerProps';
+import { CaptionsAdapter } from './CaptionsAdapter';
 
-export interface MediaProviderAdapter<InternalPlayerType = any> {
+export interface MediaProviderAdapter<InternalPlayerType = any> extends CaptionsAdapter {
   getInternalPlayer(): Promise<InternalPlayerType>
   play(): Promise<void>
   pause(): Promise<void>

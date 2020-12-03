@@ -61,7 +61,7 @@ export class Player implements MediaPlayer {
   @Prop({ reflect: true }) theme?: string;
 
   /** @inheritDoc */
-  @Prop({ reflect: true }) icons = 'material';
+  @Prop({ reflect: true }) icons = 'vime';
 
   /** @inheritDoc */
   @Prop({ mutable: true }) paused = true;
@@ -291,6 +291,9 @@ export class Player implements MediaPlayer {
 
   /** @inheritDoc */
   @Prop({ mutable: true, attribute: null }) isPiPActive = false;
+
+  /** @inheritDoc */
+  @Prop({ attribute: null }) textTracks = [];
 
   /** @inheritDoc */
   @Prop() autopause = true;
@@ -570,6 +573,36 @@ export class Player implements MediaPlayer {
   @Method()
   async exitPiP() {
     return this.adapter?.exitPiP?.();
+  }
+
+  /** @inheritDoc */
+  @Method()
+  async getCurrentTextTrack() {
+    return this.adapter?.getCurrentTextTrack?.() ?? -1;
+  }
+
+  /** @inheritDoc */
+  @Method()
+  async setCurrentTextTrack(trackId: number) {
+    this.adapter?.setCurrentTextTrack?.(trackId);
+  }
+
+  /** @inheritDoc */
+  @Method()
+  async canSetTextTrackVisibility() {
+    return !isUndefined(this.adapter?.setTextTrackVisibility);
+  }
+
+  /** @inheritDoc */
+  @Method()
+  async getTextTrackVisibility() {
+    return this.adapter?.getTextTrackVisibility?.() ?? false;
+  }
+
+  /** @inheritDoc */
+  @Method()
+  async setTextTrackVisibility(isVisible: boolean) {
+    this.adapter?.setTextTrackVisibility?.(isVisible);
   }
 
   /** @inheritDoc */

@@ -137,6 +137,9 @@ export class Control implements KeyboardControl {
 
   private onTouchStart() {
     this.showTapHighlight = true;
+  }
+
+  private onTouchEnd() {
     setTimeout(() => { this.showTapHighlight = false; }, 100);
   }
 
@@ -197,6 +200,7 @@ export class Control implements KeyboardControl {
         aria-hidden={this.hidden ? 'true' : 'false'}
         aria-describedby={this.describedBy}
         onTouchStart={this.onTouchStart.bind(this)}
+        onTouchEnd={this.onTouchEnd.bind(this)}
         onFocus={this.onFocus.bind(this)}
         onBlur={this.onBlur.bind(this)}
         onMouseEnter={this.onMouseEnter.bind(this)}

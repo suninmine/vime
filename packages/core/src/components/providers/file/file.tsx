@@ -217,7 +217,6 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
     this.onViewTypeChange();
     this.onPosterChange();
     this.onMediaTitleChange();
-    this.listenToTextTracksChanges();
   }
 
   componentDidRender() {
@@ -301,6 +300,7 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   private onSrcSetChange() {
     this.mediaQueryDisposal.empty();
     this.vmLoadStart.emit();
+    this.onTextTracksReset();
     this.vmSrcSetChange.emit(this.currentSrcSet);
     if (this.hasPlaybackQualities()) {
       this.dispatch('playbackQualities', this.getPlaybackQualities());
@@ -384,7 +384,7 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   }
 
   private onLoadedMetadata() {
-    this.onTracksChange();
+    this.onTextTracksChange();
 
     // Reset player state on quality change.
     if (this.playbackStarted) {
@@ -525,17 +525,6 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
     this.dispatch('isPiPActive', false);
   }
 
-  private onTracksChange() {
-    // this.dispatch('textTracks', this.mediaEl!.textTracks);
-  }
-
-  private listenToTextTracksChanges() {
-    if (isUndefined(this.mediaEl)) return;
-    this.disposal.add(
-      listen(this.mediaEl!.textTracks, 'change', this.onTracksChange.bind(this)),
-    );
-  }
-
   /**
    * @internal
    */
@@ -574,7 +563,82 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
       canSetFullscreen: async () => canFullscreenVideo(),
       enterFullscreen: () => this.toggleFullscreen(true),
       exitFullscreen: () => this.toggleFullscreen(false),
+      getTextTracks: () => this.getTextTracks(),
+      getCurrentTextTrack: () => this.currentTextTrackId,
+      setCurrentTextTrack: (trackId: number) => {
+        if (trackId !== this.currentTextTrackId) this.toggleTextTrackModes(trackId);
+      },
+      getTextTrackVisibility: () => this.isTextTrackVisible,
+      setTextTrackVisibility: (isVisible: boolean) => {
+        this.isTextTrackVisible = isVisible;
+        this.toggleTextTrackModes(this.currentTextTrackId);
+      },
     };
+  }
+
+  private currentTextTrackId = -1;
+
+  private isTextTrackVisible = true;
+
+  private getTextTracks() {
+    const tracks = [];
+    const textTrackList = Array.from(this.mediaEl!.textTracks);
+
+    for (let i = 0; i < textTrackList.length; i += 1) {
+      const track = textTrackList[i];
+      // Edge adds a track without a label; we don't want to use it.
+      if ((track.kind === 'subtitles' || track.kind === 'captions') && track.label) {
+        tracks.push(textTrackList[i]);
+      }
+    }
+
+    return tracks;
+  }
+
+  private onTextTracksReset() {
+    this.disposal.empty();
+    this.currentTextTrackId = -1;
+    this.isTextTrackVisible = true;
+    this.dispatch('textTracks', this.getTextTracks());
+    if (isUndefined(this.mediaEl)) return;
+    this.disposal.add(
+      listen(this.mediaEl!.textTracks, 'change', this.onTextTracksChange.bind(this)),
+    );
+  }
+
+  private onTextTracksChange() {
+    const tracks = this.getTextTracks();
+
+    let trackId = -1;
+    for (let id = 0; id < tracks.length; id += 1) {
+      if (tracks[id].mode === 'hidden') {
+        // Do not break in case there is a following track with showing.
+        trackId = id;
+      } else if (tracks[id].mode === 'showing') {
+        trackId = id;
+        break;
+      }
+    }
+
+    this.currentTextTrackId = trackId;
+    this.dispatch('textTracks', tracks);
+  }
+
+  private toggleTextTrackModes(newTrackId: number) {
+    if (isNullOrUndefined(this.mediaEl)) return;
+
+    const { textTracks } = this.mediaEl;
+
+    if (newTrackId === -1) {
+      Array.from(textTracks).forEach((track) => { track.mode = 'disabled'; });
+    } else {
+      const oldTrack = textTracks[this.currentTextTrackId];
+      if (oldTrack) oldTrack.mode = 'disabled';
+    }
+
+    const nextTrack = textTracks[newTrackId];
+    if (nextTrack) nextTrack.mode = this.isTextTrackVisible ? 'showing' : 'hidden';
+    this.currentTextTrackId = newTrackId;
   }
 
   render() {

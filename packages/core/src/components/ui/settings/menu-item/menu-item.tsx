@@ -128,6 +128,9 @@ export class MenuItem {
 
   private onTouchStart() {
     this.showTapHighlight = true;
+  }
+
+  private onTouchEnd() {
     setTimeout(() => { this.showTapHighlight = false; }, 100);
   }
 
@@ -170,6 +173,7 @@ export class MenuItem {
         onFocus={this.onFocus.bind(this)}
         onBlur={this.onBlur.bind(this)}
         onTouchStart={this.onTouchStart.bind(this)}
+        onTouchEnd={this.onTouchEnd.bind(this)}
         onMouseLeave={this.onMouseLeave.bind(this)}
         ref={((el) => { this.menuItem = el; })}
       >

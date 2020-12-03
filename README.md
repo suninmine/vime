@@ -9,7 +9,6 @@ Vime is a customizable, extensible, accessible and framework agnostic media play
 
 [![package-badge]][package]
 [![license-badge]][license]
-[![coverage-badge]][coverage]
 [![semantic-release-badge]][semantic-release]
 ![Release][release-badge]
 [![docs-badge]][docs]
@@ -223,7 +222,5 @@ A huge thanks to our sponsors who support open-source projects like Vime.
 [jsdelivr]: https://www.jsdelivr.com/package/npm/@vime/core
 [jsdelivr-badge]: https://data.jsdelivr.com/v1/package/npm/@vime/core/badge?style=rounded
 [release-badge]: https://github.com/vime-js/vime/workflows/Release/badge.svg?branch=master
-[coverage-badge]: https://img.shields.io/codecov/c/github/mihar-22/vime.svg
-[coverage]: https://codecov.io/github/mihar-22/vime
 [discord]: https://discord.gg/feZ6cAE
 [discord-badge]: https://img.shields.io/badge/chat-on%20discord-7389D8
