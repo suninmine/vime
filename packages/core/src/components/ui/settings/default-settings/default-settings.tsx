@@ -6,7 +6,7 @@ import { PlayerProps } from '../../../core/player/PlayerProps';
 import { Disposal } from '../../../../utils/Disposal';
 import { Dispatcher, createDispatcher } from '../../../core/player/PlayerDispatcher';
 import { findPlayer } from '../../../core/player/findPlayer';
-import { withComponentRegistry } from '../../../core/player/withComponentRegistry';
+import { getPlayerFromRegistry, withComponentRegistry } from '../../../core/player/withComponentRegistry';
 
 /**
  * @slot - Used to extend the settings with additional menu options (see `vm-submenu` or
@@ -25,6 +25,12 @@ export class DefaultSettings {
   @State() canSetPlaybackRate = false;
 
   @State() canSetPlaybackQuality = false;
+
+  @State() canSetTextTrack = false;
+
+  @State() currentTrackId = -1;
+
+  @State() isTextTrackVisible = false;
 
   /**
    * Pins the settings to the defined position inside the video player. This has no effect when
@@ -64,12 +70,31 @@ export class DefaultSettings {
   /**
    * @internal
    */
+  @Prop() isVideoView: PlayerProps['isAudioView'] = false;
+
+  /**
+   * @internal
+   */
   @Prop() playbackQuality?: PlayerProps['playbackQuality'];
 
   /**
    * @internal
    */
   @Prop() playbackQualities: PlayerProps['playbackQualities'] = [];
+
+  /**
+   * @internal
+   */
+  @Prop() textTracks: PlayerProps['textTracks'] = [];
+
+  @Watch('textTracks')
+  @Watch('playbackReady')
+  async onTextTracksChange() {
+    const player = getPlayerFromRegistry(this);
+    this.canSetTextTrack = (await player?.canSetTextTrack()) ?? false;
+    this.currentTrackId = (await player?.getCurrentTextTrack()) ?? -1;
+    this.isTextTrackVisible = (await player?.getTextTrackVisibility()) ?? false;
+  }
 
   constructor() {
     withComponentRegistry(this);
@@ -80,11 +105,17 @@ export class DefaultSettings {
       'playbackRates',
       'playbackQuality',
       'playbackQualities',
+      'isVideoView',
+      'textTracks',
     ]);
   }
 
   connectedCallback() {
     this.dispatch = createDispatcher(this);
+  }
+
+  componentDidLoad() {
+    this.onTextTracksChange();
   }
 
   disconnectedCallback() {
@@ -105,20 +136,15 @@ export class DefaultSettings {
 
     const formatRate = (rate: number) => ((rate === 1) ? this.i18n.normal : `${rate}`);
 
-    const radios = this.playbackRates.map((rate) => (
-      <vm-menu-radio
-        label={formatRate(rate)}
-        value={`${rate}`}
-      />
-    ));
-
     return (
       <vm-submenu label={this.i18n.playbackRate} hint={formatRate(this.playbackRate)}>
         <vm-menu-radio-group
           value={`${this.playbackRate}`}
           onVmCheck={this.onPlaybackRateSelect.bind(this)}
         >
-          {radios}
+          {this.playbackRates.map((rate) => (
+            <vm-menu-radio label={formatRate(rate)} value={`${rate}`} />
+          ))}
         </vm-menu-radio-group>
       </vm-submenu>
     );
@@ -147,21 +173,62 @@ export class DefaultSettings {
       return undefined;
     };
 
-    const radios = this.playbackQualities.map((quality) => (
-      <vm-menu-radio
-        label={quality}
-        value={quality}
-        badge={getBadge(quality)}
-      />
-    ));
-
     return (
       <vm-submenu label={this.i18n.playbackQuality} hint={this.playbackQuality}>
         <vm-menu-radio-group
           value={this.playbackQuality}
           onVmCheck={this.onPlaybackQualitySelect.bind(this)}
         >
-          {radios}
+          { this.playbackQualities.map((quality) => (
+            <vm-menu-radio
+              label={quality}
+              value={quality}
+              badge={getBadge(quality)}
+            />
+          ))}
+        </vm-menu-radio-group>
+      </vm-submenu>
+    );
+  }
+
+  private onCaptionSelect(event: Event) {
+    const radio = event.target as HTMLVmMenuRadioElement;
+    const trackId = parseInt(radio.value, 10);
+    const player = getPlayerFromRegistry(this);
+
+    if (trackId === -1) {
+      player?.setTextTrackVisibility(false);
+      return;
+    }
+
+    player?.setTextTrackVisibility(true);
+    player?.setCurrentTextTrack(trackId);
+  }
+
+  private buildCaptionsSubmenu() {
+    if (this.textTracks.length === 0 || !this.canSetTextTrack) {
+      return (
+        <vm-menu-item
+          label={this.i18n.subtitlesOrCc}
+          hint={this.textTracks[this.currentTrackId]?.label ?? this.i18n.none}
+        />
+      );
+    }
+
+    return (
+      <vm-submenu
+        label={this.i18n.subtitlesOrCc}
+        hint={this.isTextTrackVisible ? this.textTracks[this.currentTrackId]?.label : this.i18n.off}
+      >
+        <vm-menu-radio-group
+          value={`${!this.isTextTrackVisible ? -1 : this.currentTrackId}`}
+          onVmCheck={this.onCaptionSelect.bind(this)}
+        >
+          {[(
+            <vm-menu-radio label={this.i18n.off} value="-1" />
+          )].concat(this.textTracks.map((track, i) => (
+            <vm-menu-radio label={track.label} value={`${i}`} />
+          )))}
         </vm-menu-radio-group>
       </vm-submenu>
     );
@@ -172,6 +239,7 @@ export class DefaultSettings {
       <vm-settings pin={this.pin}>
         {this.buildPlaybackRateSubmenu()}
         {this.buildPlaybackQualitySubmenu()}
+        {this.isVideoView && this.buildCaptionsSubmenu()}
         <slot />
       </vm-settings>
     );

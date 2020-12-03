@@ -87,7 +87,7 @@ export class CaptionControl implements KeyboardControl {
     this.onTextTracksChange();
   }
 
-  private async onClick() {
+  private onClick() {
     const player = getPlayerFromRegistry(this);
     player?.setTextTrackVisibility?.(!this.isCaptionsActive);
   }

@@ -100,6 +100,11 @@ export interface PlayerMethods {
   exitPiP(): Promise<void>
 
   /**
+   * Whether the text track can be changed programtically.
+   */
+  canSetTextTrack(): Promise<boolean>
+
+  /**
    * Returns the currently active text track index. Defaults to `-1` if no track is active.
    */
   getCurrentTextTrack(): Promise<number>
@@ -123,6 +128,12 @@ export interface PlayerMethods {
    * Sets the visiblity of the currently active text track.
    */
   setTextTrackVisibility(isVisible: boolean): Promise<void>
+
+  /**
+   * Whether text tracks should be rendered by native player, set to `false` if using custom
+   * display.
+   */
+  renderNativeTextTracks(shouldRender: boolean): Promise<void>
 
   /**
    * Extends the translation map for a given language.

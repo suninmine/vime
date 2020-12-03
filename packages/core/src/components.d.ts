@@ -31,7 +31,7 @@ export namespace Components {
           * @inheritdoc
          */
         "disableRemotePlayback"?: boolean;
-        "getAdapter": () => Promise<{ getInternalPlayer: () => Promise<HTMLMediaElement>; play: () => Promise<void | undefined>; pause: () => Promise<void | undefined>; canPlay: (type: any) => Promise<boolean>; setCurrentTime: (time: number) => Promise<void>; setMuted: (muted: boolean) => Promise<void>; setVolume: (volume: number) => Promise<void>; canSetPlaybackRate: () => Promise<boolean>; setPlaybackRate: (rate: number) => Promise<void>; canSetPlaybackQuality: () => Promise<boolean>; setPlaybackQuality: (quality: string) => Promise<void>; canSetPiP: () => Promise<boolean>; enterPiP: () => Promise<any>; exitPiP: () => Promise<any>; canSetFullscreen: () => Promise<boolean>; enterFullscreen: () => Promise<any>; exitFullscreen: () => Promise<any>; getTextTracks: () => TextTrack[]; getCurrentTextTrack: () => number; setCurrentTextTrack: (trackId: number) => void; getTextTrackVisibility: () => boolean; setTextTrackVisibility: (isVisible: boolean) => void; }>;
+        "getAdapter": () => Promise<{ getInternalPlayer: () => Promise<HTMLMediaElement>; play: () => Promise<void | undefined>; pause: () => Promise<void | undefined>; canPlay: (type: any) => Promise<boolean>; setCurrentTime: (time: number) => Promise<void>; setMuted: (muted: boolean) => Promise<void>; setVolume: (volume: number) => Promise<void>; canSetPlaybackRate: () => Promise<boolean>; setPlaybackRate: (rate: number) => Promise<void>; canSetPlaybackQuality: () => Promise<boolean>; setPlaybackQuality: (quality: string) => Promise<void>; canSetPiP: () => Promise<boolean>; enterPiP: () => Promise<any>; exitPiP: () => Promise<any>; canSetFullscreen: () => Promise<boolean>; enterFullscreen: () => Promise<any>; exitFullscreen: () => Promise<any>; getTextTracks: () => TextTrack[]; getCurrentTextTrack: () => number; setCurrentTextTrack: (trackId: number) => void; getTextTrackVisibility: () => boolean; setTextTrackVisibility: (isVisible: boolean) => void; renderNativeTextTracks: (shouldRender: boolean) => void; }>;
         /**
           * The title of the current media.
          */
@@ -286,7 +286,7 @@ export namespace Components {
           * @inheritdoc
          */
         "disableRemotePlayback"?: boolean;
-        "getAdapter": () => Promise<{ getInternalPlayer: () => Promise<any>; canPlay: (type: any) => Promise<boolean>; play: () => Promise<void | undefined>; pause: () => Promise<void | undefined>; setCurrentTime: (time: number) => Promise<void>; setMuted: (muted: boolean) => Promise<void>; setVolume: (volume: number) => Promise<void>; canSetPlaybackRate: () => Promise<boolean>; setPlaybackRate: (rate: number) => Promise<void>; canSetPlaybackQuality: () => Promise<boolean>; setPlaybackQuality: (quality: string) => Promise<void>; canSetPiP: () => Promise<boolean>; enterPiP: () => Promise<any>; exitPiP: () => Promise<any>; canSetFullscreen: () => Promise<boolean>; enterFullscreen: () => Promise<any>; exitFullscreen: () => Promise<any>; getTextTracks: () => TextTrack[]; getCurrentTextTrack: () => number; setCurrentTextTrack: (trackId: number) => void; getTextTrackVisibility: () => boolean; setTextTrackVisibility: (isVisible: boolean) => void; }>;
+        "getAdapter": () => Promise<{ getInternalPlayer: () => Promise<any>; canPlay: (type: any) => Promise<boolean>; play: () => Promise<void | undefined>; pause: () => Promise<void | undefined>; setCurrentTime: (time: number) => Promise<void>; setMuted: (muted: boolean) => Promise<void>; setVolume: (volume: number) => Promise<void>; canSetPlaybackRate: () => Promise<boolean>; setPlaybackRate: (rate: number) => Promise<void>; canSetPlaybackQuality: () => Promise<boolean>; setPlaybackQuality: (quality: string) => Promise<void>; canSetPiP: () => Promise<boolean>; enterPiP: () => Promise<any>; exitPiP: () => Promise<any>; canSetFullscreen: () => Promise<boolean>; enterFullscreen: () => Promise<any>; exitFullscreen: () => Promise<any>; getTextTracks: () => TextTrack[]; getCurrentTextTrack: () => number; setCurrentTextTrack: (trackId: number) => void; getTextTrackVisibility: () => boolean; setTextTrackVisibility: (isVisible: boolean) => void; renderNativeTextTracks: (shouldRender: boolean) => void; }>;
         /**
           * The title of the current media.
          */
@@ -345,6 +345,7 @@ export namespace Components {
     }
     interface VmDefaultSettings {
         "i18n": PlayerProps['i18n'];
+        "isVideoView": PlayerProps['isAudioView'];
         /**
           * Pins the settings to the defined position inside the video player. This has no effect when the view is of type `audio`, it will always be `bottomRight`.
          */
@@ -354,6 +355,7 @@ export namespace Components {
         "playbackRate": PlayerProps['playbackRate'];
         "playbackRates": PlayerProps['playbackRates'];
         "playbackReady": PlayerProps['playbackReady'];
+        "textTracks": PlayerProps['textTracks'];
     }
     interface VmDefaultUi {
         /**
@@ -456,7 +458,7 @@ export namespace Components {
           * @inheritdoc
          */
         "disableRemotePlayback"?: boolean;
-        "getAdapter": () => Promise<{ getInternalPlayer: () => Promise<HTMLMediaElement>; play: () => Promise<void | undefined>; pause: () => Promise<void | undefined>; canPlay: (type: any) => Promise<boolean>; setCurrentTime: (time: number) => Promise<void>; setMuted: (muted: boolean) => Promise<void>; setVolume: (volume: number) => Promise<void>; canSetPlaybackRate: () => Promise<boolean>; setPlaybackRate: (rate: number) => Promise<void>; canSetPlaybackQuality: () => Promise<boolean>; setPlaybackQuality: (quality: string) => Promise<void>; canSetPiP: () => Promise<boolean>; enterPiP: () => Promise<any>; exitPiP: () => Promise<any>; canSetFullscreen: () => Promise<boolean>; enterFullscreen: () => Promise<any>; exitFullscreen: () => Promise<any>; getTextTracks: () => TextTrack[]; getCurrentTextTrack: () => number; setCurrentTextTrack: (trackId: number) => void; getTextTrackVisibility: () => boolean; setTextTrackVisibility: (isVisible: boolean) => void; }>;
+        "getAdapter": () => Promise<{ getInternalPlayer: () => Promise<HTMLMediaElement>; play: () => Promise<void | undefined>; pause: () => Promise<void | undefined>; canPlay: (type: any) => Promise<boolean>; setCurrentTime: (time: number) => Promise<void>; setMuted: (muted: boolean) => Promise<void>; setVolume: (volume: number) => Promise<void>; canSetPlaybackRate: () => Promise<boolean>; setPlaybackRate: (rate: number) => Promise<void>; canSetPlaybackQuality: () => Promise<boolean>; setPlaybackQuality: (quality: string) => Promise<void>; canSetPiP: () => Promise<boolean>; enterPiP: () => Promise<any>; exitPiP: () => Promise<any>; canSetFullscreen: () => Promise<boolean>; enterFullscreen: () => Promise<any>; exitFullscreen: () => Promise<any>; getTextTracks: () => TextTrack[]; getCurrentTextTrack: () => number; setCurrentTextTrack: (trackId: number) => void; getTextTrackVisibility: () => boolean; setTextTrackVisibility: (isVisible: boolean) => void; renderNativeTextTracks: (shouldRender: boolean) => void; }>;
         "language": string;
         "logger"?: Logger;
         "loop": boolean;
@@ -553,7 +555,7 @@ export namespace Components {
           * @inheritdoc
          */
         "disableRemotePlayback"?: boolean;
-        "getAdapter": () => Promise<{ getInternalPlayer: () => Promise<any>; canPlay: (type: any) => Promise<boolean>; play: () => Promise<void | undefined>; pause: () => Promise<void | undefined>; setCurrentTime: (time: number) => Promise<void>; setMuted: (muted: boolean) => Promise<void>; setVolume: (volume: number) => Promise<void>; canSetPlaybackRate: () => Promise<boolean>; setPlaybackRate: (rate: number) => Promise<void>; canSetPlaybackQuality: () => Promise<boolean>; setPlaybackQuality: (quality: string) => Promise<void>; canSetPiP: () => Promise<boolean>; enterPiP: () => Promise<any>; exitPiP: () => Promise<any>; canSetFullscreen: () => Promise<boolean>; enterFullscreen: () => Promise<any>; exitFullscreen: () => Promise<any>; getTextTracks: () => TextTrack[]; getCurrentTextTrack: () => number; setCurrentTextTrack: (trackId: number) => void; getTextTrackVisibility: () => boolean; setTextTrackVisibility: (isVisible: boolean) => void; }>;
+        "getAdapter": () => Promise<{ getInternalPlayer: () => Promise<any>; canPlay: (type: any) => Promise<boolean>; play: () => Promise<void | undefined>; pause: () => Promise<void | undefined>; setCurrentTime: (time: number) => Promise<void>; setMuted: (muted: boolean) => Promise<void>; setVolume: (volume: number) => Promise<void>; canSetPlaybackRate: () => Promise<boolean>; setPlaybackRate: (rate: number) => Promise<void>; canSetPlaybackQuality: () => Promise<boolean>; setPlaybackQuality: (quality: string) => Promise<void>; canSetPiP: () => Promise<boolean>; enterPiP: () => Promise<any>; exitPiP: () => Promise<any>; canSetFullscreen: () => Promise<boolean>; enterFullscreen: () => Promise<any>; exitFullscreen: () => Promise<any>; getTextTracks: () => TextTrack[]; getCurrentTextTrack: () => number; setCurrentTextTrack: (trackId: number) => void; getTextTrackVisibility: () => boolean; setTextTrackVisibility: (isVisible: boolean) => void; renderNativeTextTracks: (shouldRender: boolean) => void; }>;
         /**
           * The title of the current media.
          */
@@ -671,6 +673,10 @@ export namespace Components {
           * Focuses the menu item.
          */
         "focusItem": () => Promise<void>;
+        /**
+          * Returns the height of the menu item.
+         */
+        "getHeight": () => Promise<number>;
         /**
           * Whether the item is displayed or not.
          */
@@ -897,6 +903,12 @@ export namespace Components {
          */
         "canSetPlaybackRate": () => Promise<boolean>;
         /**
+          * Whether the text track can be changed programtically.
+          * @inheritDoc
+         */
+        "canSetTextTrack": () => Promise<boolean>;
+        /**
+          * Whether the text track visibility can be set.
           * @inheritDoc
          */
         "canSetTextTrackVisibility": () => Promise<boolean>;
@@ -1141,6 +1153,11 @@ export namespace Components {
          */
         "ready": boolean;
         /**
+          * Whether text tracks should be rendered by native player, set to `false` if using custom display.
+          * @inheritDoc
+         */
+        "renderNativeTextTracks": (shouldRender: boolean) => Promise<void>;
+        /**
           * `@readonly` Whether the player is in the process of seeking to a new time position.
           * @inheritDoc
          */
@@ -1334,6 +1351,7 @@ export namespace Components {
         "buffering": PlayerProps['buffering'];
         "currentProvider"?: PlayerProps['currentProvider'];
         "isVideoView": PlayerProps['isVideoView'];
+        "playbackReady": PlayerProps['playbackReady'];
     }
     interface VmSubmenu {
         /**
@@ -1344,6 +1362,10 @@ export namespace Components {
           * Returns the controller (`vm-menu-item`) for this submenu.
          */
         "getController": () => Promise<HTMLVmMenuItemElement | undefined>;
+        /**
+          * Returns the height of the submenu controller.
+         */
+        "getControllerHeight": () => Promise<number>;
         /**
           * Returns the menu (`vm-menu`) for this submenu.
          */
@@ -1436,7 +1458,7 @@ export namespace Components {
           * @inheritdoc
          */
         "disableRemotePlayback"?: boolean;
-        "getAdapter": () => Promise<{ getInternalPlayer: () => Promise<HTMLMediaElement>; play: () => Promise<void | undefined>; pause: () => Promise<void | undefined>; canPlay: (type: any) => Promise<boolean>; setCurrentTime: (time: number) => Promise<void>; setMuted: (muted: boolean) => Promise<void>; setVolume: (volume: number) => Promise<void>; canSetPlaybackRate: () => Promise<boolean>; setPlaybackRate: (rate: number) => Promise<void>; canSetPlaybackQuality: () => Promise<boolean>; setPlaybackQuality: (quality: string) => Promise<void>; canSetPiP: () => Promise<boolean>; enterPiP: () => Promise<any>; exitPiP: () => Promise<any>; canSetFullscreen: () => Promise<boolean>; enterFullscreen: () => Promise<any>; exitFullscreen: () => Promise<any>; getTextTracks: () => TextTrack[]; getCurrentTextTrack: () => number; setCurrentTextTrack: (trackId: number) => void; getTextTrackVisibility: () => boolean; setTextTrackVisibility: (isVisible: boolean) => void; }>;
+        "getAdapter": () => Promise<{ getInternalPlayer: () => Promise<HTMLMediaElement>; play: () => Promise<void | undefined>; pause: () => Promise<void | undefined>; canPlay: (type: any) => Promise<boolean>; setCurrentTime: (time: number) => Promise<void>; setMuted: (muted: boolean) => Promise<void>; setVolume: (volume: number) => Promise<void>; canSetPlaybackRate: () => Promise<boolean>; setPlaybackRate: (rate: number) => Promise<void>; canSetPlaybackQuality: () => Promise<boolean>; setPlaybackQuality: (quality: string) => Promise<void>; canSetPiP: () => Promise<boolean>; enterPiP: () => Promise<any>; exitPiP: () => Promise<any>; canSetFullscreen: () => Promise<boolean>; enterFullscreen: () => Promise<any>; exitFullscreen: () => Promise<any>; getTextTracks: () => TextTrack[]; getCurrentTextTrack: () => number; setCurrentTextTrack: (trackId: number) => void; getTextTrackVisibility: () => boolean; setTextTrackVisibility: (isVisible: boolean) => void; renderNativeTextTracks: (shouldRender: boolean) => void; }>;
         /**
           * The title of the current media.
          */
@@ -2240,6 +2262,7 @@ declare namespace LocalJSX {
     }
     interface VmDefaultSettings {
         "i18n"?: PlayerProps['i18n'];
+        "isVideoView"?: PlayerProps['isAudioView'];
         /**
           * Pins the settings to the defined position inside the video player. This has no effect when the view is of type `audio`, it will always be `bottomRight`.
          */
@@ -2249,6 +2272,7 @@ declare namespace LocalJSX {
         "playbackRate"?: PlayerProps['playbackRate'];
         "playbackRates"?: PlayerProps['playbackRates'];
         "playbackReady"?: PlayerProps['playbackReady'];
+        "textTracks"?: PlayerProps['textTracks'];
     }
     interface VmDefaultUi {
         /**
@@ -3384,6 +3408,7 @@ declare namespace LocalJSX {
           * Emitted when the spinner will be shown.
          */
         "onVmWillShow"?: (event: CustomEvent<void>) => void;
+        "playbackReady"?: PlayerProps['playbackReady'];
     }
     interface VmSubmenu {
         /**

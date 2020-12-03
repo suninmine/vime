@@ -114,6 +114,14 @@ export class MenuItem {
     this.menuItem?.blur();
   }
 
+  /**
+   * Returns the height of the menu item.
+   */
+  @Method()
+  async getHeight() {
+    return parseFloat(this.menuItem ? window.getComputedStyle(this.menuItem).height : '0');
+  }
+
   private onClick() {
     if (!isNullOrUndefined(this.menu)) this.menu.active = !this.expanded;
   }
@@ -166,7 +174,7 @@ export class MenuItem {
         aria-label={this.label}
         aria-hidden={this.hidden ? 'true' : 'false'}
         aria-haspopup={isMenuDefined ? 'true' : undefined}
-        aria-controls={this.menu?.id}
+        aria-controls={this.menu?.identifier ?? this.menu?.id}
         aria-expanded={isMenuDefined ? hasExpanded : undefined}
         aria-checked={isCheckedDefined ? isChecked : undefined}
         onClick={this.onClick.bind(this)}

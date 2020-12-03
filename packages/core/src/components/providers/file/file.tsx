@@ -568,9 +568,13 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
       setCurrentTextTrack: (trackId: number) => {
         if (trackId !== this.currentTextTrackId) this.toggleTextTrackModes(trackId);
       },
-      getTextTrackVisibility: () => this.isTextTrackVisible,
+      getTextTrackVisibility: () => (this.currentTextTrackId !== -1) && this.isTextTrackVisible,
       setTextTrackVisibility: (isVisible: boolean) => {
         this.isTextTrackVisible = isVisible;
+        this.toggleTextTrackModes(this.currentTextTrackId);
+      },
+      renderNativeTextTracks: (shouldRender: boolean) => {
+        this.shouldRenderNativeTextTracks = shouldRender;
         this.toggleTextTrackModes(this.currentTextTrackId);
       },
     };
@@ -579,6 +583,8 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   private currentTextTrackId = -1;
 
   private isTextTrackVisible = true;
+
+  private shouldRenderNativeTextTracks = true;
 
   private getTextTracks() {
     const tracks = [];
@@ -598,7 +604,6 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   private onTextTracksReset() {
     this.disposal.empty();
     this.currentTextTrackId = -1;
-    this.isTextTrackVisible = true;
     this.dispatch('textTracks', this.getTextTracks());
     if (isUndefined(this.mediaEl)) return;
     this.disposal.add(
@@ -637,7 +642,13 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
     }
 
     const nextTrack = textTracks[newTrackId];
-    if (nextTrack) nextTrack.mode = this.isTextTrackVisible ? 'showing' : 'hidden';
+
+    if (nextTrack) {
+      nextTrack.mode = (this.isTextTrackVisible && this.shouldRenderNativeTextTracks)
+        ? 'showing'
+        : 'hidden';
+    }
+
     this.currentTextTrackId = newTrackId;
   }
 

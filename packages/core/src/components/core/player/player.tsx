@@ -577,6 +577,12 @@ export class Player implements MediaPlayer {
 
   /** @inheritDoc */
   @Method()
+  async canSetTextTrack() {
+    return !isUndefined(this.adapter?.setCurrentTextTrack);
+  }
+
+  /** @inheritDoc */
+  @Method()
   async getCurrentTextTrack() {
     return this.adapter?.getCurrentTextTrack?.() ?? -1;
   }
@@ -603,6 +609,12 @@ export class Player implements MediaPlayer {
   @Method()
   async setTextTrackVisibility(isVisible: boolean) {
     this.adapter?.setTextTrackVisibility?.(isVisible);
+  }
+
+  /** @inheritDoc */
+  @Method()
+  async renderNativeTextTracks(shouldRender: boolean) {
+    this.adapter?.renderNativeTextTracks?.(shouldRender);
   }
 
   /** @inheritDoc */

@@ -1,5 +1,5 @@
 import {
-  h, Component, Prop, Event, EventEmitter, Element, Watch, Method, State, Listen,
+  h, Component, Prop, Event, EventEmitter, Element, Watch, Method, State, Listen, writeTask,
 } from '@stencil/core';
 import { isUndefined } from '../../../../utils/unit';
 import { withComponentRegistry } from '../../../core/player/withComponentRegistry';
@@ -43,6 +43,9 @@ export class Menu {
   @Watch('active')
   onActiveChange() {
     this.active ? this.vmOpen.emit(this.host) : this.vmClose.emit(this.host);
+    if (this.controller?.tagName.toLowerCase() === 'vm-menu-item') {
+      (this.controller as HTMLVmMenuItemElement).expanded = true;
+    }
   }
 
   /**
@@ -100,7 +103,9 @@ export class Menu {
   }
 
   componentDidRender() {
-    this.calculateHeight();
+    writeTask(() => {
+      this.calculateHeight();
+    });
   }
 
   /**
@@ -146,9 +151,7 @@ export class Menu {
     if (this.activeSubmenu) {
       const submenu = await this.activeSubmenu.getMenu();
       height = await submenu?.calculateHeight() ?? 0;
-      height += submenu?.controller
-        ? parseFloat(window.getComputedStyle(submenu!.controller).height)
-        : 0;
+      height += (await this.activeSubmenu.getControllerHeight());
     } else {
       const children = (this.container?.firstChild as HTMLSlotElement)
         .assignedElements(({ flatten: true }));
@@ -167,27 +170,50 @@ export class Menu {
     event.stopPropagation();
     if (!isUndefined(this.activeSubmenu)) this.activeSubmenu.active = false;
     this.activeSubmenu = event.detail;
-    this.activeSubmenu.active = true;
+    this.getChildren().forEach((child) => {
+      if (child !== this.activeSubmenu) {
+        child.style.opacity = '0';
+        child.style.visibility = 'hidden';
+      }
+    });
+    writeTask(() => { this.activeSubmenu!.active = true; });
   }
 
   @Listen('vmCloseSubmenu')
-  onCloseSubmenu(event: Event) {
-    event.stopPropagation();
+  onCloseSubmenu(event?: Event) {
+    event?.stopPropagation();
     if (!isUndefined(this.activeSubmenu)) this.activeSubmenu.active = false;
-    this.activeSubmenu = undefined;
+    this.getChildren().forEach((child) => {
+      if (child !== this.activeSubmenu) {
+        child.style.opacity = '';
+        child.style.visibility = '';
+      }
+    });
+    writeTask(() => { this.activeSubmenu = undefined; });
   }
 
   @Listen('click', { target: 'window' })
   onWindowClick() {
+    this.onCloseSubmenu();
     this.onClose();
   }
 
   @Listen('keydown', { target: 'window' })
   onWindowKeyDown(event: KeyboardEvent) {
     if (this.active && (event.key === 'Escape')) {
+      this.onCloseSubmenu();
       this.onClose();
       this.focusController();
     }
+  }
+
+  private getChildren() {
+    const assignedElements = this.host
+      .shadowRoot!
+      .querySelector('slot')
+      ?.assignedElements({ flatten: true });
+
+    return (assignedElements ?? []) as HTMLElement[];
   }
 
   private getMenuItems() {
@@ -296,7 +322,9 @@ export class Menu {
         }}
         role="menu"
         tabindex="-1"
-        aria-labelledby={this.controller?.id}
+        aria-labelledby={
+          (this.controller as HTMLVmMenuItemElement)?.identifier ?? this.controller?.id
+        }
         aria-hidden={!this.active ? 'true' : 'false'}
         onFocus={this.onFocus.bind(this)}
         onBlur={this.onBlur.bind(this)}

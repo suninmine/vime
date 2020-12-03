@@ -1,7 +1,6 @@
 import {
-  h, Component, Prop, EventEmitter, Event, Method, State, Element,
+  h, Component, Prop, EventEmitter, Event, Method, State, Element, writeTask,
 } from '@stencil/core';
-import { isUndefined } from '../../../../utils/unit';
 import { withComponentRegistry } from '../../../core/player/withComponentRegistry';
 
 let idCount = 0;
@@ -78,6 +77,19 @@ export class Submenu {
     return this.menu;
   }
 
+  /**
+   * Returns the height of the submenu controller.
+   */
+  @Method()
+  async getControllerHeight() {
+    return this.controller?.getHeight() ?? 0;
+  }
+
+  private getControllerHeightSync() {
+    const el = this.controller?.shadowRoot!.querySelector("[role='menuitem']")!;
+    return el ? parseFloat(window.getComputedStyle(el).height) : 0;
+  }
+
   private onMenuOpen() {
     this.active = true;
     this.vmOpenSubmenu.emit(this.host);
@@ -97,11 +109,6 @@ export class Submenu {
     return `${this.id}-controller`;
   }
 
-  private getControllerHeight() {
-    if (isUndefined(this.controller)) return '0px';
-    return window.getComputedStyle(this.controller).height;
-  }
-
   render() {
     return (
       <div>
@@ -111,7 +118,7 @@ export class Submenu {
           label={this.label}
           hint={this.hint}
           expanded={this.active}
-          ref={((el) => { this.controller = el; })}
+          ref={((el) => { writeTask(() => { this.controller = el; }); })}
         />
         <vm-menu
           identifier={this.id}
@@ -120,8 +127,8 @@ export class Submenu {
           slideInDirection={this.slideInDirection}
           onVmOpen={this.onMenuOpen.bind(this)}
           onVmClose={this.onMenuClose.bind(this)}
-          ref={((el) => { this.menu = el; })}
-          style={{ top: this.getControllerHeight() }}
+          ref={((el) => { writeTask(() => { this.menu = el; }); })}
+          style={{ top: `${this.getControllerHeightSync() + 1}px` }}
         >
           <slot />
         </vm-menu>

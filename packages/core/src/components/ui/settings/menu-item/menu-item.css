@@ -55,6 +55,13 @@
   background-color: var(--vm-menu-item-focus-bg);
 }
 
+.menuItem[aria-expanded='true'] {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  width: 100%;
+}
+
 .menuItem[aria-hidden='true'] {
   display: none;
 }

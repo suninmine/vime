@@ -47,11 +47,17 @@ export class Spinner {
   /**
    * @internal
    */
+  @Prop() playbackReady: PlayerProps['playbackReady'] = false;
+
+  /**
+   * @internal
+   */
   @Prop() buffering: PlayerProps['buffering'] = false;
 
   @Watch('buffering')
+  @Watch('playbackReady')
   onActiveChange() {
-    this.isActive = this.buffering;
+    this.isActive = this.buffering || !this.playbackReady;
     this.onVisiblityChange();
   }
 
@@ -60,6 +66,7 @@ export class Spinner {
     withPlayerContext(this, [
       'isVideoView',
       'buffering',
+      'playbackReady',
       'currentProvider',
     ]);
   }
