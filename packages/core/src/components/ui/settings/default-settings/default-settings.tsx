@@ -28,10 +28,6 @@ export class DefaultSettings {
 
   @State() canSetTextTrack = false;
 
-  @State() currentTrackId = -1;
-
-  @State() isTextTrackVisible = false;
-
   /**
    * Pins the settings to the defined position inside the video player. This has no effect when
    * the view is of type `audio`, it will always be `bottomRight`.
@@ -87,13 +83,21 @@ export class DefaultSettings {
    */
   @Prop() textTracks: PlayerProps['textTracks'] = [];
 
+  /**
+   * @internal
+   */
+  @Prop() currentTextTrack = -1;
+
+  /**
+   * @internal
+   */
+  @Prop() isTextTrackVisible = true;
+
   @Watch('textTracks')
   @Watch('playbackReady')
   async onTextTracksChange() {
     const player = getPlayerFromRegistry(this);
     this.canSetTextTrack = (await player?.canSetTextTrack()) ?? false;
-    this.currentTrackId = (await player?.getCurrentTextTrack()) ?? -1;
-    this.isTextTrackVisible = (await player?.getTextTrackVisibility()) ?? false;
   }
 
   constructor() {
@@ -107,6 +111,8 @@ export class DefaultSettings {
       'playbackQualities',
       'isVideoView',
       'textTracks',
+      'currentTextTrack',
+      'isTextTrackVisible',
     ]);
   }
 
@@ -210,7 +216,7 @@ export class DefaultSettings {
       return (
         <vm-menu-item
           label={this.i18n.subtitlesOrCc}
-          hint={this.textTracks[this.currentTrackId]?.label ?? this.i18n.none}
+          hint={this.textTracks[this.currentTextTrack]?.label ?? this.i18n.none}
         />
       );
     }
@@ -218,10 +224,12 @@ export class DefaultSettings {
     return (
       <vm-submenu
         label={this.i18n.subtitlesOrCc}
-        hint={this.isTextTrackVisible ? this.textTracks[this.currentTrackId]?.label : this.i18n.off}
+        hint={
+          this.isTextTrackVisible ? this.textTracks[this.currentTextTrack]?.label : this.i18n.off
+        }
       >
         <vm-menu-radio-group
-          value={`${!this.isTextTrackVisible ? -1 : this.currentTrackId}`}
+          value={`${!this.isTextTrackVisible ? -1 : this.currentTextTrack}`}
           onVmCheck={this.onCaptionSelect.bind(this)}
         >
           {[(

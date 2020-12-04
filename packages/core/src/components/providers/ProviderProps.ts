@@ -23,6 +23,8 @@ export type ProviderWritableProps = WritableProps & Pick<PlayerProps,
 | 'playbackRates'
 | 'playbackQualities'
 | 'textTracks'
+| 'currentTextTrack'
+| 'isTextTrackVisible'
 | 'isPiPActive'
 | 'isFullscreenActive'
 >;
@@ -45,6 +47,8 @@ const providerWritableProps = new Set<PlayerProp>([
   'playbackRates',
   'playbackQualities',
   'textTracks',
+  'currentTextTrack',
+  'isTextTrackVisible',
   'isPiPActive',
   'isFullscreenActive',
 ]);

@@ -296,6 +296,15 @@ export class Player implements MediaPlayer {
   @Prop({ attribute: null }) textTracks = [];
 
   /** @inheritDoc */
+  @Prop({ attribute: null }) currentTextTrack = -1;
+
+  /** @inheritDoc */
+  @Prop({ attribute: null }) isTextTrackVisible = true;
+
+  /** @inheritDoc */
+  @Prop({ attribute: null }) shouldRenderNativeTextTracks = true;
+
+  /** @inheritDoc */
   @Prop() autopause = true;
 
   /** @inheritDoc */
@@ -583,12 +592,6 @@ export class Player implements MediaPlayer {
 
   /** @inheritDoc */
   @Method()
-  async getCurrentTextTrack() {
-    return this.adapter?.getCurrentTextTrack?.() ?? -1;
-  }
-
-  /** @inheritDoc */
-  @Method()
   async setCurrentTextTrack(trackId: number) {
     this.adapter?.setCurrentTextTrack?.(trackId);
   }
@@ -601,20 +604,8 @@ export class Player implements MediaPlayer {
 
   /** @inheritDoc */
   @Method()
-  async getTextTrackVisibility() {
-    return this.adapter?.getTextTrackVisibility?.() ?? false;
-  }
-
-  /** @inheritDoc */
-  @Method()
   async setTextTrackVisibility(isVisible: boolean) {
     this.adapter?.setTextTrackVisibility?.(isVisible);
-  }
-
-  /** @inheritDoc */
-  @Method()
-  async renderNativeTextTracks(shouldRender: boolean) {
-    this.adapter?.renderNativeTextTracks?.(shouldRender);
   }
 
   /** @inheritDoc */

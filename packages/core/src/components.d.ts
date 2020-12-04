@@ -31,7 +31,7 @@ export namespace Components {
           * @inheritdoc
          */
         "disableRemotePlayback"?: boolean;
-        "getAdapter": () => Promise<{ getInternalPlayer: () => Promise<HTMLMediaElement>; play: () => Promise<void | undefined>; pause: () => Promise<void | undefined>; canPlay: (type: any) => Promise<boolean>; setCurrentTime: (time: number) => Promise<void>; setMuted: (muted: boolean) => Promise<void>; setVolume: (volume: number) => Promise<void>; canSetPlaybackRate: () => Promise<boolean>; setPlaybackRate: (rate: number) => Promise<void>; canSetPlaybackQuality: () => Promise<boolean>; setPlaybackQuality: (quality: string) => Promise<void>; canSetPiP: () => Promise<boolean>; enterPiP: () => Promise<any>; exitPiP: () => Promise<any>; canSetFullscreen: () => Promise<boolean>; enterFullscreen: () => Promise<any>; exitFullscreen: () => Promise<any>; getTextTracks: () => TextTrack[]; getCurrentTextTrack: () => number; setCurrentTextTrack: (trackId: number) => void; getTextTrackVisibility: () => boolean; setTextTrackVisibility: (isVisible: boolean) => void; renderNativeTextTracks: (shouldRender: boolean) => void; }>;
+        "getAdapter": () => Promise<{ getInternalPlayer: () => Promise<HTMLMediaElement>; play: () => Promise<void | undefined>; pause: () => Promise<void | undefined>; canPlay: (type: any) => Promise<boolean>; setCurrentTime: (time: number) => Promise<void>; setMuted: (muted: boolean) => Promise<void>; setVolume: (volume: number) => Promise<void>; canSetPlaybackRate: () => Promise<boolean>; setPlaybackRate: (rate: number) => Promise<void>; canSetPlaybackQuality: () => Promise<boolean>; setPlaybackQuality: (quality: string) => Promise<void>; canSetPiP: () => Promise<boolean>; enterPiP: () => Promise<any>; exitPiP: () => Promise<any>; canSetFullscreen: () => Promise<boolean>; enterFullscreen: () => Promise<any>; exitFullscreen: () => Promise<any>; setCurrentTextTrack: (trackId: number) => void; setTextTrackVisibility: (isVisible: boolean) => void; }>;
         /**
           * The title of the current media.
          */
@@ -57,6 +57,7 @@ export namespace Components {
           * The name of an icon library to use. Defaults to the library defined by the `icons` player property.
          */
         "icons"?: string;
+        "isTextTrackVisible": PlayerProps['isTextTrackVisible'];
         /**
           * A slash (`/`) separated string of JS keyboard keys (`KeyboardEvent.key`), that when caught in a `keydown` event, will trigger a `click` event on the control.
           * @inheritdoc
@@ -78,13 +79,16 @@ export namespace Components {
         "tooltipPosition": TooltipPosition;
     }
     interface VmCaptions {
+        "currentTextTrack": PlayerProps['currentTextTrack'];
         /**
           * Whether the captions should be visible or not.
          */
         "hidden": boolean;
         "isControlsActive": PlayerProps['isControlsActive'];
+        "isTextTrackVisible": PlayerProps['isTextTrackVisible'];
         "isVideoView": PlayerProps['isVideoView'];
         "playbackStarted": PlayerProps['playbackStarted'];
+        "textTracks": PlayerProps['textTracks'];
     }
     interface VmClickToPlay {
         "forceClick": () => Promise<void>;
@@ -286,7 +290,7 @@ export namespace Components {
           * @inheritdoc
          */
         "disableRemotePlayback"?: boolean;
-        "getAdapter": () => Promise<{ getInternalPlayer: () => Promise<any>; canPlay: (type: any) => Promise<boolean>; play: () => Promise<void | undefined>; pause: () => Promise<void | undefined>; setCurrentTime: (time: number) => Promise<void>; setMuted: (muted: boolean) => Promise<void>; setVolume: (volume: number) => Promise<void>; canSetPlaybackRate: () => Promise<boolean>; setPlaybackRate: (rate: number) => Promise<void>; canSetPlaybackQuality: () => Promise<boolean>; setPlaybackQuality: (quality: string) => Promise<void>; canSetPiP: () => Promise<boolean>; enterPiP: () => Promise<any>; exitPiP: () => Promise<any>; canSetFullscreen: () => Promise<boolean>; enterFullscreen: () => Promise<any>; exitFullscreen: () => Promise<any>; getTextTracks: () => TextTrack[]; getCurrentTextTrack: () => number; setCurrentTextTrack: (trackId: number) => void; getTextTrackVisibility: () => boolean; setTextTrackVisibility: (isVisible: boolean) => void; renderNativeTextTracks: (shouldRender: boolean) => void; }>;
+        "getAdapter": () => Promise<{ getInternalPlayer: () => Promise<any>; canPlay: (type: any) => Promise<boolean>; play: () => Promise<void | undefined>; pause: () => Promise<void | undefined>; setCurrentTime: (time: number) => Promise<void>; setMuted: (muted: boolean) => Promise<void>; setVolume: (volume: number) => Promise<void>; canSetPlaybackRate: () => Promise<boolean>; setPlaybackRate: (rate: number) => Promise<void>; canSetPlaybackQuality: () => Promise<boolean>; setPlaybackQuality: (quality: string) => Promise<void>; canSetPiP: () => Promise<boolean>; enterPiP: () => Promise<any>; exitPiP: () => Promise<any>; canSetFullscreen: () => Promise<boolean>; enterFullscreen: () => Promise<any>; exitFullscreen: () => Promise<any>; setCurrentTextTrack: (trackId: number) => void; setTextTrackVisibility: (isVisible: boolean) => void; }>;
         /**
           * The title of the current media.
          */
@@ -344,7 +348,9 @@ export namespace Components {
         "waitForPlaybackStart": boolean;
     }
     interface VmDefaultSettings {
+        "currentTextTrack": number;
         "i18n": PlayerProps['i18n'];
+        "isTextTrackVisible": boolean;
         "isVideoView": PlayerProps['isAudioView'];
         /**
           * Pins the settings to the defined position inside the video player. This has no effect when the view is of type `audio`, it will always be `bottomRight`.
@@ -447,6 +453,7 @@ export namespace Components {
           * @inheritdoc
          */
         "crossOrigin"?: MediaCrossOriginOption;
+        "currentTextTrack": number;
         "currentTime": number;
         /**
           * **EXPERIMENTAL:** Prevents the browser from suggesting a picture-in-picture context menu or to request picture-in-picture automatically in some cases.
@@ -458,7 +465,8 @@ export namespace Components {
           * @inheritdoc
          */
         "disableRemotePlayback"?: boolean;
-        "getAdapter": () => Promise<{ getInternalPlayer: () => Promise<HTMLMediaElement>; play: () => Promise<void | undefined>; pause: () => Promise<void | undefined>; canPlay: (type: any) => Promise<boolean>; setCurrentTime: (time: number) => Promise<void>; setMuted: (muted: boolean) => Promise<void>; setVolume: (volume: number) => Promise<void>; canSetPlaybackRate: () => Promise<boolean>; setPlaybackRate: (rate: number) => Promise<void>; canSetPlaybackQuality: () => Promise<boolean>; setPlaybackQuality: (quality: string) => Promise<void>; canSetPiP: () => Promise<boolean>; enterPiP: () => Promise<any>; exitPiP: () => Promise<any>; canSetFullscreen: () => Promise<boolean>; enterFullscreen: () => Promise<any>; exitFullscreen: () => Promise<any>; getTextTracks: () => TextTrack[]; getCurrentTextTrack: () => number; setCurrentTextTrack: (trackId: number) => void; getTextTrackVisibility: () => boolean; setTextTrackVisibility: (isVisible: boolean) => void; renderNativeTextTracks: (shouldRender: boolean) => void; }>;
+        "getAdapter": () => Promise<{ getInternalPlayer: () => Promise<HTMLMediaElement>; play: () => Promise<void | undefined>; pause: () => Promise<void | undefined>; canPlay: (type: any) => Promise<boolean>; setCurrentTime: (time: number) => Promise<void>; setMuted: (muted: boolean) => Promise<void>; setVolume: (volume: number) => Promise<void>; canSetPlaybackRate: () => Promise<boolean>; setPlaybackRate: (rate: number) => Promise<void>; canSetPlaybackQuality: () => Promise<boolean>; setPlaybackQuality: (quality: string) => Promise<void>; canSetPiP: () => Promise<boolean>; enterPiP: () => Promise<any>; exitPiP: () => Promise<any>; canSetFullscreen: () => Promise<boolean>; enterFullscreen: () => Promise<any>; exitFullscreen: () => Promise<any>; setCurrentTextTrack: (trackId: number) => void; setTextTrackVisibility: (isVisible: boolean) => void; }>;
+        "isTextTrackVisible": boolean;
         "language": string;
         "logger"?: Logger;
         "loop": boolean;
@@ -485,6 +493,7 @@ export namespace Components {
           * @inheritdoc
          */
         "preload"?: MediaPreloadOption;
+        "shouldRenderNativeTextTracks": boolean;
         /**
           * Whether to use an `audio` or `video` element to play the media.
          */
@@ -555,7 +564,7 @@ export namespace Components {
           * @inheritdoc
          */
         "disableRemotePlayback"?: boolean;
-        "getAdapter": () => Promise<{ getInternalPlayer: () => Promise<any>; canPlay: (type: any) => Promise<boolean>; play: () => Promise<void | undefined>; pause: () => Promise<void | undefined>; setCurrentTime: (time: number) => Promise<void>; setMuted: (muted: boolean) => Promise<void>; setVolume: (volume: number) => Promise<void>; canSetPlaybackRate: () => Promise<boolean>; setPlaybackRate: (rate: number) => Promise<void>; canSetPlaybackQuality: () => Promise<boolean>; setPlaybackQuality: (quality: string) => Promise<void>; canSetPiP: () => Promise<boolean>; enterPiP: () => Promise<any>; exitPiP: () => Promise<any>; canSetFullscreen: () => Promise<boolean>; enterFullscreen: () => Promise<any>; exitFullscreen: () => Promise<any>; getTextTracks: () => TextTrack[]; getCurrentTextTrack: () => number; setCurrentTextTrack: (trackId: number) => void; getTextTrackVisibility: () => boolean; setTextTrackVisibility: (isVisible: boolean) => void; renderNativeTextTracks: (shouldRender: boolean) => void; }>;
+        "getAdapter": () => Promise<{ getInternalPlayer: () => Promise<any>; canPlay: (type: any) => Promise<boolean>; play: () => Promise<void | undefined>; pause: () => Promise<void | undefined>; setCurrentTime: (time: number) => Promise<void>; setMuted: (muted: boolean) => Promise<void>; setVolume: (volume: number) => Promise<void>; canSetPlaybackRate: () => Promise<boolean>; setPlaybackRate: (rate: number) => Promise<void>; canSetPlaybackQuality: () => Promise<boolean>; setPlaybackQuality: (quality: string) => Promise<void>; canSetPiP: () => Promise<boolean>; enterPiP: () => Promise<any>; exitPiP: () => Promise<any>; canSetFullscreen: () => Promise<boolean>; enterFullscreen: () => Promise<any>; exitFullscreen: () => Promise<any>; setCurrentTextTrack: (trackId: number) => void; setTextTrackVisibility: (isVisible: boolean) => void; }>;
         /**
           * The title of the current media.
          */
@@ -903,12 +912,12 @@ export namespace Components {
          */
         "canSetPlaybackRate": () => Promise<boolean>;
         /**
-          * Whether the text track can be changed programtically.
+          * Returns whether the current provider allows changing the text track.
           * @inheritDoc
          */
         "canSetTextTrack": () => Promise<boolean>;
         /**
-          * Whether the text track visibility can be set.
+          * Returns whether the current providers allows setting the text track visibility.
           * @inheritDoc
          */
         "canSetTextTrackVisibility": () => Promise<boolean>;
@@ -932,6 +941,11 @@ export namespace Components {
           * @inheritDoc
          */
         "currentSrc"?: string;
+        /**
+          * `@readonly` Gets the index of the currently active text track. Defaults to `-1` to when all text tracks are disabled. If you'd like to set it than see the `setCurrentTextTrack` method.
+          * @inheritDoc
+         */
+        "currentTextTrack": number;
         /**
           * A `double` indicating the current playback time in seconds. Defaults to `0` if the media has not started to play and has not seeked. Setting this value seeks the media to the new time. The value can be set to a minimum of `0` and maximum of the total length of the media (indicated by the duration prop).
           * @inheritDoc
@@ -977,20 +991,10 @@ export namespace Components {
          */
         "getAdapter": <InternalPlayerType = any>() => Promise<MediaProviderAdapter<InternalPlayerType> | undefined>;
         /**
-          * Returns the currently active text track index. Defaults to `-1` if no track is active.
-          * @inheritDoc
-         */
-        "getCurrentTextTrack": () => Promise<number>;
-        /**
           * Returns the current media provider.
           * @inheritDoc
          */
         "getProvider": <InternalPlayerType = any>() => Promise<AdapterHost<InternalPlayerType> | undefined>;
-        /**
-          * Returns whether the active text track is currently showing.
-          * @inheritDoc
-         */
-        "getTextTrackVisibility": () => Promise<boolean>;
         /**
           * `@readonly` A dictionary of translations for the current language.
           * @inheritDoc
@@ -1041,6 +1045,11 @@ export namespace Components {
           * @inheritDoc
          */
         "isSettingsActive": boolean;
+        /**
+          * `@readonly` Whether the current text tracks is visible. If you'd like to set it than see the `setTrackTrackVisibility` method.
+          * @inheritDoc
+         */
+        "isTextTrackVisible": boolean;
         /**
           * `@readonly` Whether the player is in touch mode. This is determined by listening for mouse/touch events and toggling this value.
           * @inheritDoc
@@ -1153,11 +1162,6 @@ export namespace Components {
          */
         "ready": boolean;
         /**
-          * Whether text tracks should be rendered by native player, set to `false` if using custom display.
-          * @inheritDoc
-         */
-        "renderNativeTextTracks": (shouldRender: boolean) => Promise<void>;
-        /**
           * `@readonly` Whether the player is in the process of seeking to a new time position.
           * @inheritDoc
          */
@@ -1169,10 +1173,15 @@ export namespace Components {
         "setCurrentTextTrack": (trackId: number) => Promise<void>;
         "setProvider": (provider: AdapterHost) => Promise<void>;
         /**
-          * Sets the visiblity of the currently active text track.
+          * Sets the visibility of the currently active text track.
           * @inheritDoc
          */
         "setTextTrackVisibility": (isVisible: boolean) => Promise<void>;
+        /**
+          * Whether text tracks should be rendered by native player, set to `false` if using custom display.
+          * @inheritDoc
+         */
+        "shouldRenderNativeTextTracks": boolean;
         /**
           * `@readonly` The text tracks associated with the current media.
           * @inheritDoc
@@ -1458,7 +1467,7 @@ export namespace Components {
           * @inheritdoc
          */
         "disableRemotePlayback"?: boolean;
-        "getAdapter": () => Promise<{ getInternalPlayer: () => Promise<HTMLMediaElement>; play: () => Promise<void | undefined>; pause: () => Promise<void | undefined>; canPlay: (type: any) => Promise<boolean>; setCurrentTime: (time: number) => Promise<void>; setMuted: (muted: boolean) => Promise<void>; setVolume: (volume: number) => Promise<void>; canSetPlaybackRate: () => Promise<boolean>; setPlaybackRate: (rate: number) => Promise<void>; canSetPlaybackQuality: () => Promise<boolean>; setPlaybackQuality: (quality: string) => Promise<void>; canSetPiP: () => Promise<boolean>; enterPiP: () => Promise<any>; exitPiP: () => Promise<any>; canSetFullscreen: () => Promise<boolean>; enterFullscreen: () => Promise<any>; exitFullscreen: () => Promise<any>; getTextTracks: () => TextTrack[]; getCurrentTextTrack: () => number; setCurrentTextTrack: (trackId: number) => void; getTextTrackVisibility: () => boolean; setTextTrackVisibility: (isVisible: boolean) => void; renderNativeTextTracks: (shouldRender: boolean) => void; }>;
+        "getAdapter": () => Promise<{ getInternalPlayer: () => Promise<HTMLMediaElement>; play: () => Promise<void | undefined>; pause: () => Promise<void | undefined>; canPlay: (type: any) => Promise<boolean>; setCurrentTime: (time: number) => Promise<void>; setMuted: (muted: boolean) => Promise<void>; setVolume: (volume: number) => Promise<void>; canSetPlaybackRate: () => Promise<boolean>; setPlaybackRate: (rate: number) => Promise<void>; canSetPlaybackQuality: () => Promise<boolean>; setPlaybackQuality: (quality: string) => Promise<void>; canSetPiP: () => Promise<boolean>; enterPiP: () => Promise<any>; exitPiP: () => Promise<any>; canSetFullscreen: () => Promise<boolean>; enterFullscreen: () => Promise<any>; exitFullscreen: () => Promise<any>; setCurrentTextTrack: (trackId: number) => void; setTextTrackVisibility: (isVisible: boolean) => void; }>;
         /**
           * The title of the current media.
          */
@@ -1963,6 +1972,7 @@ declare namespace LocalJSX {
           * The name of an icon library to use. Defaults to the library defined by the `icons` player property.
          */
         "icons"?: string;
+        "isTextTrackVisible"?: PlayerProps['isTextTrackVisible'];
         /**
           * A slash (`/`) separated string of JS keyboard keys (`KeyboardEvent.key`), that when caught in a `keydown` event, will trigger a `click` event on the control.
           * @inheritdoc
@@ -1984,13 +1994,16 @@ declare namespace LocalJSX {
         "tooltipPosition"?: TooltipPosition;
     }
     interface VmCaptions {
+        "currentTextTrack"?: PlayerProps['currentTextTrack'];
         /**
           * Whether the captions should be visible or not.
          */
         "hidden"?: boolean;
         "isControlsActive"?: PlayerProps['isControlsActive'];
+        "isTextTrackVisible"?: PlayerProps['isTextTrackVisible'];
         "isVideoView"?: PlayerProps['isVideoView'];
         "playbackStarted"?: PlayerProps['playbackStarted'];
+        "textTracks"?: PlayerProps['textTracks'];
     }
     interface VmClickToPlay {
         "isMobile"?: PlayerProps['isMobile'];
@@ -2261,7 +2274,9 @@ declare namespace LocalJSX {
         "waitForPlaybackStart"?: boolean;
     }
     interface VmDefaultSettings {
+        "currentTextTrack"?: number;
         "i18n"?: PlayerProps['i18n'];
+        "isTextTrackVisible"?: boolean;
         "isVideoView"?: PlayerProps['isAudioView'];
         /**
           * Pins the settings to the defined position inside the video player. This has no effect when the view is of type `audio`, it will always be `bottomRight`.
@@ -2372,6 +2387,7 @@ declare namespace LocalJSX {
           * @inheritdoc
          */
         "crossOrigin"?: MediaCrossOriginOption;
+        "currentTextTrack"?: number;
         "currentTime"?: number;
         /**
           * **EXPERIMENTAL:** Prevents the browser from suggesting a picture-in-picture context menu or to request picture-in-picture automatically in some cases.
@@ -2383,6 +2399,7 @@ declare namespace LocalJSX {
           * @inheritdoc
          */
         "disableRemotePlayback"?: boolean;
+        "isTextTrackVisible"?: boolean;
         "language"?: string;
         "logger"?: Logger;
         "loop"?: boolean;
@@ -2422,6 +2439,7 @@ declare namespace LocalJSX {
           * @inheritdoc
          */
         "preload"?: MediaPreloadOption;
+        "shouldRenderNativeTextTracks"?: boolean;
         /**
           * Whether to use an `audio` or `video` element to play the media.
          */
@@ -2855,6 +2873,11 @@ declare namespace LocalJSX {
          */
         "currentSrc"?: string;
         /**
+          * `@readonly` Gets the index of the currently active text track. Defaults to `-1` to when all text tracks are disabled. If you'd like to set it than see the `setCurrentTextTrack` method.
+          * @inheritDoc
+         */
+        "currentTextTrack"?: number;
+        /**
           * A `double` indicating the current playback time in seconds. Defaults to `0` if the media has not started to play and has not seeked. Setting this value seeks the media to the new time. The value can be set to a minimum of `0` and maximum of the total length of the media (indicated by the duration prop).
           * @inheritDoc
          */
@@ -2919,6 +2942,11 @@ declare namespace LocalJSX {
           * @inheritDoc
          */
         "isSettingsActive"?: boolean;
+        /**
+          * `@readonly` Whether the current text tracks is visible. If you'd like to set it than see the `setTrackTrackVisibility` method.
+          * @inheritDoc
+         */
+        "isTextTrackVisible"?: boolean;
         /**
           * `@readonly` Whether the player is in touch mode. This is determined by listening for mouse/touch events and toggling this value.
           * @inheritDoc
@@ -3210,6 +3238,11 @@ declare namespace LocalJSX {
           * @inheritDoc
          */
         "seeking"?: boolean;
+        /**
+          * Whether text tracks should be rendered by native player, set to `false` if using custom display.
+          * @inheritDoc
+         */
+        "shouldRenderNativeTextTracks"?: boolean;
         /**
           * `@readonly` The text tracks associated with the current media.
           * @inheritDoc

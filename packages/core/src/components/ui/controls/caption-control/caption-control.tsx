@@ -14,9 +14,7 @@ import { isUndefined } from '../../../../utils/unit';
   shadow: true,
 })
 export class CaptionControl implements KeyboardControl {
-  @State() canToggleCaptions = false;
-
-  @State() isCaptionsActive = false;
+  @State() canToggleCaptionVisibility = false;
 
   /**
    * The URL to an SVG element or fragment to load.
@@ -69,18 +67,27 @@ export class CaptionControl implements KeyboardControl {
    */
   @Prop() textTracks: PlayerProps['textTracks'] = [];
 
+  /**
+   * @internal
+   */
+  @Prop() isTextTrackVisible: PlayerProps['isTextTrackVisible'] = false;
+
   @Watch('textTracks')
   @Watch('playbackReady')
   async onTextTracksChange() {
     const player = getPlayerFromRegistry(this);
-    this.canToggleCaptions = (this.textTracks.length > 0)
+    this.canToggleCaptionVisibility = (this.textTracks.length > 0)
       && (await player?.canSetTextTrackVisibility() ?? false);
-    this.isCaptionsActive = (await player?.getTextTrackVisibility?.()) ?? false;
   }
 
   constructor() {
     withComponentRegistry(this);
-    withPlayerContext(this, ['i18n', 'textTracks', 'playbackReady']);
+    withPlayerContext(this, [
+      'i18n',
+      'textTracks',
+      'isTextTrackVisible',
+      'playbackReady',
+    ]);
   }
 
   componentDidLoad() {
@@ -89,24 +96,24 @@ export class CaptionControl implements KeyboardControl {
 
   private onClick() {
     const player = getPlayerFromRegistry(this);
-    player?.setTextTrackVisibility?.(!this.isCaptionsActive);
+    player?.setTextTrackVisibility?.(!this.isTextTrackVisible);
   }
 
   render() {
-    const tooltip = this.isCaptionsActive ? this.i18n.disableCaptions : this.i18n.enableCaptions;
+    const tooltip = this.isTextTrackVisible ? this.i18n.disableCaptions : this.i18n.enableCaptions;
     const tooltipWithHint = !isUndefined(this.keys) ? `${tooltip} (${this.keys})` : tooltip;
 
     return (
-      <Host hidden={!this.canToggleCaptions}>
+      <Host hidden={!this.canToggleCaptionVisibility}>
         <vm-control
           label={this.i18n.captions}
           keys={this.keys}
-          hidden={!this.canToggleCaptions}
-          pressed={this.isCaptionsActive}
+          hidden={!this.canToggleCaptionVisibility}
+          pressed={this.isTextTrackVisible}
           onClick={this.onClick.bind(this)}
         >
           <vm-icon
-            name={this.isCaptionsActive ? this.showIcon : this.hideIcon}
+            name={this.isTextTrackVisible ? this.showIcon : this.hideIcon}
             library={this.icons}
           />
 

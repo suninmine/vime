@@ -15,6 +15,9 @@ export const initialState: { [P in keyof PlayerProps]: PlayerProps[P] } = {
   currentSrc: undefined,
   currentPoster: undefined,
   textTracks: [],
+  currentTextTrack: -1,
+  isTextTrackVisible: true,
+  shouldRenderNativeTextTracks: true,
   icons: 'vime',
   currentTime: 0,
   autoplay: false,
@@ -78,6 +81,7 @@ export type WritableProps = Pick<PlayerProps,
 | 'volume'
 | 'isSettingsActive'
 | 'isControlsActive'
+| 'shouldRenderNativeTextTracks'
 >;
 
 const writableProps = new Set<PlayerProp>([
@@ -99,6 +103,7 @@ const writableProps = new Set<PlayerProp>([
   'volume',
   'isSettingsActive',
   'isControlsActive',
+  'shouldRenderNativeTextTracks',
 ]);
 
 export const isReadonlyProp = (prop: PlayerProp) => !writableProps.has(prop);
@@ -117,6 +122,7 @@ const resetableProps = new Set<PlayerProp>([
   'buffering',
   'playbackReady',
   'textTracks',
+  'currentTextTrack',
   'mediaTitle',
   'currentSrc',
   'currentPoster',
@@ -421,6 +427,25 @@ export interface PlayerProps {
    * `@readonly` The text tracks associated with the current media.
    */
   textTracks: TextTrack[]
+
+  /**
+   * `@readonly` Gets the index of the currently active text track. Defaults to `-1` to when
+   * all text tracks are disabled. If you'd like to set it than see the `setCurrentTextTrack`
+   * method.
+   */
+  currentTextTrack: number
+
+  /**
+   * `@readonly` Whether the current text tracks is visible. If you'd like to set it than see
+   * the `setTrackTrackVisibility` method.
+   */
+  isTextTrackVisible: boolean
+
+  /**
+   * Whether text tracks should be rendered by native player, set to `false` if using
+   * custom display.
+   */
+  shouldRenderNativeTextTracks: boolean
 
   /**
    * The current language of the player. This can be any code defined via the `extendLanguage`

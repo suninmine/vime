@@ -39,7 +39,7 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
 
   private timeRAF?: number;
 
-  private disposal = new Disposal();
+  private textTracksDisposal = new Disposal();
 
   private lazyLoader?: LazyLoader;
 
@@ -207,7 +207,14 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   constructor() {
     withComponentRegistry(this);
     if (!this.noConnect) withProviderConnect(this);
-    withProviderContext(this, ['playbackStarted', 'currentTime', 'paused']);
+    withProviderContext(this, [
+      'playbackStarted',
+      'currentTime',
+      'paused',
+      'currentTextTrack',
+      'isTextTrackVisible',
+      'shouldRenderNativeTextTracks',
+    ]);
     watchComponentRegistry(this, 'vm-poster', ((regs) => { [this.vmPoster] = regs; }));
   }
 
@@ -232,8 +239,8 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
 
   disconnectedCallback() {
     this.mediaQueryDisposal.empty();
+    this.textTracksDisposal.empty();
     this.cancelTimeUpdates();
-    this.disposal.empty();
     this.lazyLoader?.destroy();
     this.wasPausedBeforeSeeking = true;
   }
@@ -298,9 +305,10 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   }
 
   private onSrcSetChange() {
+    this.textTracksDisposal.empty();
     this.mediaQueryDisposal.empty();
     this.vmLoadStart.emit();
-    this.onTextTracksReset();
+    this.listenToTextTracksForChanges();
     this.vmSrcSetChange.emit(this.currentSrcSet);
     if (this.hasPlaybackQualities()) {
       this.dispatch('playbackQualities', this.getPlaybackQualities());
@@ -384,6 +392,7 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   }
 
   private onLoadedMetadata() {
+    this.listenToTextTracksForChanges();
     this.onTextTracksChange();
 
     // Reset player state on quality change.
@@ -563,30 +572,31 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
       canSetFullscreen: async () => canFullscreenVideo(),
       enterFullscreen: () => this.toggleFullscreen(true),
       exitFullscreen: () => this.toggleFullscreen(false),
-      getTextTracks: () => this.getTextTracks(),
-      getCurrentTextTrack: () => this.currentTextTrackId,
       setCurrentTextTrack: (trackId: number) => {
-        if (trackId !== this.currentTextTrackId) this.toggleTextTrackModes(trackId);
+        if (trackId !== this.currentTextTrack) this.toggleTextTrackModes(trackId);
       },
-      getTextTrackVisibility: () => (this.currentTextTrackId !== -1) && this.isTextTrackVisible,
       setTextTrackVisibility: (isVisible: boolean) => {
         this.isTextTrackVisible = isVisible;
-        this.toggleTextTrackModes(this.currentTextTrackId);
-      },
-      renderNativeTextTracks: (shouldRender: boolean) => {
-        this.shouldRenderNativeTextTracks = shouldRender;
-        this.toggleTextTrackModes(this.currentTextTrackId);
+        this.toggleTextTrackModes(this.currentTextTrack);
       },
     };
   }
 
-  private currentTextTrackId = -1;
+  /** @internal  */
+  @Prop() currentTextTrack = -1;
 
-  private isTextTrackVisible = true;
+  /** @internal  */
+  @Prop() isTextTrackVisible = true;
 
-  private shouldRenderNativeTextTracks = true;
+  /** @internal  */
+  @Prop() shouldRenderNativeTextTracks = true;
 
-  private getTextTracks() {
+  @Watch('shouldRenderNativeTextTracks')
+  onShouldRenderNativeTextTracksChange() {
+    this.toggleTextTrackModes(this.currentTextTrack);
+  }
+
+  private getFilteredTextTracks() {
     const tracks = [];
     const textTrackList = Array.from(this.mediaEl!.textTracks);
 
@@ -601,18 +611,16 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
     return tracks;
   }
 
-  private onTextTracksReset() {
-    this.disposal.empty();
-    this.currentTextTrackId = -1;
-    this.dispatch('textTracks', this.getTextTracks());
+  private listenToTextTracksForChanges() {
+    this.textTracksDisposal.empty();
     if (isUndefined(this.mediaEl)) return;
-    this.disposal.add(
+    this.textTracksDisposal.add(
       listen(this.mediaEl!.textTracks, 'change', this.onTextTracksChange.bind(this)),
     );
   }
 
   private onTextTracksChange() {
-    const tracks = this.getTextTracks();
+    const tracks = this.getFilteredTextTracks();
 
     let trackId = -1;
     for (let id = 0; id < tracks.length; id += 1) {
@@ -625,8 +633,12 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
       }
     }
 
-    this.currentTextTrackId = trackId;
     this.dispatch('textTracks', tracks);
+    this.dispatch('currentTextTrack', trackId);
+
+    if (this.shouldRenderNativeTextTracks) {
+      this.dispatch('isTextTrackVisible', (trackId !== -1) && (tracks[trackId].mode === 'showing'));
+    }
   }
 
   private toggleTextTrackModes(newTrackId: number) {
@@ -637,7 +649,7 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
     if (newTrackId === -1) {
       Array.from(textTracks).forEach((track) => { track.mode = 'disabled'; });
     } else {
-      const oldTrack = textTracks[this.currentTextTrackId];
+      const oldTrack = textTracks[this.currentTextTrack];
       if (oldTrack) oldTrack.mode = 'disabled';
     }
 
@@ -649,7 +661,8 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
         : 'hidden';
     }
 
-    this.currentTextTrackId = newTrackId;
+    this.dispatch('currentTextTrack', newTrackId);
+    this.dispatch('isTextTrackVisible', this.isTextTrackVisible);
   }
 
   render() {
